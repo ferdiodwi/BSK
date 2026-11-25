@@ -130,6 +130,12 @@
   animation: bskMarqueeRight 38s linear infinite;
 }
 
+.bsk-marquee-track:hover,
+.bsk-marquee-track:has(.bsk-testimonial-card:hover),
+.bsk-marquee-track:focus-within {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bsk-bike-swap,
   .bsk-dialog-in {

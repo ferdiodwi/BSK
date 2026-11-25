@@ -20,7 +20,7 @@ function TestimonialCard({
   locale: "id" | "en";
 }) {
   return (
-    <article className="flex h-full w-[310px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:w-[370px] sm:p-7 lg:w-[400px]">
+    <article className="bsk-testimonial-card flex h-full w-[310px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:w-[370px] sm:p-7 lg:w-[400px]">
       <div>
         <Quote className="h-6 w-6 fill-[#FF6B35] text-[#FF6B35]" aria-hidden="true" />
         <p className="mt-4 text-sm leading-relaxed text-[#E5E7EB] sm:text-[15px]">
@@ -66,10 +66,10 @@ function MarqueeRow({
     <div
       role="region"
       aria-label={ariaLabel}
-      className="group/marquee relative flex overflow-hidden"
+      className="relative flex overflow-hidden"
     >
       <div
-        className={`flex w-max will-change-transform group-hover/marquee:[animation-play-state:paused] motion-reduce:w-full motion-reduce:overflow-x-auto motion-reduce:[animation:none] ${animClass}`}
+        className={`bsk-marquee-track flex w-max will-change-transform motion-reduce:w-full motion-reduce:overflow-x-auto motion-reduce:[animation:none] ${animClass}`}
       >
         {items.map((item) => (
           <div key={item.id} className="flex pr-4 sm:pr-5">
