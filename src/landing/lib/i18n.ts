@@ -82,6 +82,7 @@ const EN_MAP: Record<string, string> = {
   "Tentang": "About",
   "Layanan": "Services",
   "Galeri": "Gallery",
+  "Testimoni": "Reviews",
   "Anatomi Presisi": "Frame Anatomy",
   "Layanan & Paket": "Services & Packages",
   "Galeri Unit": "Build Gallery",
@@ -181,6 +182,13 @@ const EN_MAP: Record<string, string> = {
   "Foto Berikutnya": "Next Photo",
   "Tutup preview foto": "Close photo preview",
   "Daftar foto galeri BSK Custom": "BSK Custom gallery photo strip",
+
+  // Testimonials
+  "CATATAN OWNER & ANAK BENGKEL": "RIDER & WORKSHOP NOTES",
+  "Kata Pemilik Motor.": "What Riders Say.",
+  "Lempeng, Rapi, Siap Jalan.": "Straight, Tight, Road Ready.",
+  "Testimoni pelanggan baris atas": "Customer testimonials top row",
+  "Testimoni pelanggan baris bawah": "Customer testimonials bottom row",
 
   // SOP & Workshop
   "KONSULTASI & LOKASI": "CONSULTATION & LOCATION",

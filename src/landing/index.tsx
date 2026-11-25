@@ -7,6 +7,7 @@ import { Hero } from "./components/Hero";
 import { AboutSection } from "./components/AboutSection";
 import { ServicePackages } from "./components/ServicePackages";
 import { ShowcaseGallery } from "./components/ShowcaseGallery";
+import { TestimonialsSection } from "./components/TestimonialsSection";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
 import {
@@ -22,6 +23,7 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   AboutSection,
   ServicePackages,
   ShowcaseGallery,
+  TestimonialsSection,
 };
 
 export function Landing() {
