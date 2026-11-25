@@ -126,8 +126,8 @@ export function AboutSection({ block }: SectionComponentProps) {
                 </a>
                 <a
                   href={site.contact.tiktok_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={site.contact.tiktok_url.startsWith("http") ? "_blank" : undefined}
+                  rel={site.contact.tiktok_url.startsWith("http") ? "noopener noreferrer" : undefined}
                   aria-label="TikTok BSK Custom"
                   className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[#141518] text-[#D1D5DB] transition-colors hover:border-[#FF6B35]/60 hover:bg-[#16181D] hover:text-[#FF6B35]"
                 >

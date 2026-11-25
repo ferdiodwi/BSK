@@ -112,12 +112,12 @@ export function ContactSection({ block }: SectionComponentProps) {
 
               <a
                 href={site.contact.tiktok_url}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={site.contact.tiktok_url.startsWith("http") ? "_blank" : undefined}
+                rel={site.contact.tiktok_url.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-white/10 bg-[#141518] px-4 py-2.5 text-sm font-medium text-[#D1D5DB] transition-colors hover:border-[#FF6B35]/60 hover:text-[#FF8A5B]"
               >
                 <TikTokLogo className="h-4 w-4" aria-hidden="true" />
-                <span>@bsk.custom</span>
+                <span>TikTok</span>
               </a>
             </div>
 

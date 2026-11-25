@@ -553,7 +553,7 @@ export const site = {
     whatsapp_display: "+62 822-2314-5215",
     instagram_user: "@bsk_custom_wwe",
     instagram_url: "https://instagram.com/bsk_custom_wwe",
-    tiktok_url: "https://tiktok.com/@bsk.custom",
+    tiktok_url: "/#",
     address: "BSK CUSTOM (Pin Lokasi Google Maps)",
     hours: "Konfirmasi jadwal & antrean via WhatsApp sebelum datang.",
     maps_embed_url:
