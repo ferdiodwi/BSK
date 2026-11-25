@@ -10,6 +10,9 @@ export type BikeSpec = {
   imageUrl: string;
   width: number;
   height: number;
+  standXPercent: number;
+  rearXPercent: number;
+  frontXPercent: number;
   facing: "right" | "left";
   platform: string;
   focus: string;
@@ -44,6 +47,9 @@ export const BSK_BIKES: BikeSpec[] = [
     imageUrl: "/bikes/5.png",
     width: 1531,
     height: 944,
+    standXPercent: 43,
+    rearXPercent: 18,
+    frontXPercent: 83,
     facing: "right",
     platform: "Rangka CB 100 / 125",
     focus: "Fitting tangki hitam lis emas, jok slim kotak, sok depan gold, dan senter as roda.",
@@ -63,6 +69,9 @@ export const BSK_BIKES: BikeSpec[] = [
     imageUrl: "/bikes/8.png",
     width: 1765,
     height: 1000,
+    standXPercent: 42,
+    rearXPercent: 19,
+    frontXPercent: 84,
     facing: "right",
     platform: "Rangka Klasik CB / GL",
     focus: "Penataan tangki bahan primer, dudukan jok tipis presisi, subframe belakang, dan slebor chrome.",
@@ -82,6 +91,9 @@ export const BSK_BIKES: BikeSpec[] = [
     imageUrl: "/bikes/4.png",
     width: 1706,
     height: 992,
+    standXPercent: 44,
+    rearXPercent: 21,
+    frontXPercent: 84,
     facing: "right",
     platform: "GL Series Restomod",
     focus: "Tata body utuh, bak mesin & begel chrome, shock tabung merah, rem cakram lebar depan.",
@@ -101,6 +113,9 @@ export const BSK_BIKES: BikeSpec[] = [
     imageUrl: "/bikes/7.png",
     width: 1396,
     height: 816,
+    standXPercent: 43,
+    rearXPercent: 18,
+    frontXPercent: 84,
     facing: "right",
     platform: "Megapro / GL Racing",
     focus: "Postur rangka herex harian, jok datar presisi, knalpot racing stainless, dan shock belakang kuning.",
@@ -120,6 +135,9 @@ export const BSK_BIKES: BikeSpec[] = [
     imageUrl: "/bikes/6.png",
     width: 1806,
     height: 1180,
+    standXPercent: 60,
+    rearXPercent: 81,
+    frontXPercent: 15,
     facing: "left",
     platform: "Rangka CB Silver",
     focus: "Fitting tangki biru metalik, arm kotak kokoh, shock tabung, dan penyetelan kelurusan ban belakang.",
