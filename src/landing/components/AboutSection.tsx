@@ -1,10 +1,13 @@
 "use client";
 
+import { ArrowUpRight, Compass, Layers, Wrench } from "lucide-react";
 import { site } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
 import { imgPerfProps, revealLeft, revealRight, sortedItems, type SectionComponentProps } from "../lib/helpers";
 import { InstagramLogo, TikTokLogo, WhatsAppLogo } from "../ui/BrandLogos";
+
+const PILLAR_ICONS = [Compass, Wrench, Layers] as const;
 
 export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
@@ -13,35 +16,65 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
   return (
     <section
       id="about"
-      className="border-b border-black/10 bg-[#F3F0EA] text-[#111216]"
+      className="bsk-dark-section relative overflow-hidden border-t border-white/[0.08] bg-[#0B0C0E] text-[#F9FAFB]"
     >
-      <div className="mx-auto max-w-[1320px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
-          {/* Left Portrait Photo (about.jpeg: builder working on CB/GL at BSK workshop) */}
+      {/* Subtle overhead ember ambient tint linking the Hero garage floor into the workshop section */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-1/2 h-px w-full max-w-[1320px] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#FF6B35]/35 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(255,107,53,0.07)_0%,transparent_70%)]"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1320px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+          {/* Left Editorial Photo Card: about.jpeg with frosted bottom caption */}
           <div {...revealLeft(0)} className="lg:col-span-5">
-            <div className="mx-auto max-w-[440px] overflow-hidden bg-[#141518] shadow-[0_18px_40px_rgba(17,18,22,0.14)] lg:max-w-none">
+            <div className="group relative mx-auto max-w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#141518] shadow-[0_24px_60px_rgba(0,0,0,0.6)] lg:max-w-none">
               <img
                 src="/about.jpeg"
-                alt="Proses pengerjaan tata body dan perakitan rangka di bengkel BSK Custom"
+                alt={tr("Proses pengerjaan tata body dan perakitan rangka di bengkel BSK Custom", locale)}
                 width={1792}
                 height={2400}
                 {...imgPerfProps()}
-                className="aspect-[3/4] h-auto w-full object-cover object-center"
+                className="aspect-[3/4] h-auto w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B0C0E]/90 via-[#0B0C0E]/40 to-transparent"
+              />
+              <div className="absolute inset-x-3.5 bottom-3.5 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#0B0C0E]/82 px-4 py-3 backdrop-blur-md">
+                <div>
+                  <p className="font-mono text-[10px] font-semibold tracking-[0.18em] text-[#FF8A5B] uppercase">
+                    {tr("Bengkel BSK Custom", locale)}
+                  </p>
+                  <p className="mt-0.5 text-xs font-medium text-[#F9FAFB]">
+                    {tr("Tata Body CB & Senter Rangka", locale)}
+                  </p>
+                </div>
+                <span className="font-condensed text-lg tracking-wider text-white/90 uppercase">
+                  BSK
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Right Content Block (matching clean 2-column reference + 3 workshop standards) */}
+          {/* Right Bento Content Block */}
           <div {...revealRight(0.08)} className="lg:col-span-7">
-            <h2 className="font-condensed text-4xl leading-[0.94] tracking-tight text-[#111216] uppercase sm:text-5xl lg:text-6xl">
+            <div className="flex items-center gap-3">
+              <span className="h-[1px] w-7 bg-[#FF6B35]" aria-hidden="true" />
+              <p className="font-mono text-[11px] font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
+                {tr(bind(block, "subtitle", "SPESIALIS TATA BODY CB & RANGKA PRESISI"), locale)}
+              </p>
+            </div>
+
+            <h2 className="mt-4 font-display text-3xl leading-[1.04] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl lg:text-[3.35rem]">
               {tr(bind(block, "title", "Tentang BSK Custom"), locale)}
             </h2>
 
-            <p className="mt-3 font-hero text-sm font-bold tracking-[0.12em] text-[#C41E0A] uppercase sm:text-base">
-              {tr(bind(block, "subtitle", "BSK CUSTOM - SPESIALIS TATA BODY CB & RANGKA PRESISI"), locale)}
-            </p>
-
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#374151] sm:text-base">
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#D1D5DB] sm:text-base">
               {tr(
                 bind(
                   block,
@@ -52,34 +85,55 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
               )}
             </p>
 
-            {/* 3 Workshop Workmanship Standards */}
+            {/* 3 Dark Bento Workmanship Cards */}
             {pillars.length > 0 && (
-              <div className="mt-8 grid grid-cols-1 gap-6 border-t border-black/15 pt-7 sm:grid-cols-3">
-                {pillars.map((item, idx) => (
-                  <div key={idx}>
-                    <span className="font-mono text-xs font-bold text-[#C41E0A]">
-                      0{idx + 1}
-                    </span>
-                    <h3 className="mt-1.5 font-hero text-sm font-bold tracking-wide text-[#111216] uppercase">
-                      {tr(item.title || "", locale)}
-                    </h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-[#4B5563]">
-                      {tr(item.description || "", locale)}
-                    </p>
-                  </div>
-                ))}
+              <div className="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-3">
+                {pillars.map((item, idx) => {
+                  const Icon = PILLAR_ICONS[idx % PILLAR_ICONS.length];
+                  return (
+                    <div
+                      key={idx}
+                      className="group rounded-2xl border border-white/[0.08] bg-[#141518] p-5 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D]"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-semibold text-[#FF8A5B]">
+                          0{idx + 1}
+                        </span>
+                        <Icon
+                          className="h-4 w-4 text-[#9CA3AF] transition-colors group-hover:text-[#FF6B35]"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <h3 className="mt-4 font-display text-[15px] leading-snug font-bold text-[#F9FAFB]">
+                        {tr(item.title || "", locale)}
+                      </h3>
+                      <p className="mt-2 text-xs leading-relaxed text-[#A1A1AA]">
+                        {tr(item.description || "", locale)}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             )}
 
-            {/* Social Links & Consultation Action */}
-            <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-6">
-              <div className="flex items-center gap-2">
+            {/* Primary CTA & Rounded Dark Social Actions */}
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+              <button
+                type="button"
+                onClick={() => onOpenInquiry?.()}
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-sans text-xs font-bold tracking-[0.12em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35]"
+              >
+                <span>{tr("Konsultasi Konsep Garapan", locale)}</span>
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+
+              <div className="flex items-center gap-2.5">
                 <a
                   href={site.contact.instagram_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram BSK Custom"
-                  className="flex h-11 w-11 items-center justify-center border border-black/15 bg-white text-[#111216] transition-colors hover:border-[#C41E0A] hover:text-[#C41E0A]"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#141518] text-[#D1D5DB] transition-colors hover:border-[#FF6B35]/60 hover:bg-[#16181D] hover:text-[#FF6B35]"
                 >
                   <InstagramLogo className="h-4 w-4" aria-hidden="true" />
                 </a>
@@ -88,7 +142,7 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok BSK Custom"
-                  className="flex h-11 w-11 items-center justify-center border border-black/15 bg-white text-[#111216] transition-colors hover:border-[#C41E0A] hover:text-[#C41E0A]"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#141518] text-[#D1D5DB] transition-colors hover:border-[#FF6B35]/60 hover:bg-[#16181D] hover:text-[#FF6B35]"
                 >
                   <TikTokLogo className="h-4 w-4" aria-hidden="true" />
                 </a>
@@ -99,19 +153,11 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp BSK Custom"
-                  className="flex h-11 w-11 items-center justify-center border border-black/15 bg-white text-[#111216] transition-colors hover:border-[#047857] hover:text-[#047857]"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#141518] text-[#D1D5DB] transition-colors hover:border-[#6EE7B7]/50 hover:bg-[#16181D] hover:text-[#6EE7B7]"
                 >
                   <WhatsAppLogo className="h-4 w-4" aria-hidden="true" />
                 </a>
               </div>
-
-              <button
-                type="button"
-                onClick={() => onOpenInquiry?.()}
-                className="inline-flex min-h-[44px] items-center justify-center bg-[#141518] px-6 py-2.5 font-hero text-xs font-bold tracking-widest text-white uppercase transition-colors hover:bg-[#C41E0A]"
-              >
-                {tr("Konsultasi Konsep Garapan", locale)}
-              </button>
             </div>
           </div>
         </div>

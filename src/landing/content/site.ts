@@ -209,7 +209,7 @@ export const site = {
             {
               order: 0,
               title: "Tentang BSK Custom",
-              subtitle: "BSK CUSTOM - SPESIALIS TATA BODY CB & RANGKA PRESISI",
+              subtitle: "SPESIALIS TATA BODY CB & RANGKA PRESISI",
               description:
                 "BSK Custom berfokus menangani tata body CB, perbaikan geometri rangka, dan penataan kaki-kaki motor klasik maupun harian. Setiap unit dikerjakan dengan pengukuran senter yang teliti, pengelasan matang, serta fitting tangki dan jok yang rapat agar tampilan motor rapi sekaligus stabil dikendarai.",
               items: [
