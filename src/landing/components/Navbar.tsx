@@ -56,18 +56,36 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
 
         {/* Center: Clean Horizontal Nav Links */}
         <nav aria-label="Navigasi utama" className="hidden items-center gap-7 lg:flex xl:gap-9">
-          {links.map((item, idx) => (
-            <a
-              key={idx}
-              href={item.icon || "#hero"}
-              className="inline-flex min-h-[44px] items-center px-1 font-hero text-[13px] font-medium tracking-[0.14em] text-[#E5E7EB] uppercase transition-colors hover:text-[#FF6B35]"
-            >
-              {tr(item.title || "", locale)}
-            </a>
-          ))}
+          {links.map((item, idx) => {
+            const href = item.icon || "#hero";
+            if (href === "#inquiry") {
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => onOpenInquiry?.()}
+                  className="inline-flex min-h-[44px] items-center px-1 font-hero text-[13px] font-medium tracking-[0.14em] text-[#E5E7EB] uppercase transition-colors hover:text-[#FF6B35]"
+                >
+                  {tr(item.title || "", locale)}
+                </button>
+              );
+            }
+            const isExternal = href.startsWith("http");
+            return (
+              <a
+                key={idx}
+                href={href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="inline-flex min-h-[44px] items-center px-1 font-hero text-[13px] font-medium tracking-[0.14em] text-[#E5E7EB] uppercase transition-colors hover:text-[#FF6B35]"
+              >
+                {tr(item.title || "", locale)}
+              </a>
+            );
+          })}
         </nav>
 
-        {/* Right: Minimal Language Toggle + Sharp Orange-Bordered CTA (Harley TEST RIDE style) */}
+        {/* Right: Minimal Language Toggle + Sharp Orange-Bordered CTA */}
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -114,16 +132,37 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
           className="border-t border-white/15 bg-[#141518] px-4 py-4 shadow-2xl lg:hidden"
         >
           <div className="flex flex-col gap-1">
-            {links.map((item, idx) => (
-              <a
-                key={idx}
-                href={item.icon || "#hero"}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex min-h-[44px] items-center px-3 font-hero text-sm font-semibold tracking-wider text-[#F3F4F6] uppercase transition-colors hover:bg-white/5 hover:text-[#FF6B35]"
-              >
-                {tr(item.title || "", locale)}
-              </a>
-            ))}
+            {links.map((item, idx) => {
+              const href = item.icon || "#hero";
+              if (href === "#inquiry") {
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenInquiry?.();
+                    }}
+                    className="flex min-h-[44px] w-full items-center px-3 text-left font-hero text-sm font-semibold tracking-wider text-[#F3F4F6] uppercase transition-colors hover:bg-white/5 hover:text-[#FF6B35]"
+                  >
+                    {tr(item.title || "", locale)}
+                  </button>
+                );
+              }
+              const isExternal = href.startsWith("http");
+              return (
+                <a
+                  key={idx}
+                  href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex min-h-[44px] items-center px-3 font-hero text-sm font-semibold tracking-wider text-[#F3F4F6] uppercase transition-colors hover:bg-white/5 hover:text-[#FF6B35]"
+                >
+                  {tr(item.title || "", locale)}
+                </a>
+              );
+            })}
             <button
               type="button"
               onClick={() => {

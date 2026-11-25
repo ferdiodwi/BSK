@@ -21,19 +21,6 @@ export type BikeSpec = {
   finishingEn: string;
 };
 
-export type AnatomyPoint = {
-  id: string;
-  number: string;
-  title: string;
-  titleEn: string;
-  xPercent: number;
-  yPercent: number;
-  standard: string;
-  standardEn: string;
-  detail: string;
-  detailEn: string;
-};
-
 export const BSK_BIKES: BikeSpec[] = [
   {
     id: "cb-black-gold",
@@ -105,7 +92,7 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "mp-herex",
     inquiryBikeId: "megapro",
     name: "Megapro / GL Herex",
-    heroTitle: "GL HEREX",
+    heroTitle: "MP GL HEREX",
     watermark: "HEREX",
     category: "Full Build",
     categoryLabel: "Full Build Racing Harian",
@@ -144,58 +131,6 @@ export const BSK_BIKES: BikeSpec[] = [
     focusEn: "Metallic blue tank fitment, box swingarm, reservoir shock, and rear wheel centering.",
     finishing: "Rangka silver rapi dengan cover ban kontes",
     finishingEn: "Clean silver frame with show-ready wheel setup",
-  },
-];
-
-// Coordinates calibrated directly to the trimmed 5.png and 8.png aspect ratios
-export const ANATOMY_POINTS: AnatomyPoint[] = [
-  {
-    id: "komstir",
-    number: "01",
-    title: "Komstir & Leher Rangka",
-    titleEn: "Steering Head & Neck Alignment",
-    xPercent: 68,
-    yPercent: 26,
-    standard: "Sudut Rake Simetris & Bebas Oblak",
-    standardEn: "Symmetrical Rake Angle & Zero Play",
-    detail: "Kelurusan leher komstir diperiksa dengan mal ukur agar motor tetap lurus stabil saat lepas stang di kecepatan tinggi.",
-    detailEn: "Steering neck alignment is checked with precision jigs so tracking stays straight at highway speed.",
-  },
-  {
-    id: "tangki-jok",
-    number: "02",
-    title: "Pertemuan Tangki & Jok",
-    titleEn: "Tank-to-Seat Flush Fitment",
-    xPercent: 45,
-    yPercent: 25,
-    standard: "Garis Bodi Datar Tanpa Celah Renggang",
-    standardEn: "Flush Profile With Zero Awkward Gap",
-    detail: "Dudukan karet dan kait tangki disetel ulang supaya posisi tangki tidak mendongak dan ujung jok menempel rapat mengikuti lekuk tangki.",
-    detailEn: "Tank mounts are repositioned so the tank sits level and the seat nose hugs the rear tank contour tightly.",
-  },
-  {
-    id: "subframe",
-    number: "03",
-    title: "Subframe & Dudukan Shock",
-    titleEn: "Subframe & Shock Mounts",
-    xPercent: 28,
-    yPercent: 39,
-    standard: "Las Penetrasi Penuh & Kiri-Kanan Sejajar",
-    standardEn: "Full-Penetration Weld & Equal Left-Right Geometry",
-    detail: "Pemotongan dan penyambungan pipa subframe memakai pengelasan matang serta dudukan shock dobel yang simetris kiri-kanan.",
-    detailEn: "Subframe pipe fabrication uses full-penetration welds with symmetrical left and right shock mounting bosses.",
-  },
-  {
-    id: "arm-roda",
-    number: "04",
-    title: "Swingarm & Senter As Roda",
-    titleEn: "Swingarm & Axle Centering",
-    xPercent: 18,
-    yPercent: 69,
-    standard: "Senter Ban, Slebor & Gir Sejalur",
-    standardEn: "Wheel, Fender & Sprocket Inline Alignment",
-    detail: "Penataan bushing swingarm, jarak ban terhadap slebor belakang, serta garis rantai agar ban berputar lurus tanpa gesekan.",
-    detailEn: "Swingarm bushings, rear fender clearance, and chain line are aligned so the rear wheel tracks true without rubbing.",
   },
 ];
 
@@ -241,8 +176,8 @@ export const site = {
               },
               items: [
                 { order: 0, title: "Showcase", icon: "#hero" },
-                { order: 1, title: "Anatomi Presisi", icon: "#anatomi" },
-                { order: 2, title: "Layanan & Paket", icon: "#paket" },
+                { order: 1, title: "Konsultasi Konsep", icon: "#inquiry" },
+                { order: 2, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
               ],
             },
           ],
@@ -261,106 +196,7 @@ export const site = {
               extra: {
                 section_id: "hero",
                 primary_cta_label: "Konsultasi Konsep Garapan",
-                secondary_cta_label: "Lihat Detail Garapan",
               },
-            },
-          ],
-        },
-        {
-          type: "AnatomySection",
-          order: 2,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "Anatomi Tata Body Presisi",
-              subtitle: "INSPEKSI TEKNIS",
-              description:
-                "Pilih titik pemeriksaan pada motor untuk melihat standar pengerjaan dan penyetelan BSK Custom.",
-            },
-          ],
-        },
-        {
-          type: "ServicePackages",
-          order: 3,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "Layanan Tata Body & Jasa Bengkel",
-              subtitle: "RUANG LINGKUP GARAPAN",
-              description:
-                "Penentuan rincian pengerjaan disesuaikan dengan kondisi rangka awal, basis motor, dan kelengkapan part. Kirim konsep motor Anda untuk cek jadwal dan penawaran langsung via WhatsApp.",
-              extra: {
-                note: "Waktu pengerjaan bergantung pada antrean bengkel, kondisi rangka awal, dan ketersediaan part.",
-              },
-              items: [
-                {
-                  order: 0,
-                  id: "standar",
-                  title: "Paket Tata Body Standar",
-                  description:
-                    "Pemasangan set bodi lengkap: dudukan tangki, setting jok presisi, dudukan slebor depan dan belakang, serta begel.",
-                  extra: {
-                    duration: "3 - 5 Hari Kerja",
-                    scope: "Fitting Bodi & Braket",
-                    highlights: [
-                      "Fitting tangki rata tidak mendongak",
-                      "Dudukan jok presisi tanpa celah",
-                      "Penataan slebor, begel, dan stoplamp",
-                    ],
-                  },
-                },
-                {
-                  order: 1,
-                  id: "full-rangka",
-                  title: "Paket Full Rangka & Senter Kaki",
-                  description:
-                    "Penyelarasan rangka total, bikin subframe pipa seamless baru, dudukan shock dobel simetris, dan senter as roda depan-belakang.",
-                  extra: {
-                    duration: "5 - 7 Hari Kerja",
-                    scope: "Fabrikasi Subframe & Alignment",
-                    featured: true,
-                    highlights: [
-                      "Semua cakupan Paket Standar",
-                      "Potong dan sambung subframe pipa tebal",
-                      "Senter as roda depan, swingarm, dan gir",
-                    ],
-                  },
-                },
-                {
-                  order: 2,
-                  id: "restorasi",
-                  title: "Paket Restorasi Komplit + Cat Oven",
-                  description:
-                    "Bangun motor dari rangka dasar: tata body penuh, repaint oven 3 lapis rangka dan bodi, serta perakitan kabel bodi tersembunyi.",
-                  extra: {
-                    duration: "10 - 14 Hari Kerja",
-                    scope: "Bangun Ulang & Finishing",
-                    highlights: [
-                      "Full tata body & alignment rangka",
-                      "Repaint oven 3 lapis rangka dan tangki",
-                      "Rakit kabel bodi rapi tersembunyi",
-                    ],
-                  },
-                },
-                {
-                  order: 3,
-                  id: "tune-up",
-                  title: "Paket Tune-Up & Setting Harian / Herex",
-                  description:
-                    "Perawatan performa mesin dan kelistrikan: servis karburator atau throttle body, setel klep, cek pengapian, dan ganti oli.",
-                  extra: {
-                    duration: "1 - 2 Hari Kerja",
-                    scope: "Performa Mesin & Kelistrikan",
-                    highlights: [
-                      "Servis karburator atau throttle body",
-                      "Setting celah klep dan kelistrikan",
-                      "Uji jalan respons tarikan",
-                    ],
-                  },
-                },
-              ],
             },
           ],
         },

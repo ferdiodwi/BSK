@@ -4,8 +4,6 @@ import { useRef, useState, type ComponentType } from "react";
 import "./styles.css";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { AnatomySection } from "./components/AnatomySection";
-import { ServicePackages } from "./components/ServicePackages";
 import { BuildInquiryModal } from "./components/BuildInquiryModal";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
@@ -19,8 +17,6 @@ import {
 const views: Record<string, ComponentType<SectionComponentProps>> = {
   Navbar,
   Hero,
-  AnatomySection,
-  ServicePackages,
 };
 
 export function Landing() {

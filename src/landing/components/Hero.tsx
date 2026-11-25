@@ -8,7 +8,7 @@ import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
 import { heroEnterAttr, type SectionComponentProps } from "../lib/helpers";
 
-export function Hero({ block }: SectionComponentProps) {
+export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const stageRef = useRef<HTMLElement>(null);
@@ -66,7 +66,7 @@ export function Hero({ block }: SectionComponentProps) {
     <section
       id="hero"
       ref={stageRef}
-      className="bsk-dark-section relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-[#141518] pt-20 pb-8 text-white sm:min-h-[680px] sm:pt-24 sm:pb-10 lg:min-h-[100dvh] lg:pt-28 lg:pb-12"
+      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-[#141518] pt-20 pb-8 text-white sm:pt-24 sm:pb-10 lg:pt-28 lg:pb-12"
     >
       {/* Anchor background to bottom so warm sunlit garage floor sits directly beneath the motorcycle stand and wheels */}
       <img
@@ -173,14 +173,15 @@ export function Hero({ block }: SectionComponentProps) {
             </button>
           </div>
 
-          {/* Bottom Centered Underlined Action Link */}
+          {/* Bottom Centered Underlined Action Button opening Build Inquiry with Active Bike */}
           <div {...heroEnterAttr(0.18)} className="relative z-30 mt-4 flex flex-col items-center">
-            <a
-              href="#anatomi"
+            <button
+              type="button"
+              onClick={() => onOpenInquiry?.({ bikeId: activeBike.inquiryBikeId })}
               className="inline-flex min-h-[44px] items-center border-b-2 border-[#FF5722] px-2 pb-1 font-condensed text-base tracking-[0.12em] text-[#FF6B35] uppercase transition-colors hover:border-white hover:text-white sm:text-lg"
             >
-              {tr("Lihat Detail Garapan", locale)}
-            </a>
+              {tr(bind(block, "extra.primary_cta_label", "Konsultasi Konsep Garapan"), locale)}
+            </button>
           </div>
         </div>
       </div>
