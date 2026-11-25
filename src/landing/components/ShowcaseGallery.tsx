@@ -197,12 +197,12 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                     style={{
                       transform: `translate(-50%, -50%) translateX(${translatePercent}) scale(${scaleVal})`,
                     }}
-                    className={`group absolute top-1/2 left-1/2 aspect-[3/4] w-[250px] overflow-hidden rounded-2xl border bg-[#141518] transition-all duration-300 ease-out sm:w-[325px] lg:w-[360px] ${zClass} ${
+                    className={`group absolute top-1/2 left-1/2 aspect-[3/4] w-[250px] overflow-hidden rounded-2xl bg-[#141518] transition-all duration-300 ease-out sm:w-[325px] lg:w-[360px] ${zClass} ${
                       isCenter
-                        ? "border-[#FF6B35]/60 shadow-[0_28px_70px_rgba(0,0,0,0.85)]"
+                        ? "shadow-[0_28px_70px_rgba(0,0,0,0.9)]"
                         : abs === 1
-                          ? "border-white/15 shadow-[0_20px_45px_rgba(0,0,0,0.8)] hover:border-white/35"
-                          : "hidden border-white/10 shadow-[0_14px_35px_rgba(0,0,0,0.75)] hover:border-white/25 sm:block"
+                          ? "shadow-[0_20px_45px_rgba(0,0,0,0.85)]"
+                          : "hidden shadow-[0_14px_35px_rgba(0,0,0,0.8)] sm:block"
                     }`}
                   >
                     <img
@@ -273,10 +273,8 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                       onClick={() => setActiveIndex(idx)}
                       aria-label={`${String(idx + 1).padStart(2, "0")}. ${thumbTitle}`}
                       aria-current={isCurrent ? "true" : undefined}
-                      className={`group relative h-20 w-16 shrink-0 overflow-hidden rounded-xl border bg-[#141518] transition-colors sm:h-24 sm:w-20 ${
-                        isCurrent
-                          ? "border-[#FF6B35] ring-2 ring-[#FF6B35]/60"
-                          : "border-white/10 hover:border-white/30"
+                      className={`group relative h-20 w-16 shrink-0 overflow-hidden rounded-xl bg-[#141518] transition-transform duration-200 sm:h-24 sm:w-20 ${
+                        isCurrent ? "scale-[1.03]" : ""
                       }`}
                     >
                       <img
