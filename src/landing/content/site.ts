@@ -1,18 +1,191 @@
+export type BikeSpec = {
+  id: string;
+  estimatorBikeId: string;
+  name: string;
+  watermark: string;
+  category: "Tata Body Rangka" | "Full Build";
+  categoryLabel: string;
+  categoryLabelEn: string;
+  imageUrl: string;
+  facing: "right" | "left";
+  basePrice: number;
+  platform: string;
+  focus: string;
+  focusEn: string;
+  finishing: string;
+  finishingEn: string;
+};
+
+export type AnatomyPoint = {
+  id: string;
+  number: string;
+  title: string;
+  titleEn: string;
+  xPercent: number;
+  yPercent: number;
+  standard: string;
+  standardEn: string;
+  detail: string;
+  detailEn: string;
+};
+
+export const BSK_BIKES: BikeSpec[] = [
+  {
+    id: "cb-black-gold",
+    estimatorBikeId: "cb-gelatik",
+    name: "CB 100 Black Gold",
+    watermark: "CB 100",
+    category: "Tata Body Rangka",
+    categoryLabel: "Tata Body & Rolling Chassis",
+    categoryLabelEn: "Bodywork & Rolling Chassis",
+    imageUrl: "/bikes/5.png",
+    facing: "right",
+    basePrice: 850000,
+    platform: "Rangka CB 100 / 125",
+    focus: "Fitting tangki hitam lis emas, jok slim kotak, sok depan gold, dan senter as roda.",
+    focusEn: "Black-gold tank fitting, slim checkered seat, gold front fork, and axle alignment.",
+    finishing: "Rolling chassis presisi siap naik mesin",
+    finishingEn: "Precision rolling chassis ready for engine mount",
+  },
+  {
+    id: "cb-raw-frame",
+    estimatorBikeId: "cb-gelatik",
+    name: "CB Raw Frame",
+    watermark: "RAW CB",
+    category: "Tata Body Rangka",
+    categoryLabel: "Tata Body Mentahan Presisi",
+    categoryLabelEn: "Raw Frame Alignment",
+    imageUrl: "/bikes/8.png",
+    facing: "right",
+    basePrice: 650000,
+    platform: "Rangka Klasik CB / GL",
+    focus: "Penataan tangki bahan primer, dudukan jok tipis presisi, subframe belakang, dan slebor chrome.",
+    focusEn: "Primer tank alignment, tight slim seat fitment, rear subframe, and chrome fender setup.",
+    finishing: "Siap masuk proses pengecatan dan rakit mesin",
+    finishingEn: "Prepared for final paintwork and engine assembly",
+  },
+  {
+    id: "gl-slate-blue",
+    estimatorBikeId: "gl-series",
+    name: "GL / CB Slate Blue",
+    watermark: "RESTOMOD",
+    category: "Full Build",
+    categoryLabel: "Full Build Resto",
+    categoryLabelEn: "Full Build Restoration",
+    imageUrl: "/bikes/4.png",
+    facing: "right",
+    basePrice: 2200000,
+    platform: "GL Series Restomod",
+    focus: "Tata body utuh, bak mesin & begel chrome, shock tabung merah, rem cakram lebar depan.",
+    focusEn: "Complete bodywork, chrome engine cover & grab rail, reservoir shocks, wide front disc.",
+    finishing: "Cat biru keabuan striping merah siap jalan",
+    finishingEn: "Slate blue paint with red striping, road ready",
+  },
+  {
+    id: "mp-herex",
+    estimatorBikeId: "megapro",
+    name: "Megapro / GL Herex",
+    watermark: "HEREX",
+    category: "Full Build",
+    categoryLabel: "Full Build Racing Harian",
+    categoryLabelEn: "Daily Racing Herex Build",
+    imageUrl: "/bikes/7.png",
+    facing: "right",
+    basePrice: 1850000,
+    platform: "Megapro / GL Racing",
+    focus: "Postur rangka herex harian, jok datar presisi, knalpot racing stainless, dan shock belakang kuning.",
+    focusEn: "Daily herex stance, flush flat seat, stainless racing exhaust, yellow twin shocks.",
+    finishing: "Cat hitam grafis lembayung ungu-hijau",
+    finishingEn: "Gloss black finish with purple-green graphic livery",
+  },
+  {
+    id: "cb-blue-track",
+    estimatorBikeId: "cb-dream",
+    name: "CB Blue Track",
+    watermark: "CLASSIC",
+    category: "Tata Body Rangka",
+    categoryLabel: "Tata Body & Kaki-Kaki",
+    categoryLabelEn: "Bodywork & Suspension Setup",
+    imageUrl: "/bikes/6.png",
+    facing: "left",
+    basePrice: 900000,
+    platform: "Rangka CB Silver",
+    focus: "Fitting tangki biru metalik, arm kotak kokoh, shock tabung, dan penyetelan kelurusan ban belakang.",
+    focusEn: "Metallic blue tank fitment, box swingarm, reservoir shock, and rear wheel centering.",
+    finishing: "Rangka silver rapi dengan cover ban kontes",
+    finishingEn: "Clean silver frame with show-ready wheel setup",
+  },
+];
+
+export const ANATOMY_POINTS: AnatomyPoint[] = [
+  {
+    id: "komstir",
+    number: "01",
+    title: "Komstir & Leher Rangka",
+    titleEn: "Steering Head & Neck Alignment",
+    xPercent: 60,
+    yPercent: 45,
+    standard: "Sudut Rake Simetris & Bebas Oblak",
+    standardEn: "Symmetrical Rake Angle & Zero Play",
+    detail: "Kelurusan leher komstir diperiksa dengan mal ukur agar motor tetap lurus stabil saat lepas stang di kecepatan tinggi.",
+    detailEn: "Steering neck alignment is checked with precision jigs so tracking stays straight at highway speed.",
+  },
+  {
+    id: "tangki-jok",
+    number: "02",
+    title: "Pertemuan Tangki & Jok",
+    titleEn: "Tank-to-Seat Flush Fitment",
+    xPercent: 46,
+    yPercent: 46,
+    standard: "Garis Bodi Datar Tanpa Celah Renggang",
+    standardEn: "Flush Profile With Zero Awkward Gap",
+    detail: "Dudukan karet dan kait tangki disetel ulang supaya posisi tangki tidak mendongak dan ujung jok menempel rapat mengikuti lekuk tangki.",
+    detailEn: "Tank mounts are repositioned so the tank sits level and the seat nose hugs the rear tank contour tightly.",
+  },
+  {
+    id: "subframe",
+    number: "03",
+    title: "Subframe & Dudukan Shock",
+    titleEn: "Subframe & Shock Mounts",
+    xPercent: 31,
+    yPercent: 52,
+    standard: "Las Penetrasi Penuh & Kiri-Kanan Sejajar",
+    standardEn: "Full-Penetration Weld & Equal Left-Right Geometry",
+    detail: "Pemotongan dan penyambungan pipa subframe memakai pengelasan matang serta dudukan shock dobel yang simetris kiri-kanan.",
+    detailEn: "Subframe pipe fabrication uses full-penetration welds with symmetrical left and right shock mounting bosses.",
+  },
+  {
+    id: "arm-roda",
+    number: "04",
+    title: "Swingarm & Senter As Roda",
+    titleEn: "Swingarm & Axle Centering",
+    xPercent: 26,
+    yPercent: 67,
+    standard: "Senter Ban, Slebor & Gir Sejalur",
+    standardEn: "Wheel, Fender & Sprocket Inline Alignment",
+    detail: "Penataan bushing swingarm, jarak ban terhadap slebor belakang, serta garis rantai agar ban berputar lurus tanpa gesekan.",
+    detailEn: "Swingarm bushings, rear fender clearance, and chain line are aligned so the rear wheel tracks true without rubbing.",
+  },
+];
+
 export const site = {
   name: "BSK Custom",
   slug: "bsk-custom",
   category: "Bengkel Spesialis Tata Body CB & Rangka Presisi",
-  tagline: "Tata Body CB · Rangka Presisi · Custom Classic & Herex",
+  tagline: "Tata Body CB · Rangka Presisi · Custom Klasik & Herex",
   description:
-    "Bengkel spesialis tata body CB, restorasi rangka presisi, custom bodi, dan setting kaki-kaki motor klasik/herex. Rapi, center, bergaransi, dan siap harian maupun kontes.",
+    "Bengkel spesialis tata body CB, penataan rangka center, fitting tangki dan jok presisi, serta custom kaki-kaki motor klasik dan harian.",
   preview_image_url: "/logo.png",
   contact: {
-    whatsapp: "6285159506662",
-    instagram: "bsk.custom",
+    // Placeholder kontak bengkel yang mudah diperbarui di satu tempat
+    whatsapp_number: "6280000000000",
+    whatsapp_is_placeholder: true,
+    whatsapp_display: "[Nomor WA Admin, atur di site.ts]",
+    instagram_user: "@bsk.custom",
     instagram_url: "https://instagram.com/bsk.custom",
     tiktok_url: "https://tiktok.com/@bsk.custom",
-    address: "Jl. Otomotif Presisi No. 12, Workshop BSK Custom",
-    operating_hours: "Senin - Sabtu: 08:30 - 17:30 WIB",
+    address: "[Alamat Workshop BSK Custom, atur di site.ts]",
+    hours: "[Hari & Jam Buka Workshop, atur di site.ts]",
   },
   pages: [
     {
@@ -30,23 +203,18 @@ export const site = {
               order: 0,
               title: "BSK Custom",
               extra: {
-                home_href: "#top",
-                whatsapp_number: "6285159506662",
-                instagram_user: "@bsk.custom",
-                lang_id_label: "ID",
-                lang_en_label: "EN",
+                home_href: "#hero",
+                instagram_url: "https://instagram.com/bsk.custom",
                 menu_label: "Menu",
                 menu_open_aria: "Buka menu navigasi",
                 menu_close_aria: "Tutup menu navigasi",
               },
               items: [
-                { order: 0, title: "Layanan", icon: "#services" },
-                { order: 1, title: "Proses SOP", icon: "#process" },
-                { order: 2, title: "Estimator", icon: "#estimator" },
-                { order: 3, title: "Galeri", icon: "#gallery" },
-                { order: 4, title: "Keunggulan", icon: "#why-us" },
-                { order: 5, title: "Testimoni", icon: "#testimonials" },
-                { order: 6, title: "Workshop", icon: "#contact" },
+                { order: 0, title: "Showcase", icon: "#hero" },
+                { order: 1, title: "Anatomi Presisi", icon: "#anatomi" },
+                { order: 2, title: "Paket & Biaya", icon: "#paket" },
+                { order: 3, title: "Galeri Unit", icon: "#galeri" },
+                { order: 4, title: "Bengkel", icon: "#bengkel" },
               ],
             },
           ],
@@ -58,104 +226,29 @@ export const site = {
           blocks: [
             {
               order: 0,
-              title: "PRESISI RANGKA",
-              subtitle: "SEMPURNA DI SETIAP SUDUT",
+              title: "Tata Body CB & Rangka Presisi",
+              subtitle: "TATA BODY CB",
               description:
-                "Bengkel spesialis tata body CB, restorasi rangka center, dan custom kaki-kaki motor klasik/herex. Dikerjakan dengan alat ukur presisi dan standar pengerjaan rapi tanpa kompromi.",
+                "Penataan tangki, jok, subframe, dan kelurusan kaki-kaki motor klasik maupun harian. Rapi di mata, lurus saat dikendarai.",
               extra: {
-                section_id: "top",
-                badge_text: "SPESIALIS TATA BODY CB & HEREX",
-                seal_top: "PRESISI",
-                seal_bottom: "GARANSI",
-                stat_bikes: "1.200+",
-                stat_bikes_label: "Motor Ditata Center",
-                stat_rating: "4.9 ★",
-                stat_rating_label: "Kepuasan Komunitas",
-                stat_warranty: "100%",
-                stat_warranty_label: "Garansi Rangka Lurus",
-                whatsapp_number: "6285159506662",
+                section_id: "hero",
                 primary_cta_label: "Hitung Estimasi Biaya",
-                secondary_cta_label: "Konsultasi WhatsApp",
+                secondary_cta_label: "Lihat Detail Garapan",
               },
-              items: [
-                {
-                  order: 0,
-                  title: "Honda CB Gelatik / 100",
-                  description: "Aliran klasik orisinil atau kontes, tangki presisi nempel rapi dengan jok tipis.",
-                  extra: {
-                    badge: "Kategori Klasik",
-                    base_price: 650000,
-                  },
-                },
-                {
-                  order: 1,
-                  title: "Honda CB Dream / Twin",
-                  description: "Proporsi tangki besar dengan subframe kokoh dan center roda depan-belakang segaris.",
-                  extra: {
-                    badge: "Kategori Touring",
-                    base_price: 750000,
-                  },
-                },
-                {
-                  order: 2,
-                  title: "Honda GL / Megapro Herex",
-                  description: "Setting rangka racing harian/touring, sok depan tinggi, arm kokoh siap tarikan panjang.",
-                  extra: {
-                    badge: "Kategori Herex Racing",
-                    base_price: 800000,
-                  },
-                },
-                {
-                  order: 3,
-                  title: "Honda Tiger Reborn / Custom",
-                  description: "Tata body modern klasik, sambungan rangka rapi, anti getar dan stabil kecepatan tinggi.",
-                  extra: {
-                    badge: "Kategori Custom Total",
-                    base_price: 900000,
-                  },
-                },
-              ],
             },
           ],
         },
         {
-          type: "PrecisionProcess",
+          type: "AnatomySection",
           order: 2,
           is_active: true,
           blocks: [
             {
               order: 0,
-              title: "SOP 5 TAHAPAN TATA BODY PRESISI",
-              subtitle: "STANDAR KERJA BSK CUSTOM",
+              title: "Anatomi Tata Body Presisi",
+              subtitle: "INSPEKSI TEKNIS",
               description:
-                "Kami tidak sekadar memasang bodi. Setiap lekukan, dudukan baut, dan kelurusan rangka melewati pengukuran waterpass & laser center agar motor enak dilihat dan stabil dikendarai.",
-              items: [
-                {
-                  order: 0,
-                  title: "01. Cek Senter & Geometri Rangka",
-                  description: "Pemeriksaan kemiringan rangka utama, komstir, dan titik simetris swingarm dengan mal presisi.",
-                },
-                {
-                  order: 1,
-                  title: "02. Setting Subframe & Dudukan Shock",
-                  description: "Pemotongan atau penyambungan rangka belakang yang proporsional, sudut kemiringan shockbreaker simetris.",
-                },
-                {
-                  order: 2,
-                  title: "03. Fitting Tangki, Jok & Begel",
-                  description: "Penataan tangki CB agar tidak mendongak, jok ngepres bodi tanpa renggang, dan begel sejajar lampu belakang.",
-                },
-                {
-                  order: 3,
-                  title: "04. Penataan Kaki-Kaki & Slebor",
-                  description: "Penyelarasan as roda depan-belakang satu garis lurus, jarak ban ke slebor simetris tanpa gesekan.",
-                },
-                {
-                  order: 4,
-                  title: "05. Finishing Las Rapi & Quality Control",
-                  description: "Pengelasan full matang, pembersihan sisa las, uji coba test jalan, dan jaminan rangka anti-mleyot.",
-                },
-              ],
+                "Pilih titik pemeriksaan pada motor untuk melihat standar pengerjaan dan penyetelan BSK Custom.",
             },
           ],
         },
@@ -166,126 +259,82 @@ export const site = {
           blocks: [
             {
               order: 0,
-              title: "PAKET TATA BODY & JASA BENGKEL",
-              subtitle: "PILIHAN TEPAT SESUAI KEBUTUHAN MOTOR ANDA",
-              description: "Semua paket sudah termasuk konsultasi konsep, pengerjaan presisi, dan garansi kelurusan rangka.",
+              title: "Paket Tata Body & Jasa Bengkel",
+              subtitle: "ESTIMASI TRANSPARAN",
+              description:
+                "Biaya jasa dihitung transparan sesuai basis motor dan tingkat pengerjaan rangka. Persetujuan pemilik selalu diminta sebelum pengerjaan dimulai.",
               extra: {
-                whatsapp_number: "6285159506662",
-                note: "Estimasi waktu pengerjaan 3 - 14 hari kerja tergantung antrian dan paket.",
+                note: "Durasi pengerjaan 1 sampai 14 hari kerja bergantung antrean bengkel dan ketersediaan part.",
               },
               items: [
                 {
                   order: 0,
+                  id: "standar",
                   title: "Paket Tata Body Standar",
-                  description: "Pemasangan set bodi lengkap: dudukan tangki, setting jok presisi, dudukan slebor depan/belakang, dan pasang begel samping.",
+                  description:
+                    "Pemasangan set bodi lengkap: dudukan tangki, setting jok presisi, dudukan slebor depan dan belakang, serta begel.",
                   extra: {
                     price: 450000,
                     price_display: "Rp 450.000",
-                    featured: false,
-                    duration: "3 - 5 Hari",
-                    features: [
-                      "Fitting tangki anti mendongak",
+                    duration: "3 - 5 Hari Kerja",
+                    highlights: [
+                      "Fitting tangki rata tidak mendongak",
                       "Dudukan jok presisi tanpa celah",
-                      "Setting slebor depan & belakang",
-                      "Dudukan begel & stoplamp",
-                      "Garansi fitting rapi 1 bulan",
+                      "Penataan slebor, begel, dan stoplamp",
                     ],
                   },
                 },
                 {
                   order: 1,
+                  id: "full-rangka",
                   title: "Paket Full Rangka & Senter Kaki",
-                  description: "Paket paling diminati! Penyelarasan rangka total, bikin subframe baru, setting sudut shockbreaker belakang, dan as roda 100% center.",
+                  description:
+                    "Penyelarasan rangka total, bikin subframe pipa seamless baru, dudukan shock dobel simetris, dan senter as roda depan-belakang.",
                   extra: {
                     price: 850000,
                     price_display: "Rp 850.000",
+                    duration: "5 - 7 Hari Kerja",
                     featured: true,
-                    duration: "5 - 7 Hari",
-                    features: [
-                      "Semua isi Paket Standar",
-                      "Potong & sambung subframe pipa tebal",
-                      "Setting dudukan sok belakang dobel",
-                      "Penyelarasan as roda depan-belakang",
-                      "Pengelasan matang anti patah",
-                      "Garansi rangka center 6 bulan",
+                    highlights: [
+                      "Semua cakupan Paket Standar",
+                      "Potong dan sambung subframe pipa tebal",
+                      "Senter as roda depan, swingarm, dan gir",
                     ],
                   },
                 },
                 {
                   order: 2,
-                  title: "Paket Restorasi Komplit + Cat",
-                  description: "Bangun motor dari nol atau peremajaan total: tata body presisi, repaint oven rangka & bodi, chrome part, dan rakit kelistrikan rapi.",
+                  id: "restorasi",
+                  title: "Paket Restorasi Komplit + Cat Oven",
+                  description:
+                    "Bangun motor dari rangka dasar: tata body penuh, repaint oven 3 lapis rangka dan bodi, serta perakitan kabel bodi tersembunyi.",
                   extra: {
                     price: 2200000,
                     price_display: "Mulai Rp 2.200.000",
-                    featured: false,
-                    duration: "10 - 14 Hari",
-                    features: [
-                      "Full tata body & rangka presisi",
-                      "Repaint bodi & rangka oven 3 lapis",
-                      "Finishing cat glossy / lembayung",
-                      "Perakitan kabel bodi rapi tersembunyi",
-                      "Setting kaki-kaki siap jalan",
-                      "Garansi cat & rangka 1 tahun",
+                    duration: "10 - 14 Hari Kerja",
+                    highlights: [
+                      "Full tata body & alignment rangka",
+                      "Repaint oven 3 lapis rangka dan tangki",
+                      "Rakit kabel bodi rapi tersembunyi",
                     ],
                   },
                 },
                 {
                   order: 3,
-                  title: "Paket Tune-Up & Setting Herex",
-                  description: "Khusus performa mesin dan kelistrikan: servis karbu/injeksi, peremajaan kopling, setting klep, dan balancing getaran mesin.",
+                  id: "tune-up",
+                  title: "Paket Tune-Up & Setting Harian / Herex",
+                  description:
+                    "Perawatan performa mesin dan kelistrikan: servis karburator atau throttle body, setel klep, cek pengapian, dan ganti oli.",
                   extra: {
                     price: 350000,
                     price_display: "Rp 350.000",
-                    featured: false,
-                    duration: "1 - 2 Hari",
-                    features: [
-                      "Servis karburator / throttle body",
-                      "Setting celah klep presisi",
-                      "Cek pengapian & kelistrikan",
-                      "Ganti oli & filter mesin",
-                      "Test ride responsif",
+                    duration: "1 - 2 Hari Kerja",
+                    highlights: [
+                      "Servis karburator atau throttle body",
+                      "Setting celah klep dan kelistrikan",
+                      "Uji jalan respons tarikan",
                     ],
                   },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: "WhyUs",
-          order: 4,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "MENGAPA HARUS TATA BODY DI BSK CUSTOM?",
-              subtitle: "KOMITMEN KUALITAS & KEPUASAN",
-              description: "Bodi motor yang rapi bukan hanya soal gaya, tapi juga kestabilan dan keselamatan saat melaju kencang di jalanan.",
-              items: [
-                {
-                  order: 0,
-                  title: "Pengukuran Presisi & Senter",
-                  description: "Menggunakan mal ukur simetris dan pengujian kelurusan as roda agar motor tidak lari ke samping saat lepas stang.",
-                  icon: "CheckCircle",
-                },
-                {
-                  order: 1,
-                  title: "Pengelasan Rapi & Matang",
-                  description: "Penyambungan menggunakan las MIG/Argon berpenetrasi kuat, bukan sekadar tempel, aman untuk beban boncengan dan touring jauh.",
-                  icon: "Flame",
-                },
-                {
-                  order: 2,
-                  title: "Proporsi Estetik Khas BSK",
-                  description: "Garis lekukan antara tangki, jok, dan slebor mengalir natural tanpa celah renggang yang mengganggu pemandangan.",
-                  icon: "Award",
-                },
-                {
-                  order: 3,
-                  title: "Garansi Rangka Nyaman",
-                  description: "Jika posisi bodi kurang pas atau getar, Anda berhak klaim perbaikan gratis sampai bodi motor benar-benar sesuai impian.",
-                  icon: "ShieldCheck",
                 },
               ],
             },
@@ -293,137 +342,70 @@ export const site = {
         },
         {
           type: "ShowcaseGallery",
+          order: 4,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Galeri 5 Unit Garapan BSK",
+              subtitle: "UNIT NYATA WORKSHOP",
+              description:
+                "Lima contoh hasil penataan rangka dan full build dari studio BSK Custom. Klik unit untuk melihat spesifikasi ubahan lengkap.",
+            },
+          ],
+        },
+        {
+          type: "WorkshopSection",
           order: 5,
           is_active: true,
           blocks: [
             {
               order: 0,
-              title: "KARYA & HASIL GARAPAN",
-              subtitle: "PORTOFOLIO BSK CUSTOM",
-              description: "Beberapa motor konsumen yang telah selesai ditata bodi dan rangkanya di workshop kami.",
+              title: "Alur Kerja Bengkel",
+              subtitle: "KONSULTASI & LOKASI",
+              description:
+                "Setiap unit melewati tahapan ukur sebelum las untuk menjamin kestabilan berkendara dan kerapian tampilan.",
               items: [
                 {
                   order: 0,
-                  title: "CB Gelatik 100 - Black Crimson",
-                  description: "Tangki CB Gelatik presisi, jok slim press jahit dobel, shock tirev, rangka center.",
-                  image_url: "/logo.png",
+                  title: "01. Cek Rangka Awal",
+                  description: "Pemeriksaan kondisi leher komstir, lengan ayun, dan titik simetris rangka dasar.",
                 },
                 {
                   order: 1,
-                  title: "CB Dream 200 - Herex Style",
-                  description: "Subframe ganti pipa seamless, dudukan dobel shock tiger, knalpot corbi presisi.",
-                  image_url: "/logo.png",
+                  title: "02. Penentuan Konsep",
+                  description: "Pemilihan tangki, jok, dan jarak main suspensi serta persetujuan estimasi biaya.",
                 },
                 {
                   order: 2,
-                  title: "GL Pro Restomod Classic",
-                  description: "Tata bodi model CB K2, repaint rangka hitam glossy oven, kabel bodi rapi sembunyi.",
-                  image_url: "/logo.png",
+                  title: "03. Fabrikasi & Las",
+                  description: "Pemotongan, penyambungan subframe, serta pembuatan braket bodi yang kokoh.",
                 },
                 {
                   order: 3,
-                  title: "Tiger 2000 Reborn - Candy Orange",
-                  description: "Restorasi rangka leher stang, kaki-kaki pelek jari-jari lebar, tangki CB 125.",
-                  image_url: "/logo.png",
+                  title: "04. Senter Kaki-Kaki",
+                  description: "Penyelarasan as roda depan-belakang, posisi slebor, dan jalur rantai.",
+                },
+                {
+                  order: 4,
+                  title: "05. Finishing & Uji Jalan",
+                  description: "Pembersihan las, perakitan akhir, dan pengecekan kestabilan sebelum serah terima.",
                 },
               ],
-            },
-          ],
-        },
-        {
-          type: "Testimonials",
-          order: 6,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "KATA MEREKA TENTANG BSK CUSTOM",
-              subtitle: "ULASAN KOMUNITAS & KONSUMEN",
-              description: "Kepuasan sedulur bikers dan pecinta motor klasik adalah kebanggaan workshop kami.",
-              items: [
-                {
-                  order: 0,
-                  title: "Bagus Prasetyo",
-                  description: "Tangki CB saya awalnya mendongak parah dan jok ada celah 3 cm. Masuk ke BSK Custom, hasilnya presisi banget nempel rapi. Lepas stang di 80 km/jam tetep lempeng!",
-                  extra: {
-                    motor: "Honda CB 100 (Kediri)",
-                    rating: 5,
-                  },
-                },
-                {
-                  order: 1,
-                  title: "Rian Hendrawan",
-                  description: "Garapan las-lasan subframe-nya mulus, dudukan shock belakang presisi kiri-kanan. Pokoknya rekomendasi buat yang mau bangun CB herex atau harian.",
-                  extra: {
-                    motor: "Megapro Primus (Surabaya)",
-                    rating: 5,
-                  },
-                },
-                {
-                  order: 2,
-                  title: "Dimas Aditya",
-                  description: "Pelayanan ramah, diajak konsultasi konsep bodi enak banget dan transparan soal biaya. Nggak ada istilah biaya bengkak tiba-tiba. Mantap BSK!",
-                  extra: {
-                    motor: "GL 100 Resto (Malang)",
-                    rating: 5,
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: "ConsultationCta",
-          order: 7,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "PUNYA MOTOR CB ATAU RANGKA YANG INGIN DITATA?",
-              subtitle: "KONSULTASIKAN KONSEP IMPIANMU SEKARANG",
-              description: "Mulai dari sekadar pasang tangki, set rangka, hingga bangun full custom dari nol. Tim BSK Custom siap mewujudkannya dengan hasil rapi dan bergaransi.",
-              extra: {
-                whatsapp_number: "6285159506662",
-                cta_label: "Chat WhatsApp Sekarang",
-                sub_label: "Gratis Konsultasi Konsep & Perhitungan Biaya",
-              },
-            },
-          ],
-        },
-        {
-          type: "WorkshopInfo",
-          order: 8,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "LOKASI & KONTAK WORKSHOP",
-              subtitle: "MAMPIR KE WORKSHOP KAMI",
-              description: "Silakan datang langsung untuk melihat proses pengerjaan atau konsultasi santai sambil ngopi.",
-              extra: {
-                address: "Jl. Otomotif Presisi No. 12, Workshop BSK Custom",
-                city: "Jawa Timur, Indonesia",
-                hours: "Senin - Sabtu: 08:30 - 17:30 WIB (Minggu Libur)",
-                whatsapp: "0851-5950-6662",
-                instagram: "@bsk.custom",
-                maps_url: "https://maps.google.com",
-              },
             },
           ],
         },
         {
           type: "Footer",
-          order: 9,
+          order: 6,
           is_active: true,
           blocks: [
             {
               order: 0,
               title: "BSK Custom",
-              description: "Bengkel Spesialis Tata Body CB, Rangka Presisi & Modifikasi Motor Klasik/Herex Nusantara.",
+              description: "Spesialis Tata Body CB & Rangka Presisi",
               extra: {
-                copyright: "© 2026 BSK Custom. All Rights Reserved. Presisi Rangka & Jiwa Otomotif.",
-                instagram_url: "https://instagram.com/bsk.custom",
-                whatsapp_number: "6285159506662",
+                copyright: "© 2026 BSK Custom. Tata Body CB & Rangka Presisi.",
               },
             },
           ],

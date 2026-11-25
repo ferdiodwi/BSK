@@ -1,139 +1,137 @@
 "use client";
 
-import { useState } from "react";
 import { bind } from "../lib/bind";
+import { tr, useLocale } from "../lib/i18n";
 import { formatIDR, revealUp, sortedItems, type SectionComponentProps } from "../lib/helpers";
-import { ServiceEstimatorModal } from "./ServiceEstimatorModal";
-import { Check, Clock, ArrowRight, Sparkles } from "lucide-react";
 
-export function ServicePackages({ block }: SectionComponentProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPkgId, setSelectedPkgId] = useState<string>("full-rangka");
-
+export function ServicePackages({ block, onOpenEstimator }: SectionComponentProps) {
+  const locale = useLocale();
   const packages = sortedItems(block.items);
 
-  const handleOpenModal = (pkgTitle?: string) => {
-    if (pkgTitle?.includes("Standar")) setSelectedPkgId("standar");
-    else if (pkgTitle?.includes("Full Rangka")) setSelectedPkgId("full-rangka");
-    else if (pkgTitle?.includes("Restorasi")) setSelectedPkgId("restorasi");
-    else setSelectedPkgId("tune-up");
-
-    setModalOpen(true);
-  };
-
   return (
-    <section id="services" className="relative overflow-hidden bg-[#0B0C10] py-20 lg:py-28">
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-[#E51919]/5 blur-[120px]" />
-
-      <div className="relative z-10 mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div {...revealUp(0)} className="text-center">
-          <span className="inline-block rounded-full bg-[#E51919]/15 px-4 py-1 text-xs font-bold uppercase tracking-wider text-[#FFE600] border border-[#E51919]/30">
-            {bind(block, "subtitle", "PILIHAN TEPAT SESUAI KEBUTUHAN MOTOR ANDA")}
-          </span>
-          <h2 className="mt-4 font-hero text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl lg:text-5xl">
-            {bind(block, "title", "PAKET TATA BODY & JASA BENGKEL")}
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-300 sm:text-base">
-            {bind(
-              block,
-              "description",
-              "Semua paket sudah termasuk konsultasi konsep, pengerjaan presisi, dan garansi kelurusan rangka."
-            )}
-          </p>
-        </div>
-
-        {/* Packages Cards Grid */}
-        <div id="estimator" className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {packages.map((pkg, idx) => {
-            const isFeatured = Boolean(pkg.extra?.featured);
-            const features = (pkg.extra?.features as string[]) ?? [];
-            const duration = (pkg.extra?.duration as string) ?? "3-5 Hari";
-
-            return (
-              <div
-                key={idx}
-                {...revealUp(Number((idx * 0.08).toFixed(2)))}
-                className={`relative flex flex-col justify-between rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02] ${
-                  isFeatured
-                    ? "border-2 border-[#E51919] bg-gradient-to-b from-[#1C1F2E] to-[#12141C] shadow-[0_0_35px_rgba(229,25,25,0.3)]"
-                    : "border border-white/10 bg-[#141620] hover:border-white/20"
-                }`}
-              >
-                {/* Popular Ribbon for Featured Card */}
-                {isFeatured && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#E51919] to-[#FF5722] px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md flex items-center gap-1.5">
-                    <Sparkles className="h-3 w-3" />
-                    <span>Paling Diminati</span>
-                  </div>
+    <section
+      id="paket"
+      className="bsk-dark-section border-b border-white/10 bg-[#141518] text-white"
+    >
+      <div className="mx-auto max-w-[1400px] border-x border-white/10 px-5 py-16 sm:px-8 lg:px-10 lg:py-24">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+          {/* Left Sticky Editorial Summary (4 Cols) */}
+          <div className="lg:col-span-4">
+            <div {...revealUp(0)} className="lg:sticky lg:top-28">
+              <span className="font-mono text-xs font-bold tracking-widest text-[#FFE600] uppercase">
+                {tr(bind(block, "subtitle", "ESTIMASI TRANSPARAN"), locale)}
+              </span>
+              <h2 className="mt-3 font-hero text-3xl font-bold leading-tight tracking-tight text-white uppercase sm:text-4xl lg:text-5xl">
+                {tr(bind(block, "title", "Paket Tata Body & Jasa Bengkel"), locale)}
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-[#D1D5DB]">
+                {tr(
+                  bind(
+                    block,
+                    "description",
+                    "Biaya jasa dihitung transparan sesuai basis motor dan tingkat pengerjaan rangka. Persetujuan pemilik selalu diminta sebelum pengerjaan dimulai."
+                  ),
+                  locale
                 )}
+              </p>
 
-                <div>
-                  {/* Package Title */}
-                  <h3 className="font-hero text-xl font-bold text-white uppercase tracking-wide">
-                    {pkg.title}
-                  </h3>
+              <button
+                type="button"
+                onClick={() => onOpenEstimator?.({ packageId: "full-rangka" })}
+                className="mt-8 inline-flex min-h-[48px] items-center justify-center bg-[#D62810] px-6 py-3 font-hero text-sm font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A]"
+              >
+                {tr("Buka Kalkulator Estimasi", locale)}
+              </button>
 
-                  {/* Price Tag */}
-                  <div className="mt-4 flex items-baseline gap-1">
-                    <span className="font-hero text-2xl font-extrabold text-[#FFE600] sm:text-3xl">
-                      {bind(pkg, "extra.price_display", formatIDR(Number(pkg.extra?.price ?? 450000)))}
-                    </span>
+              <p className="mt-4 font-mono text-xs leading-relaxed text-[#9CA3AF]">
+                {tr(
+                  bind(
+                    block,
+                    "extra.note",
+                    "Durasi pengerjaan 1 sampai 14 hari kerja bergantung antrean bengkel dan ketersediaan part."
+                  ),
+                  locale
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Architectural Specification Rows (8 Cols) */}
+          <div className="lg:col-span-8">
+            <div className="divide-y divide-white/10 border-y border-white/10">
+              {packages.map((pkg, idx) => {
+                const isFeatured = Boolean(pkg.extra?.featured);
+                const highlights = (pkg.extra?.highlights as string[]) ?? [];
+                const duration = (pkg.extra?.duration as string) ?? "3 - 5 Hari Kerja";
+                const priceDisplay = bind(
+                  pkg,
+                  "extra.price_display",
+                  formatIDR(Number(pkg.extra?.price ?? 450000))
+                );
+
+                return (
+                  <div
+                    key={pkg.id ?? idx}
+                    {...revealUp(Number((idx * 0.06).toFixed(2)))}
+                    className={`py-7 transition-colors sm:px-6 ${
+                      isFeatured ? "bg-[#1D1F26]" : "hover:bg-[#1A1C23]"
+                    }`}
+                  >
+                    <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                      <div className="max-w-lg">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="font-mono text-xs font-bold text-[#FFE600]">
+                            0{idx + 1}
+                          </span>
+                          <h3 className="font-hero text-xl font-bold tracking-wide text-white uppercase sm:text-2xl">
+                            {tr(pkg.title || "", locale)}
+                          </h3>
+                          {isFeatured && (
+                            <span className="bg-[#FFE600] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#111216] uppercase">
+                              {tr("Fokus Bengkel", locale)}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-2.5 text-sm leading-relaxed text-[#D1D5DB]">
+                          {tr(pkg.description || "", locale)}
+                        </p>
+                      </div>
+
+                      <div className="shrink-0 sm:text-right">
+                        <div className="font-hero text-2xl font-bold text-[#FFE600] tabular-nums sm:text-3xl">
+                          {priceDisplay}
+                        </div>
+                        <div className="mt-1 font-mono text-xs text-[#9CA3AF]">
+                          {tr("Estimasi Pengerjaan", locale)}: {duration}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-5 flex flex-col justify-between gap-4 border-t border-white/10 pt-4 sm:flex-row sm:items-end">
+                      <ul className="space-y-1.5 text-xs text-[#D1D5DB]">
+                        {highlights.map((feat, fIdx) => (
+                          <li key={fIdx} className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 shrink-0 bg-[#D62810]" aria-hidden="true" />
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <button
+                        type="button"
+                        onClick={() => onOpenEstimator?.({ packageId: pkg.id || "full-rangka" })}
+                        className="inline-flex min-h-[44px] shrink-0 items-center justify-center border border-white/25 bg-transparent px-5 py-2 font-hero text-xs font-bold tracking-wider text-white uppercase transition-colors hover:border-[#FFE600] hover:bg-[#FFE600] hover:text-[#111216]"
+                      >
+                        {tr("Pilih & Hitung", locale)}
+                      </button>
+                    </div>
                   </div>
-
-                  {/* Working Duration Badge */}
-                  <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-400">
-                    <Clock className="h-3.5 w-3.5 text-[#E51919]" />
-                    <span>Estimasi: {duration}</span>
-                  </div>
-
-                  {/* Description */}
-                  <p className="mt-4 text-xs leading-relaxed text-gray-300 border-t border-white/10 pt-4">
-                    {pkg.description}
-                  </p>
-
-                  {/* Feature Checklist */}
-                  <ul className="mt-5 space-y-2.5">
-                    {features.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-start gap-2.5 text-xs text-gray-200">
-                        <Check className="h-4 w-4 shrink-0 text-[#10B981] stroke-[2.5]" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Direct Action Button */}
-                <button
-                  type="button"
-                  onClick={() => handleOpenModal(pkg.title)}
-                  className={`mt-8 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-hero text-xs font-bold tracking-wider uppercase transition-all ${
-                    isFeatured
-                      ? "bg-gradient-to-r from-[#E51919] to-[#FF5722] text-white shadow-[0_0_20px_rgba(229,25,25,0.4)] hover:shadow-[0_0_30px_rgba(255,87,34,0.6)]"
-                      : "border border-white/20 bg-[#1B1E2A] text-white hover:border-[#E51919] hover:bg-[#E51919]"
-                  }`}
-                >
-                  <span>HITUNG ESTIMASI</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Global Footer Note */}
-        <div {...revealUp(0.3)} className="mt-12 text-center text-xs text-gray-400">
-          {bind(block, "extra.note", "Estimasi waktu pengerjaan 3 - 14 hari kerja tergantung antrian dan paket.")}
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Interactive Estimator Modal */}
-      <ServiceEstimatorModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        initialPackageId={selectedPkgId}
-      />
     </section>
   );
 }

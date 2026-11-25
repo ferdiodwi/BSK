@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { bind } from "../lib/bind";
-import { toggleLocale, useLocale } from "../lib/i18n";
+import { tr, toggleLocale, useLocale } from "../lib/i18n";
 import { FlagIcon } from "../ui/FlagIcon";
-import { WhatsAppLogo, InstagramLogo } from "../ui/BrandLogos";
+import { InstagramLogo } from "../ui/BrandLogos";
 import {
   ariaLabelAttr,
   attachKeydown,
@@ -15,16 +14,15 @@ import {
   type SectionComponentProps,
 } from "../lib/helpers";
 
-export function Navbar({ block }: SectionComponentProps) {
+export function Navbar({ block, onOpenEstimator }: SectionComponentProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const locale = useLocale();
 
   const links = sortedItems(block.items);
-  const waNumber = bind(block, "extra.whatsapp_number", "6285159506662");
 
   useEffect(() => {
-    return attachWindowScroll(20, setScrolled);
+    return attachWindowScroll(16, setScrolled);
   }, []);
 
   useEffect(() => {
@@ -36,122 +34,139 @@ export function Navbar({ block }: SectionComponentProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 right-0 z-40 transition-colors duration-200 border-b ${
         scrolled
-          ? "border-b border-white/10 bg-[#0B0C10]/90 shadow-2xl backdrop-blur-md py-2.5"
-          : "bg-transparent py-4"
+          ? "border-black/10 bg-[#FFFFFF] shadow-sm"
+          : "border-black/10 bg-[#F5F5F6]"
       }`}
     >
-      <div className="mx-auto flex max-w-[1360px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo */}
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
+        {/* Brand Identity */}
         <a
-          href="#top"
-          className="group flex items-center gap-3 transition-transform hover:scale-102"
+          href="#hero"
+          className="flex min-h-[44px] items-center gap-3 text-[#111216] transition-opacity hover:opacity-85"
         >
           <img
             src="/logo.png"
-            alt="BSK Custom Logo"
-            className="h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(229,25,25,0.4)] sm:h-12"
+            alt="Logo BSK Custom"
+            width={2048}
+            height={2048}
+            className="h-9 w-9 object-contain sm:h-10 sm:w-10"
           />
-          <div className="flex flex-col">
-            <span className="font-hero text-xl font-extrabold tracking-wider text-white sm:text-2xl">
-              BSK <span className="text-[#E51919]">CUSTOM</span>
+          <div className="flex flex-col leading-none">
+            <span className="font-hero text-xl font-bold tracking-tight text-[#111216] sm:text-2xl">
+              BSK <span className="text-[#D62810]">CUSTOM</span>
             </span>
-            <span className="text-[10px] font-bold tracking-widest text-[#FFE600] uppercase">
+            <span className="mt-0.5 font-mono text-[10px] font-semibold tracking-widest text-[#4B5563] uppercase">
               TATA BODY CB
             </span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+        {/* Desktop Links */}
+        <nav aria-label="Navigasi utama" className="hidden items-center gap-6 lg:flex xl:gap-8">
           {links.map((item, idx) => (
             <a
               key={idx}
-              href={item.icon || "#"}
-              className="text-[14px] font-medium text-gray-300 transition-colors hover:text-[#E51919]"
+              href={item.icon || "#hero"}
+              className="inline-flex min-h-[44px] items-center px-1 text-sm font-semibold text-[#111216] transition-colors hover:text-[#D62810]"
             >
-              {item.title}
+              {tr(item.title || "", locale)}
             </a>
           ))}
         </nav>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          {/* Instagram Link */}
+        {/* Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <a
             href="https://instagram.com/bsk.custom"
             target="_blank"
             rel="noopener noreferrer"
             {...ariaLabelAttr("Instagram BSK Custom")}
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#161822] text-gray-300 transition-all hover:border-[#E51919] hover:text-[#E51919] sm:flex"
+            className="hidden h-11 w-11 items-center justify-center border border-black/15 bg-white text-[#111216] transition-colors hover:border-[#D62810] hover:text-[#D62810] sm:inline-flex"
           >
-            <InstagramLogo className="h-4 w-4" />
+            <InstagramLogo className="h-4 w-4" aria-hidden="true" />
           </a>
 
-          {/* Language Switcher */}
           <button
             type="button"
             onClick={toggleLocale}
-            {...ariaLabelAttr("Ganti Bahasa / Switch Language")}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-[#161822] px-3 py-1.5 text-xs font-semibold text-gray-200 transition-all hover:border-[#E51919]"
+            {...ariaLabelAttr(locale === "id" ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian")}
+            className="inline-flex min-h-[44px] items-center gap-2 border border-black/15 bg-white px-3 text-xs font-bold text-[#111216] transition-colors hover:border-[#111216]"
           >
             <span>{locale.toUpperCase()}</span>
             <FlagIcon isEn={locale === "en"} />
           </button>
 
-          {/* Quick WhatsApp CTA Button */}
-          <a
-            href={`https://wa.me/${waNumber}?text=${encodeURIComponent(
-              "Halo BSK Custom, saya ingin konsultasi mengenai tata body motor saya."
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center gap-2 rounded-full bg-gradient-to-r from-[#E51919] to-[#FF5722] px-4 py-2 text-xs font-bold text-white shadow-[0_0_20px_rgba(229,25,25,0.35)] transition-all hover:scale-103 hover:shadow-[0_0_25px_rgba(255,87,34,0.5)] md:inline-flex"
+          <button
+            type="button"
+            onClick={() => onOpenEstimator?.()}
+            className="hidden min-h-[44px] items-center bg-[#D62810] px-5 text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A] active:scale-[0.98] md:inline-flex"
           >
-            <WhatsAppLogo className="h-4 w-4 text-white" />
-            <span>KONSULTASI WA</span>
-          </a>
+            {tr("Hitung Estimasi", locale)}
+          </button>
 
-          {/* Mobile Menu Toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            {...ariaLabelAttr(mobileMenuOpen ? "Tutup menu" : "Buka menu")}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-[#161822] text-white lg:hidden"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
+            {...ariaLabelAttr(
+              mobileMenuOpen ? tr("Tutup menu navigasi", locale) : tr("Buka menu navigasi", locale)
+            )}
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 border border-black/20 bg-white px-3 text-xs font-bold text-[#111216] uppercase transition-colors hover:border-[#111216] lg:hidden"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? (
+              <X className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <Menu className="h-4 w-4" aria-hidden="true" />
+            )}
+            <span>{tr("Menu", locale)}</span>
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-x-0 top-[60px] border-b border-white/10 bg-[#0B0C10]/95 p-5 shadow-2xl backdrop-blur-xl lg:hidden">
-          <nav className="flex flex-col gap-3">
+        <nav
+          id="mobile-nav-drawer"
+          aria-label="Navigasi seluler"
+          className="border-t border-black/10 bg-white px-4 py-4 shadow-lg lg:hidden"
+        >
+          <div className="flex flex-col gap-1">
             {links.map((item, idx) => (
               <a
                 key={idx}
-                href={item.icon || "#"}
+                href={item.icon || "#hero"}
                 onClick={() => setMobileMenuOpen(false)}
-                className="rounded-lg p-2.5 text-[15px] font-semibold text-gray-200 transition-colors hover:bg-white/5 hover:text-[#E51919]"
+                className="flex min-h-[44px] items-center px-3 text-sm font-semibold text-[#111216] transition-colors hover:bg-[#F5F5F6] hover:text-[#D62810]"
               >
-                {item.title}
+                {tr(item.title || "", locale)}
               </a>
             ))}
-            <a
-              href={`https://wa.me/${waNumber}?text=${encodeURIComponent(
-                "Halo BSK Custom, saya ingin konsultasi tata body motor."
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#E51919] to-[#FF5722] p-3 text-sm font-bold text-white"
-            >
-              <WhatsAppLogo className="h-4 w-4" />
-              <span>KONSULTASI VIA WHATSAPP</span>
-            </a>
-          </nav>
-        </div>
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-black/10 pt-3">
+              <a
+                href="https://instagram.com/bsk.custom"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-[44px] items-center justify-center gap-2 border border-black/15 bg-[#F5F5F6] px-3 text-xs font-bold text-[#111216]"
+              >
+                <InstagramLogo className="h-4 w-4" aria-hidden="true" />
+                <span>@bsk.custom</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenEstimator?.();
+                }}
+                className="flex min-h-[44px] items-center justify-center bg-[#D62810] px-3 text-xs font-bold tracking-wider text-white uppercase"
+              >
+                {tr("Hitung Estimasi", locale)}
+              </button>
+            </div>
+          </div>
+        </nav>
       )}
     </header>
   );

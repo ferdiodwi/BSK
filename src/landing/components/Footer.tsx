@@ -1,94 +1,94 @@
 "use client";
 
+import { site } from "../content/site";
 import { bind } from "../lib/bind";
+import { tr, useLocale } from "../lib/i18n";
 import { type SectionComponentProps } from "../lib/helpers";
-import { InstagramLogo, TikTokLogo, WhatsAppLogo } from "../ui/BrandLogos";
+import { InstagramLogo, TikTokLogo } from "../ui/BrandLogos";
 
-export function Footer({ block }: SectionComponentProps) {
+export function Footer({ block, onOpenEstimator }: SectionComponentProps) {
+  const locale = useLocale();
   const copyright = bind(
     block,
     "extra.copyright",
-    "© 2026 BSK Custom. All Rights Reserved. Presisi Rangka & Jiwa Otomotif."
+    "© 2026 BSK Custom. Tata Body CB & Rangka Presisi."
   );
 
   return (
-    <footer className="border-t border-white/10 bg-[#08090D] py-12 text-white">
-      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-          {/* Logo & Tagline */}
+    <footer className="bsk-dark-section bg-[#141518] py-10 text-white">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
+        <div className="flex flex-col items-start justify-between gap-6 border-b border-white/10 pb-8 md:flex-row md:items-center">
+          {/* Logo & Brand */}
           <div className="flex items-center gap-3">
             <img
               src="/logo.png"
-              alt="BSK Custom Logo"
-              className="h-10 w-auto object-contain drop-shadow-[0_0_10px_rgba(229,25,25,0.4)]"
+              alt="Logo BSK Custom"
+              width={2048}
+              height={2048}
+              className="h-10 w-10 object-contain"
             />
             <div>
-              <span className="font-hero text-lg font-extrabold tracking-wider text-white">
-                BSK <span className="text-[#E51919]">CUSTOM</span>
+              <span className="font-hero text-lg font-bold tracking-wider text-white uppercase">
+                BSK <span className="text-[#FFE600]">CUSTOM</span>
               </span>
-              <p className="text-[11px] text-gray-400">
-                Spesialis Tata Body CB & Rangka Presisi
+              <p className="font-mono text-[11px] text-[#9CA3AF]">
+                TATA BODY CB
               </p>
             </div>
           </div>
 
-          {/* Quick Anchor Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-300">
-            <a href="#top" className="hover:text-[#E51919] transition-colors">
-              Home
+          {/* Anchor Navigation matching actual sections */}
+          <nav aria-label="Navigasi footer" className="flex flex-wrap items-center gap-5 text-xs font-semibold text-[#D1D5DB]">
+            <a href="#hero" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+              {tr("Showcase", locale)}
             </a>
-            <a href="#process" className="hover:text-[#E51919] transition-colors">
-              SOP Proses
+            <a href="#anatomi" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+              {tr("Anatomi Presisi", locale)}
             </a>
-            <a href="#services" className="hover:text-[#E51919] transition-colors">
-              Paket Jasa
+            <a href="#paket" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+              {tr("Paket & Biaya", locale)}
             </a>
-            <a href="#estimator" className="hover:text-[#E51919] transition-colors">
-              Kalkulator Biaya
+            <a href="#galeri" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+              {tr("Galeri Unit", locale)}
             </a>
-            <a href="#gallery" className="hover:text-[#E51919] transition-colors">
-              Galeri Garapan
+            <a href="#bengkel" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+              {tr("Bengkel", locale)}
             </a>
-            <a href="#contact" className="hover:text-[#E51919] transition-colors">
-              Lokasi Workshop
-            </a>
-          </div>
+            <button
+              type="button"
+              onClick={() => onOpenEstimator?.()}
+              className="min-h-[44px] inline-flex items-center text-[#FFE600] hover:underline"
+            >
+              {tr("Hitung Estimasi", locale)}
+            </button>
+          </nav>
 
           {/* Social Links */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <a
-              href="https://instagram.com/bsk.custom"
+              href={site.contact.instagram_url}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram BSK Custom"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#141620] text-gray-300 transition-colors hover:border-[#E51919] hover:text-[#E51919]"
+              className="flex h-11 w-11 items-center justify-center border border-white/15 text-[#D1D5DB] transition-colors hover:border-[#FFE600] hover:text-[#FFE600]"
             >
-              <InstagramLogo className="h-4 w-4" />
+              <InstagramLogo className="h-4 w-4" aria-hidden="true" />
             </a>
             <a
-              href="https://tiktok.com/@bsk.custom"
+              href={site.contact.tiktok_url}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="TikTok BSK Custom"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#141620] text-gray-300 transition-colors hover:border-[#E51919] hover:text-[#E51919]"
+              className="flex h-11 w-11 items-center justify-center border border-white/15 text-[#D1D5DB] transition-colors hover:border-[#FFE600] hover:text-[#FFE600]"
             >
-              <TikTokLogo className="h-4 w-4" />
-            </a>
-            <a
-              href="https://wa.me/6285159506662"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp BSK Custom"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#141620] text-[#10B981] transition-colors hover:border-[#10B981]"
-            >
-              <WhatsAppLogo className="h-4 w-4" />
+              <TikTokLogo className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
         </div>
 
-        {/* Bottom Copyright */}
-        <div className="mt-8 border-t border-white/5 pt-6 text-center text-xs text-gray-500">
-          {copyright}
+        <div className="mt-6 flex flex-col justify-between gap-2 text-xs text-[#9CA3AF] sm:flex-row">
+          <p>{copyright}</p>
+          <p>{site.contact.instagram_user}</p>
         </div>
       </div>
     </footer>

@@ -53,6 +53,7 @@ export type LandingPayload = {
 export type SectionComponentProps = {
   section?: LandingSection;
   block: LandingBlock;
+  onOpenEstimator?: (opts?: { bikeId?: string; packageId?: string }) => void;
 };
 
 export function sortedBlocks(blocks?: LandingBlock[]): LandingBlock[] {
@@ -102,20 +103,6 @@ export function heroEnterAttr(delay = 0) {
   return {
     "data-hero-enter": "true",
     "data-reveal-delay": String(delay),
-  };
-}
-
-export function speedLineAttr(delay = 0, duration = 1.0) {
-  return {
-    "data-speed-line": "true",
-    "data-line-delay": String(delay),
-    "data-line-duration": String(duration),
-  };
-}
-
-export function scrollSpeedLineAttr() {
-  return {
-    "data-scroll-speed-line": "true",
   };
 }
 
@@ -183,6 +170,20 @@ export function attachWindowScroll(threshold: number, onStateChange: (scrolled: 
   return () => window.removeEventListener("scroll", onScroll);
 }
 
+export function buildEstimateSummaryText(
+  bikeModel: string,
+  packageName: string,
+  customNeeds: string,
+  totalEstimate: number,
+  locale: Locale,
+): string {
+  const formattedPrice = formatIDR(totalEstimate);
+
+  return locale === "en"
+    ? `Hello BSK Custom, I would like to book a bodywork & frame alignment slot:\n\n• Bike Model: ${bikeModel}\n• Package: ${packageName}\n• Add-Ons: ${customNeeds}\n• Estimated Service Total: ${formattedPrice}\n\nWhen is the next available workshop slot?`
+    : `Halo BSK Custom, saya ingin konsultasi / booking slot tata body:\n\n• Basis Motor: ${bikeModel}\n• Paket Jasa: ${packageName}\n• Tambahan Pekerjaan: ${customNeeds}\n• Estimasi Jasa: ${formattedPrice}\n\nKira-kira slot pengerjaan terdekat ready kapan ya?`;
+}
+
 export function buildWorkshopWhatsAppUrl(
   phone: string,
   bikeModel: string,
@@ -192,12 +193,12 @@ export function buildWorkshopWhatsAppUrl(
   locale: Locale,
 ): string {
   const cleanPhone = phone.replace(/\D/g, "");
-  const formattedPrice = formatIDR(totalEstimate);
-
-  const text =
-    locale === "en"
-      ? `Hello BSK Custom, I would like to book a bodywork & frame alignment slot:\n\n• Bike Model: ${bikeModel}\n• Package: ${packageName}\n• Specific Needs: ${customNeeds}\n• Estimated Total: ${formattedPrice}\n\nCould you please let me know the available schedule? Thank you!`
-      : `Halo BSK Custom, saya ingin booking slot tata body & rangka:\n\n• Tipe Motor: ${bikeModel}\n• Paket: ${packageName}\n• Kebutuhan Tambahan: ${customNeeds}\n• Estimasi Total: ${formattedPrice}\n\nKira-kira slot pengerjaan terdekat ready kapan ya Mas? Terima kasih!`;
-
+  const text = buildEstimateSummaryText(
+    bikeModel,
+    packageName,
+    customNeeds,
+    totalEstimate,
+    locale,
+  );
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
 }

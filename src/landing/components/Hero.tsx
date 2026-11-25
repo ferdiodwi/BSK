@@ -1,223 +1,285 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BSK_BIKES } from "../content/site";
 import { bind } from "../lib/bind";
-import {
-  formatIDR,
-  heroEnterAttr,
-  speedLineAttr,
-  type SectionComponentProps,
-} from "../lib/helpers";
-import { SealBadge } from "../ui/SealBadge";
-import { WhatsAppLogo } from "../ui/BrandLogos";
-import { Wrench, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { tr, useLocale } from "../lib/i18n";
+import { formatIDR, heroEnterAttr, type SectionComponentProps } from "../lib/helpers";
 
-export function Hero({ block }: SectionComponentProps) {
-  const [selectedBikeIdx, setSelectedBikeIdx] = useState(0);
+export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
+  const locale = useLocale();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const bikeLayerRef = useRef<HTMLDivElement>(null);
+  const watermarkRef = useRef<HTMLDivElement>(null);
 
-  const bikes = block.items ?? [];
-  const activeBike = bikes[selectedBikeIdx] ?? bikes[0];
-  const waNumber = bind(block, "extra.whatsapp_number", "6285159506662");
+  const bikes = BSK_BIKES;
+  const activeBike = bikes[activeIndex] ?? bikes[0];
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev === 0 ? bikes.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % bikes.length);
+  };
+
+  // Mouse parallax depth for the motorcycle cutout against giant background type (desktop pointer only)
+  useEffect(() => {
+    const stage = stageRef.current;
+    const bikeEl = bikeLayerRef.current;
+    const watermarkEl = watermarkRef.current;
+    if (!stage || !bikeEl || !watermarkEl || typeof window === "undefined") return;
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+    if (prefersReduced || !isFinePointer) return;
+
+    const moveBikeX = gsap.quickTo(bikeEl, "x", { duration: 0.45, ease: "power2.out" });
+    const moveBikeY = gsap.quickTo(bikeEl, "y", { duration: 0.45, ease: "power2.out" });
+    const moveTextX = gsap.quickTo(watermarkEl, "x", { duration: 0.6, ease: "power2.out" });
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = stage.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / rect.width - 0.5;
+      const ny = (e.clientY - rect.top) / rect.height - 0.5;
+      moveBikeX(nx * 18);
+      moveBikeY(ny * 10);
+      moveTextX(-nx * 14);
+    };
+
+    const onMouseLeave = () => {
+      moveBikeX(0);
+      moveBikeY(0);
+      moveTextX(0);
+    };
+
+    stage.addEventListener("mousemove", onMouseMove);
+    stage.addEventListener("mouseleave", onMouseLeave);
+    return () => {
+      stage.removeEventListener("mousemove", onMouseMove);
+      stage.removeEventListener("mouseleave", onMouseLeave);
+    };
+  }, []);
+
+  const stepDisplay = `0${activeIndex + 1} / 0${bikes.length}`;
 
   return (
     <section
-      id="top"
-      className="relative min-h-[92vh] overflow-hidden bg-[#0B0C10] pt-28 pb-16 lg:pt-36 lg:pb-24"
+      id="hero"
+      className="relative overflow-hidden border-b border-black/10 bg-[#F5F5F6] text-[#111216]"
     >
-      {/* Background Carbon & Grid Effect */}
-      <div className="hero-grid-field pointer-events-none absolute inset-0 z-0 opacity-60" />
-
-      {/* Dynamic Animated Speed Line Path (GSAP Target) */}
-      <svg
+      {/* Split racing orange-red architectural block behind right stage on large screens */}
+      <div
         aria-hidden="true"
-        viewBox="0 0 1440 320"
-        className="pointer-events-none absolute top-12 left-0 z-0 h-[220px] w-full opacity-35"
-      >
-        <path
-          d="M-50,180 Q320,40 720,200 T1490,90"
-          fill="none"
-          stroke="url(#racingGradient)"
-          strokeWidth="3"
-          {...speedLineAttr(0.2, 1.4)}
-        />
-        <defs>
-          <linearGradient id="racingGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#E51919" />
-            <stop offset="50%" stopColor="#FF5722" />
-            <stop offset="100%" stopColor="#FFE600" />
-          </linearGradient>
-        </defs>
-      </svg>
+        className="pointer-events-none absolute top-0 right-0 hidden h-full w-[34%] bg-[#D62810] lg:block"
+      />
 
-      <div className="relative z-10 mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-12">
-          {/* Left Column: Headlines & Action CTA */}
-          <div className="lg:col-span-7">
-            {/* Top Category Badge */}
-            <div {...heroEnterAttr(0)} className="inline-flex items-center gap-2 rounded-full border border-[#E51919]/40 bg-[#161822]/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#FFE600] shadow-[0_0_15px_rgba(229,25,25,0.2)]">
-              <span className="h-2 w-2 rounded-full bg-[#E51919] animate-pulse" />
-              <span>{bind(block, "extra.badge_text", "SPESIALIS TATA BODY CB & HEREX")}</span>
+      <div className="relative z-10 mx-auto max-w-[1400px] border-x border-black/10">
+        <div className="grid grid-cols-1 lg:grid-cols-12">
+          {/* Left Editorial Info Column */}
+          <div className="flex flex-col justify-between px-5 pt-10 pb-8 sm:px-8 lg:col-span-5 lg:px-10 lg:py-14">
+            <div>
+              {/* Numeric Index & Category */}
+              <div {...heroEnterAttr(0)} className="flex items-center justify-between border-b border-black/10 pb-4">
+                <span className="font-mono text-xs font-bold tracking-widest text-[#D62810]">
+                  {stepDisplay}
+                </span>
+                <span className="font-mono text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
+                  {locale === "en" ? activeBike.categoryLabelEn : activeBike.categoryLabel}
+                </span>
+              </div>
+
+              {/* Single H1 for document semantics */}
+              <h1
+                {...heroEnterAttr(0.08)}
+                className="mt-6 font-hero text-[clamp(2.25rem,4.4vw,3.8rem)] font-bold leading-[0.98] tracking-tight text-[#111216] uppercase"
+              >
+                {tr(bind(block, "title", "Tata Body CB & Rangka Presisi"), locale)}
+              </h1>
+
+              {/* Active Bike Name Highlight */}
+              <p
+                {...heroEnterAttr(0.14)}
+                className="mt-3 font-hero text-xl font-bold tracking-wide text-[#D62810] uppercase sm:text-2xl"
+              >
+                {activeBike.name}
+              </p>
+
+              <p
+                {...heroEnterAttr(0.18)}
+                className="mt-4 max-w-md text-sm leading-relaxed text-[#4B5563] sm:text-base"
+              >
+                {tr(
+                  bind(
+                    block,
+                    "description",
+                    "Penataan tangki, jok, subframe, dan kelurusan kaki-kaki motor klasik maupun harian. Rapi di mata, lurus saat dikendarai."
+                  ),
+                  locale
+                )}
+              </p>
+
+              {/* Active Bike Key Specs Table */}
+              <dl {...heroEnterAttr(0.24)} className="mt-6 space-y-3 border-t border-black/10 pt-5 text-xs sm:text-sm">
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="font-mono font-semibold text-[#4B5563] uppercase">{tr("Basis", locale)}</dt>
+                  <dd className="text-right font-semibold text-[#111216]">{activeBike.platform}</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="font-mono font-semibold text-[#4B5563] uppercase">{tr("Mulai Dari", locale)}</dt>
+                  <dd className="text-right font-hero text-lg font-bold text-[#D62810] tabular-nums">
+                    {formatIDR(activeBike.basePrice)}
+                  </dd>
+                </div>
+                <div className="border-t border-black/5 pt-2.5">
+                  <dt className="font-mono text-[11px] font-semibold text-[#4B5563] uppercase">
+                    {tr("Fokus", locale)}
+                  </dt>
+                  <dd className="mt-1 text-xs leading-relaxed text-[#111216]">
+                    {locale === "en" ? activeBike.focusEn : activeBike.focus}
+                  </dd>
+                </div>
+              </dl>
             </div>
 
-            {/* Giant Racing Headline */}
-            <h1 {...heroEnterAttr(0.1)} className="mt-5 font-hero text-[clamp(2.5rem,5.5vw,4.8rem)] font-extrabold leading-[0.98] tracking-tight text-white uppercase">
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-100 to-gray-400">
-                {bind(block, "title", "PRESISI RANGKA")}
-              </span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#E51919] via-[#FF5722] to-[#FFE600]">
-                {bind(block, "subtitle", "SEMPURNA DI SETIAP SUDUT")}
-              </span>
-            </h1>
-
-            {/* Sub-description */}
-            <p {...heroEnterAttr(0.2)} className="mt-6 max-w-[620px] text-base leading-relaxed text-gray-300 sm:text-lg">
-              {bind(
-                block,
-                "description",
-                "Bengkel spesialis tata body CB, restorasi rangka center, dan custom kaki-kaki motor klasik/herex. Dikerjakan dengan alat ukur presisi dan standar pengerjaan rapi tanpa kompromi."
-              )}
-            </p>
-
-            {/* Trust Metrics Bar */}
-            <div {...heroEnterAttr(0.25)} className="mt-8 grid grid-cols-3 gap-3 border-y border-white/10 py-4 sm:gap-6 sm:py-5">
-              <div>
-                <div className="font-hero text-2xl font-bold text-white sm:text-3xl">
-                  {bind(block, "extra.stat_bikes", "1.200+")}
-                </div>
-                <div className="text-xs text-gray-400">
-                  {bind(block, "extra.stat_bikes_label", "Motor Ditata Center")}
-                </div>
-              </div>
-              <div className="border-x border-white/10 px-3 sm:px-6">
-                <div className="font-hero text-2xl font-bold text-[#FFE600] sm:text-3xl">
-                  {bind(block, "extra.stat_rating", "4.9 ★")}
-                </div>
-                <div className="text-xs text-gray-400">
-                  {bind(block, "extra.stat_rating_label", "Kepuasan Komunitas")}
-                </div>
-              </div>
-              <div>
-                <div className="font-hero text-2xl font-bold text-[#10B981] sm:text-3xl">
-                  {bind(block, "extra.stat_warranty", "100%")}
-                </div>
-                <div className="text-xs text-gray-400">
-                  {bind(block, "extra.stat_warranty_label", "Garansi Rangka Lurus")}
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div {...heroEnterAttr(0.3)} className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href="#estimator"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#E51919] to-[#FF5722] px-6 py-3.5 font-hero text-sm font-bold tracking-wider text-white uppercase shadow-[0_0_25px_rgba(229,25,25,0.4)] transition-all hover:scale-103 hover:shadow-[0_0_35px_rgba(255,87,34,0.6)]"
+            {/* Primary & Secondary CTAs */}
+            <div {...heroEnterAttr(0.3)} className="mt-8 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => onOpenEstimator?.({ bikeId: activeBike.estimatorBikeId })}
+                className="inline-flex min-h-[48px] items-center justify-center bg-[#D62810] px-6 py-3 font-hero text-sm font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A] active:scale-[0.98]"
               >
-                <Wrench className="h-4 w-4" />
-                <span>{bind(block, "extra.primary_cta_label", "Hitung Estimasi Biaya")}</span>
-              </a>
+                {tr(bind(block, "extra.primary_cta_label", "Hitung Estimasi Biaya"), locale)}
+              </button>
 
               <a
-                href={`https://wa.me/${waNumber}?text=${encodeURIComponent(
-                  "Halo BSK Custom, saya mau konsultasi langsung via WhatsApp."
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-[#161822] px-6 py-3.5 font-hero text-sm font-bold tracking-wider text-gray-200 uppercase transition-all hover:border-[#10B981] hover:text-[#10B981]"
+                href="#galeri"
+                className="inline-flex min-h-[48px] items-center justify-center border border-black/20 bg-white px-6 py-3 font-hero text-sm font-bold tracking-wider text-[#111216] uppercase transition-colors hover:border-[#111216] hover:bg-[#111216] hover:text-white"
               >
-                <WhatsAppLogo className="h-4 w-4 text-[#10B981]" />
-                <span>{bind(block, "extra.secondary_cta_label", "Konsultasi WhatsApp")}</span>
+                {tr(bind(block, "extra.secondary_cta_label", "Lihat Detail Garapan"), locale)}
               </a>
             </div>
           </div>
 
-          {/* Right Column: Interactive Bike Card & Seal Badge */}
-          <div className="relative lg:col-span-5">
-            {/* Guarantee Seal Badge */}
-            <div className="absolute -top-6 -right-2 z-20 sm:-top-8 sm:-right-4">
-              <SealBadge
-                href="#process"
-                label="Garansi Presisi 100%"
-                topSlot={bind(block, "extra.seal_top", "PRESISI")}
-                bottomSlot={bind(block, "extra.seal_bottom", "GARANSI")}
-              />
+          {/* Right Motorcycle Showcase Stage (KTM layered typography + PNG cutout) */}
+          <div
+            ref={stageRef}
+            className="relative flex min-h-[360px] flex-col items-center justify-center overflow-hidden px-4 py-8 sm:min-h-[460px] lg:col-span-7 lg:min-h-[580px] lg:px-8"
+          >
+            {/* Solid accent block behind bike on mobile/tablet so split motif remains consistent */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute top-0 right-0 h-full w-[38%] bg-[#D62810] lg:hidden"
+            />
+
+            {/* Giant Background Watermark Typography */}
+            <div
+              ref={watermarkRef}
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 flex items-center justify-center select-none overflow-hidden"
+            >
+              <span className="font-hero text-[clamp(4.8rem,15vw,11.5rem)] font-bold tracking-tighter text-[#111216]/[0.09] uppercase whitespace-nowrap">
+                {activeBike.watermark}
+              </span>
             </div>
 
-            {/* Interactive Motor Model Showcase Card */}
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#14161F] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400">
-                  <ShieldCheck className="h-4 w-4 text-[#E51919]" />
-                  <span>Kategori Motor Spesialisasi</span>
-                </div>
-                <span className="rounded-full bg-[#E51919]/20 px-2.5 py-0.5 text-[11px] font-bold text-[#FFE600]">
-                  BSK Spec
-                </span>
+            {/* Active Bike Cutout Image (Hero LCP image: no lazy, fetchPriority=high) */}
+            <div ref={bikeLayerRef} className="relative z-10 w-full max-w-[600px]">
+              <div key={activeBike.id} className="bsk-bike-swap relative flex flex-col items-center">
+                <img
+                  src={activeBike.imageUrl}
+                  alt={`${activeBike.name} - ${activeBike.categoryLabel}`}
+                  width={2048}
+                  height={2048}
+                  fetchPriority="high"
+                  decoding="async"
+                  className="h-auto max-h-[320px] w-full object-contain drop-shadow-[0_18px_20px_rgba(17,18,22,0.28)] sm:max-h-[410px] lg:max-h-[470px]"
+                />
+                {/* Ground contact shadow */}
+                <div
+                  aria-hidden="true"
+                  className="-mt-3 h-4 w-[68%] rounded-full bg-black/25 blur-md"
+                />
               </div>
-
-              {/* Bike Switcher Buttons */}
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                {bikes.map((bike, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setSelectedBikeIdx(idx)}
-                    className={`rounded-xl p-2.5 text-left text-xs font-bold transition-all ${
-                      selectedBikeIdx === idx
-                        ? "border border-[#E51919] bg-[#E51919]/15 text-white shadow-[0_0_15px_rgba(229,25,25,0.3)]"
-                        : "border border-white/5 bg-[#1B1E2A] text-gray-400 hover:text-white"
-                    }`}
-                  >
-                    {bike.title}
-                  </button>
-                ))}
-              </div>
-
-              {/* Active Bike Preview Detail */}
-              {activeBike && (
-                <div className="mt-6 rounded-2xl border border-white/5 bg-[#0D0E12] p-5">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#E51919]">
-                        {bind(activeBike, "extra.badge", "Pilihan Favorit")}
-                      </span>
-                      <h4 className="mt-1 font-hero text-xl font-bold text-white">
-                        {activeBike.title}
-                      </h4>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[11px] text-gray-400">Mulai Dari</span>
-                      <div className="font-hero text-lg font-bold text-[#FFE600]">
-                        {formatIDR(Number(activeBike.extra?.base_price ?? 650000))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="mt-3 text-xs leading-relaxed text-gray-300">
-                    {activeBike.description}
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-xs text-gray-400">
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
-                      Senter Waterpass
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
-                      Las Seamless Rapi
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Quick direct book CTA */}
-              <a
-                href="#estimator"
-                className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-[#E51919]/40 bg-[#1B1E2A] py-3 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#E51919]"
-              >
-                <span>PILIH OPSI DETAIL DI ESTIMATOR</span>
-                <span>→</span>
-              </a>
             </div>
+
+            {/* Floating Step Control Arrows on Stage */}
+            <div className="relative z-20 mt-4 flex w-full items-center justify-between lg:px-2">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  aria-label={tr("Motor Sebelumnya", locale)}
+                  className="flex h-11 w-11 items-center justify-center border border-black/20 bg-white text-[#111216] transition-colors hover:border-[#111216] hover:bg-[#111216] hover:text-white"
+                >
+                  <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  aria-label={tr("Motor Berikutnya", locale)}
+                  className="flex h-11 w-11 items-center justify-center border border-black/20 bg-white text-[#111216] transition-colors hover:border-[#111216] hover:bg-[#111216] hover:text-white"
+                >
+                  <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+
+              <span className="bg-[#141518] px-3 py-1.5 font-mono text-[11px] font-semibold text-white">
+                {locale === "en" ? activeBike.finishingEn : activeBike.finishing}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Interactive Thumbnail Selector Bar (KTM Panel 1 & 4 style) */}
+        <div className="border-t border-black/10 bg-white">
+          <div
+            role="tablist"
+            aria-label="Pilih unit motor BSK Custom"
+            className="grid grid-cols-2 divide-x divide-y divide-black/10 sm:grid-cols-5 sm:divide-y-0"
+          >
+            {bikes.map((bike, idx) => {
+              const isSelected = idx === activeIndex;
+              return (
+                <button
+                  key={bike.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`group flex min-h-[72px] items-center gap-3 px-4 py-3 text-left transition-colors ${
+                    isSelected
+                      ? "bg-[#141518] text-white"
+                      : "bg-white text-[#111216] hover:bg-[#F5F5F6]"
+                  }`}
+                >
+                  <img
+                    src={bike.imageUrl}
+                    alt=""
+                    aria-hidden="true"
+                    width={2048}
+                    height={2048}
+                    loading="eager"
+                    className="h-11 w-14 shrink-0 object-contain transition-transform duration-200 group-hover:scale-105"
+                  />
+                  <div className="min-w-0">
+                    <span
+                      className={`block font-mono text-[10px] font-bold ${
+                        isSelected ? "text-[#FFE600]" : "text-[#D62810]"
+                      }`}
+                    >
+                      0{idx + 1}
+                    </span>
+                    <span className="block truncate font-hero text-xs font-bold tracking-wide uppercase sm:text-sm">
+                      {bike.name}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

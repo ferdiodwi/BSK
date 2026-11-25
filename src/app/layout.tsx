@@ -34,7 +34,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "BSK CUSTOM | Spesialis Tata Body CB & Rangka Presisi",
   description:
-    "Bengkel spesialis tata body CB, restorasi rangka presisi, custom bodi, dan setting kaki-kaki motor klasik/herex. Rapi, center, bergaransi, dan siap kontes maupun harian.",
+    "Bengkel spesialis tata body CB, penataan rangka center, fitting tangki dan jok presisi, serta custom kaki-kaki motor klasik dan harian.",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -52,7 +52,7 @@ export default function RootLayout({
       lang="id"
       className={`${bricolage.variable} ${oswald.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0B0C10] text-[#F3F4F6] font-sans selection:bg-[#E51919] selection:text-[#FFFFFF]">
+      <body className="min-h-full flex flex-col bg-[#F5F5F6] text-[#111216] font-sans selection:bg-[#D62810] selection:text-[#FFFFFF]">
         <a href="#main-content" className="skip-link">
           Lewati ke konten utama
         </a>
