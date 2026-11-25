@@ -185,9 +185,6 @@ export function Hero({ block }: SectionComponentProps) {
 
       {/* Left Edge Peeking Wheel Scaled and Grounded to Match Center Bike */}
       <div className="pointer-events-none absolute bottom-16 left-0 z-20 hidden md:block lg:bottom-20">
-        <span className="mb-4 block pl-6 font-condensed text-sm tracking-widest text-[#D1D5DB] uppercase lg:pl-12">
-          {prevBike.name}
-        </span>
         <button
           type="button"
           onClick={handlePrev}

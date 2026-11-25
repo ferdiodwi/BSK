@@ -105,7 +105,7 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "mp-herex",
     inquiryBikeId: "megapro",
     name: "Megapro / GL Herex",
-    heroTitle: "MP GL HEREX",
+    heroTitle: "GL HEREX",
     watermark: "HEREX",
     category: "Full Build",
     categoryLabel: "Full Build Racing Harian",
