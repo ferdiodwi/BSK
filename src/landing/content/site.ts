@@ -589,7 +589,6 @@ export const site = {
                 { order: 3, title: "Galeri", icon: "#galeri" },
                 { order: 4, title: "Testimoni", icon: "#testimoni" },
                 { order: 5, title: "Kontak", icon: "#kontak" },
-                { order: 6, title: "Instagram", icon: "https://instagram.com/bsk_custom_wwe" },
               ],
             },
           ],

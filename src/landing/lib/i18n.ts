@@ -84,6 +84,7 @@ const EN_MAP: Record<string, string> = {
   "Galeri": "Gallery",
   "Testimoni": "Reviews",
   "Kontak": "Contact",
+  "Konsultasi": "Consult",
   "Anatomi Presisi": "Frame Anatomy",
   "Layanan & Paket": "Services & Packages",
   "Galeri Unit": "Build Gallery",

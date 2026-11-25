@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Globe, Menu, X } from "lucide-react";
 import { site } from "../content/site";
 import { tr, toggleLocale, useLocale } from "../lib/i18n";
 import {
@@ -13,10 +13,12 @@ import {
   sortedItems,
   type SectionComponentProps,
 } from "../lib/helpers";
+import { WhatsAppLogo } from "../ui/BrandLogos";
 
 export function Navbar({ block }: SectionComponentProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeHash, setActiveHash] = useState("#hero");
   const locale = useLocale();
 
   const links = sortedItems(block.items);
@@ -27,8 +29,37 @@ export function Navbar({ block }: SectionComponentProps) {
   );
 
   useEffect(() => {
-    return attachWindowScroll(32, setScrolled);
+    return attachWindowScroll(28, setScrolled);
   }, []);
+
+  // Track currently visible section for active nav highlight
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sectionIds = sortedItems(block.items)
+      .map((item) => item.icon || "")
+      .filter((href) => href.startsWith("#"))
+      .map((href) => href.slice(1));
+
+    const updateActiveByScroll = () => {
+      const markerY = window.scrollY + window.innerHeight * 0.35;
+      let current = sectionIds[0] ? `#${sectionIds[0]}` : "#hero";
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= markerY) {
+          current = `#${id}`;
+        }
+      }
+      setActiveHash(current);
+    };
+
+    updateActiveByScroll();
+    window.addEventListener("scroll", updateActiveByScroll, { passive: true });
+    window.addEventListener("resize", updateActiveByScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", updateActiveByScroll);
+      window.removeEventListener("resize", updateActiveByScroll);
+    };
+  }, [block.items]);
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -39,65 +70,81 @@ export function Navbar({ block }: SectionComponentProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
+      className={`bsk-dark-section fixed top-0 right-0 left-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "border-b border-white/15 bg-[#141518]/95 shadow-lg"
-          : "bg-gradient-to-b from-black/75 via-black/35 to-transparent"
+          ? "border-b border-white/[0.08] bg-[#090A0D]/85 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-md"
+          : "bg-gradient-to-b from-[#07080A]/80 via-[#07080A]/35 to-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 sm:px-8 lg:px-14">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-3.5 sm:px-8 lg:px-12 xl:px-14">
         {/* Left: Brand Logo */}
         <a
           href="#hero"
           aria-label="Beranda BSK Custom"
-          className="flex min-h-[44px] items-center transition-transform hover:scale-[1.02]"
+          className="flex min-h-[44px] shrink-0 items-center transition-transform hover:scale-[1.02]"
         >
           <img
             src="/logo.png"
             alt="BSK Custom - Tata Body CB"
             width={1935}
             height={828}
-            className="h-9 w-auto object-contain sm:h-11"
+            className="h-9 w-auto object-contain sm:h-10"
           />
         </a>
 
-        {/* Center: Clean Horizontal Nav Links */}
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-7 lg:flex xl:gap-9">
+        {/* Center: Clean Horizontal Nav Links with Active Scroll Indicator */}
+        <nav aria-label="Navigasi utama" className="hidden items-center gap-6 lg:flex xl:gap-8">
           {links.map((item, idx) => {
             const href = item.icon || "#hero";
             const isExternal = href.startsWith("http");
+            const isActive = !isExternal && activeHash === href;
             return (
               <a
                 key={idx}
                 href={href}
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="inline-flex min-h-[44px] items-center px-1 font-hero text-[13px] font-medium tracking-[0.14em] text-[#E5E7EB] uppercase transition-colors hover:text-[#FF6B35]"
+                aria-current={isActive ? "true" : undefined}
+                className={`relative inline-flex min-h-[44px] items-center px-1 text-xs font-semibold tracking-[0.14em] whitespace-nowrap uppercase transition-colors ${
+                  isActive
+                    ? "text-[#FF8A5B]"
+                    : "text-[#D1D5DB] hover:text-[#F9FAFB]"
+                }`}
               >
-                {tr(item.title || "", locale)}
+                <span>{tr(item.title || "", locale)}</span>
+                {isActive && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-1 bottom-2 left-1 h-[2px] rounded-full bg-[#FF6B35]"
+                  />
+                )}
               </a>
             );
           })}
         </nav>
 
-        {/* Right: Minimal Language Toggle + Direct WhatsApp CTA */}
-        <div className="flex items-center gap-4">
+        {/* Right: Language Pill + Modern Rounded WhatsApp CTA + Mobile Trigger */}
+        <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
           <button
             type="button"
             onClick={toggleLocale}
-            {...ariaLabelAttr(locale === "id" ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian")}
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-2 font-mono text-[11px] font-bold tracking-wider text-[#D1D5DB] uppercase transition-colors hover:text-white"
+            {...ariaLabelAttr(
+              locale === "id" ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian"
+            )}
+            className="inline-flex min-h-[42px] items-center gap-1.5 rounded-xl border border-white/10 bg-[#141518]/80 px-3 font-mono text-[11px] font-semibold tracking-wider text-[#D1D5DB] uppercase transition-colors hover:border-[#FF6B35]/50 hover:text-white"
           >
-            {locale.toUpperCase()}
+            <Globe className="h-3.5 w-3.5 text-[#FF6B35]" aria-hidden="true" />
+            <span>{locale.toUpperCase()}</span>
           </button>
 
           <a
             href={waHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden min-h-[44px] items-center border border-[#FF5722] bg-transparent px-6 font-hero text-xs font-semibold tracking-[0.16em] text-[#FF6B35] uppercase transition-colors hover:border-[#D62810] hover:bg-[#D62810] hover:text-white active:scale-[0.98] md:inline-flex"
+            className="hidden min-h-[42px] items-center gap-2 rounded-xl border border-[#FF6B35]/60 bg-[#141518]/80 px-4 py-2 font-sans text-xs font-bold tracking-[0.1em] whitespace-nowrap text-[#FF8A5B] uppercase backdrop-blur-sm transition-colors hover:border-[#FF6B35] hover:bg-[#FF6B35] hover:text-[#111216] md:inline-flex"
           >
-            {tr("Ajukan Konsep", locale)}
+            <WhatsAppLogo className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>{tr("Konsultasi", locale)}</span>
           </a>
 
           <button
@@ -108,14 +155,14 @@ export function Navbar({ block }: SectionComponentProps) {
             {...ariaLabelAttr(
               mobileMenuOpen ? tr("Tutup menu navigasi", locale) : tr("Buka menu navigasi", locale)
             )}
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 border border-white/25 bg-[#141518]/85 px-3 text-xs font-bold text-white uppercase transition-colors hover:border-white lg:hidden"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl border border-white/15 bg-[#141518]/90 px-3.5 text-xs font-bold text-white uppercase transition-colors hover:border-[#FF6B35]/60 lg:hidden"
           >
             {mobileMenuOpen ? (
               <X className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Menu className="h-4 w-4" aria-hidden="true" />
             )}
-            <span>{tr("Menu", locale)}</span>
+            <span className="hidden sm:inline">{tr("Menu", locale)}</span>
           </button>
         </div>
       </div>
@@ -125,12 +172,13 @@ export function Navbar({ block }: SectionComponentProps) {
         <nav
           id="mobile-nav-drawer"
           aria-label="Navigasi seluler"
-          className="border-t border-white/15 bg-[#141518] px-4 py-4 shadow-2xl lg:hidden"
+          className="border-t border-white/10 bg-[#0B0C10]/95 px-5 py-4 shadow-2xl backdrop-blur-md lg:hidden"
         >
           <div className="flex flex-col gap-1">
             {links.map((item, idx) => {
               const href = item.icon || "#hero";
               const isExternal = href.startsWith("http");
+              const isActive = !isExternal && activeHash === href;
               return (
                 <a
                   key={idx}
@@ -138,9 +186,19 @@ export function Navbar({ block }: SectionComponentProps) {
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex min-h-[44px] items-center px-3 font-hero text-sm font-semibold tracking-wider text-[#F3F4F6] uppercase transition-colors hover:bg-white/5 hover:text-[#FF6B35]"
+                  className={`flex min-h-[44px] items-center justify-between rounded-xl px-3.5 text-sm font-semibold tracking-wider uppercase transition-colors ${
+                    isActive
+                      ? "bg-[#FF6B35]/12 text-[#FF8A5B]"
+                      : "text-[#E5E7EB] hover:bg-white/[0.04] hover:text-[#F9FAFB]"
+                  }`}
                 >
-                  {tr(item.title || "", locale)}
+                  <span>{tr(item.title || "", locale)}</span>
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full bg-[#FF6B35]"
+                    />
+                  )}
                 </a>
               );
             })}
@@ -149,9 +207,10 @@ export function Navbar({ block }: SectionComponentProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="mt-3 flex min-h-[44px] w-full items-center justify-center bg-[#D62810] px-4 font-hero text-xs font-bold tracking-widest text-white uppercase hover:bg-[#C41E0A]"
+              className="mt-3 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-[#FF6B35] px-4 text-xs font-bold tracking-[0.12em] text-[#111216] uppercase transition-colors hover:bg-white"
             >
-              {tr("Ajukan Konsep", locale)}
+              <WhatsAppLogo className="h-4 w-4" aria-hidden="true" />
+              <span>{tr("Konsultasi", locale)}</span>
             </a>
           </div>
         </nav>
