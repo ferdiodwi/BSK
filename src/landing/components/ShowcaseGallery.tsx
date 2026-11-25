@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { BSK_GALLERY, site, type GalleryItem } from "../content/site";
+import { BSK_GALLERY, type GalleryItem } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
 import {
@@ -11,7 +11,6 @@ import {
   ariaLabelAttr,
   ariaModalAttrs,
   attachKeydown,
-  buildDirectWhatsAppUrl,
   focusElement,
   isEscapeKey,
   lockDocumentScroll,
@@ -455,7 +454,8 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-3 backdrop-blur-md sm:p-6"
           role="dialog"
-          {...ariaModalAttrs("gallery-lightbox-title")}
+          {...ariaModalAttrs()}
+          {...ariaLabelAttr(locale === "en" ? lightboxItem.titleEn : lightboxItem.title)}
         >
           <div
             className="fixed inset-0"
@@ -463,29 +463,18 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
             aria-hidden="true"
           />
 
-          <div className="bsk-dialog-in relative z-10 flex max-h-[92vh] w-full max-w-[1040px] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#121419] text-[#F9FAFB] shadow-2xl">
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-3.5 sm:px-6">
-              <div className="min-w-0">
-                <h3
-                  id="gallery-lightbox-title"
-                  className="truncate font-display text-lg font-bold sm:text-xl"
-                >
-                  {locale === "en" ? lightboxItem.titleEn : lightboxItem.title}
-                </h3>
-              </div>
+          <div className="bsk-dialog-in relative z-10 flex max-h-[92vh] w-full max-w-[1040px] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#090A0D] text-[#F9FAFB] shadow-2xl">
+            <button
+              ref={closeBtnRef}
+              type="button"
+              onClick={() => setLightboxItem(null)}
+              {...ariaLabelAttr(tr("Tutup preview foto", locale))}
+              className="absolute top-3 right-3 z-30 flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-[#141518]/90 text-white transition-colors hover:border-[#FF6B35] hover:bg-[#FF6B35] hover:text-[#111216] sm:top-4 sm:right-4"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </button>
 
-              <button
-                ref={closeBtnRef}
-                type="button"
-                onClick={() => setLightboxItem(null)}
-                {...ariaLabelAttr(tr("Tutup preview foto", locale))}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-[#16181D] text-white transition-colors hover:border-[#FF6B35] hover:text-[#FF6B35]"
-              >
-                <X className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="relative flex flex-1 items-center justify-center bg-[#090A0D] p-3 sm:p-5">
+            <div className="relative flex flex-1 items-center justify-center p-3 sm:p-5">
               {items.length > 1 && (
                 <button
                   type="button"
@@ -505,7 +494,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                 quality={85}
                 priority
                 sizes="(max-width: 768px) 92vw, 900px"
-                className="h-auto max-h-[64vh] w-auto max-w-full rounded-xl object-contain"
+                className="h-auto max-h-[84vh] w-auto max-w-full rounded-xl object-contain"
               />
 
               {items.length > 1 && (
@@ -518,25 +507,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                   <ChevronRight className="h-5 w-5" aria-hidden="true" />
                 </button>
               )}
-            </div>
-
-            <div className="flex flex-col justify-between gap-4 border-t border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:px-6">
-              <p className="text-sm leading-relaxed text-[#D1D5DB]">
-                {locale === "en" ? lightboxItem.descriptionEn : lightboxItem.description}
-              </p>
-
-              <a
-                href={buildDirectWhatsAppUrl(
-                  site.contact.whatsapp_number,
-                  locale === "en" ? lightboxItem.titleEn : lightboxItem.title,
-                  locale
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-xl bg-[#FF6B35] px-5 py-2.5 font-sans text-xs font-bold tracking-[0.1em] text-[#111216] uppercase transition-colors hover:bg-white"
-              >
-                {tr("Konsultasi Unit Serupa", locale)}
-              </a>
             </div>
           </div>
         </div>
