@@ -70,8 +70,8 @@ const PACKAGES: InquiryPackage[] = [
   },
   {
     id: "mentahan",
-    name: "Rakitan Mentahan & Non-Cat",
-    desc: "Rakit unit rangka mentahan siap jalan atau siap masuk pengecatan (tidak melayani repaint)",
+    name: "Rakitan Mentahan & Unit Utuh",
+    desc: "Perakitan motor dari rangka dasar, penataan braket, dudukan mesin, dan pengecekan mekanis",
   },
 ];
 

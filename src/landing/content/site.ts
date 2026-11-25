@@ -315,14 +315,14 @@ export const site = {
                 {
                   order: 5,
                   id: "mentahan",
-                  title: "Rakitan Mentahan & Non-Cat",
+                  title: "Rakitan Mentahan & Unit Utuh",
                   description:
-                    "Fokus pengerjaan mekanis, rangka mentahan, dan perakitan unit siap jalan atau siap masuk tukang cat pilihan Anda tanpa layanan repaint.",
+                    "Perakitan motor dari rangka dasar sampai berdiri utuh siap jalan. Mencakup penataan braket, dudukan mesin, kelengkapan mekanis, dan pengecekan ulang sebelum turun jalan.",
                   extra: {
                     span: 1,
                     iconKey: "mentahan",
                     ctaLabel: "Konsultasi rakitan",
-                    tags: ["Fokus Rangka & Mesin", "Siap Naik Cat Sendiri", "Non-Repaint"],
+                    tags: ["Rakit Rolling Unit", "Braket & Dudukan", "Siap Turun Jalan"],
                   },
                 },
               ],
