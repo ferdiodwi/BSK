@@ -32,7 +32,7 @@ function TestimonialCard({
     <article
       onMouseEnter={() => onCardHover(true)}
       onMouseLeave={() => onCardHover(false)}
-      className="bsk-testimonial-card flex h-full w-[310px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:w-[370px] sm:p-7 lg:w-[400px]"
+      className="bsk-testimonial-card flex h-full w-[290px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-5 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:w-[370px] sm:p-7 lg:w-[400px]"
     >
       <div>
         <Quote className="h-6 w-6 fill-[#FF6B35] text-[#FF6B35]" aria-hidden="true" />
@@ -284,7 +284,7 @@ export function TestimonialsSection({ block }: SectionComponentProps) {
       />
 
       {/* Centered Editorial Headline matching dual-marquee showcase reference */}
-      <div className="mx-auto max-w-[1440px] px-5 pt-20 sm:px-8 sm:pt-24 lg:px-12 lg:pt-28 xl:px-14">
+      <div className="mx-auto max-w-[1440px] px-5 pt-14 sm:px-8 sm:pt-24 lg:px-12 lg:pt-28 xl:px-14">
         <div {...revealUp(0)} className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center justify-center gap-3">
             <span className="h-[1px] w-7 bg-[#FF6B35]" aria-hidden="true" />
@@ -301,14 +301,14 @@ export function TestimonialsSection({ block }: SectionComponentProps) {
       </div>
 
       {/* Opposing Dual-Row Draggable & Hover-Pausable Marquee */}
-      <div {...revealUp(0.08)} className="relative mx-auto mt-12 max-w-[1600px] pb-20 sm:pb-24 lg:pb-28">
+      <div {...revealUp(0.08)} className="relative mx-auto mt-10 max-w-[1600px] pb-14 sm:mt-12 sm:pb-24 lg:pb-28">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#090A0D] to-transparent sm:w-28 lg:w-44"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-[#090A0D] to-transparent sm:w-28 lg:w-44"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#090A0D] to-transparent sm:w-28 lg:w-44"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l from-[#090A0D] to-transparent sm:w-28 lg:w-44"
         />
 
         <div className="space-y-4 sm:space-y-5">

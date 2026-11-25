@@ -40,7 +40,7 @@ export function ServicePackages({ block }: SectionComponentProps) {
         className="mx-auto h-px w-full max-w-[1440px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
       />
 
-      <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
+      <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
         {/* Left-Aligned Bold Two-Line Editorial Header */}
         <div {...revealUp(0)} className="max-w-4xl">
           <div className="flex items-center gap-3">
@@ -68,7 +68,7 @@ export function ServicePackages({ block }: SectionComponentProps) {
               <article
                 key={svc.id ?? idx}
                 {...revealUp(Number((idx * 0.05).toFixed(2)))}
-                className={`group flex min-h-[290px] flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:p-7 xl:p-8 lg:min-h-[330px] ${
+                className={`group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:p-7 md:min-h-[290px] lg:min-h-[330px] xl:p-8 ${
                   isWide ? "md:col-span-2 lg:col-span-2" : "lg:col-span-1"
                 }`}
               >
@@ -102,7 +102,7 @@ export function ServicePackages({ block }: SectionComponentProps) {
                 </div>
 
                 {/* Bottom Pill Tags + Inline Consultation Trigger */}
-                <div className="mt-auto pt-8">
+                <div className="mt-auto pt-6 sm:pt-8">
                   {tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {tags.map((tag, tIdx) => (

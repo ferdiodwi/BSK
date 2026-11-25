@@ -165,7 +165,7 @@ export function Navbar({ block }: SectionComponentProps) {
             ) : (
               <Menu className="h-4 w-4" aria-hidden="true" />
             )}
-            <span className="hidden sm:inline">{tr("Menu", locale)}</span>
+            <span className="text-[11px] font-semibold tracking-wider">{tr("Menu", locale)}</span>
           </button>
         </div>
       </div>

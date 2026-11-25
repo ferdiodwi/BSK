@@ -345,7 +345,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
         className="mx-auto h-px w-full max-w-[1440px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
       />
 
-      <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
+      <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
         {/* Clean Minimal Editorial Header */}
         <div {...revealUp(0)} className="max-w-3xl">
           <div className="flex items-center gap-3">
@@ -417,7 +417,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
             </div>
 
             {/* Clean Bottom Controls + Caption */}
-            <div className="mx-auto mt-6 flex max-w-2xl items-center justify-between gap-4">
+            <div className="mx-auto mt-5 flex max-w-2xl items-center justify-between gap-3 sm:mt-6 sm:gap-4">
               <button
                 type="button"
                 onClick={() => moveBySteps(-1)}
@@ -428,10 +428,10 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               </button>
 
               <div className="min-w-0 flex-1 text-center">
-                <h3 className="truncate font-display text-xl font-bold text-[#F9FAFB] sm:text-2xl">
+                <h3 className="line-clamp-2 font-display text-base leading-snug font-bold text-[#F9FAFB] sm:truncate sm:text-2xl">
                   {activeTitle}
                 </h3>
-                <p className="mt-1 line-clamp-2 text-sm text-[#A1A1AA]">
+                <p className="mt-1 line-clamp-2 text-xs text-[#A1A1AA] sm:text-sm">
                   {activeDesc}
                 </p>
               </div>

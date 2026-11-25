@@ -61,7 +61,7 @@ export function ContactSection({ block }: SectionComponentProps) {
         className="mx-auto h-px w-full max-w-[1440px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
       />
 
-      <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
+      <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
         {/* Top Row: Contact Details + Quick WhatsApp Form Card */}
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-14">
           {/* Left Editorial Contact Block */}
@@ -298,7 +298,7 @@ export function ContactSection({ block }: SectionComponentProps) {
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                className="block h-[320px] w-full border-0 sm:h-[380px] lg:h-[420px]"
+                className="block h-[280px] w-full border-0 sm:h-[380px] lg:h-[420px]"
               />
             </div>
           </div>
@@ -366,7 +366,7 @@ export function ContactSection({ block }: SectionComponentProps) {
                 href={site.contact.maps_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-sans text-xs font-bold tracking-[0.1em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35] sm:text-sm"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 font-sans text-xs font-bold tracking-[0.1em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35] sm:w-auto sm:text-sm"
               >
                 <span>{tr("Buka di Google Maps", locale)}</span>
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

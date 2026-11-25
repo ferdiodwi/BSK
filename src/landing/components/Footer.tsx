@@ -37,7 +37,7 @@ export function Footer({ block }: SectionComponentProps) {
 
   return (
     <footer className="bsk-dark-section border-t border-white/10 bg-[#090A0D] text-[#F9FAFB]">
-      <div className="mx-auto max-w-[1440px] px-5 pt-14 pb-10 sm:px-8 lg:px-12 xl:px-14">
+      <div className="mx-auto max-w-[1440px] px-5 pt-10 pb-8 sm:px-8 sm:pt-14 sm:pb-10 lg:px-12 xl:px-14">
         {/* Tier 1: Brand Logo & Workshop Tagline */}
         <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-8 sm:flex-row sm:items-center">
           <a
@@ -64,18 +64,18 @@ export function Footer({ block }: SectionComponentProps) {
         </div>
 
         {/* Tier 2: Navigation, Service Focus, Contact Rows & Language/Social Controls */}
-        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-12 lg:grid-cols-12">
           {/* Col 1: Page Navigation */}
           <div className="lg:col-span-2">
             <h3 className="font-display text-sm font-bold tracking-wide text-[#F9FAFB]">
               {tr("Bengkel", locale)}
             </h3>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-3 space-y-1 md:mt-4 md:space-y-2.5">
               {NAV_LINKS.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="inline-flex min-h-[28px] items-center text-sm text-[#9CA3AF] transition-colors hover:text-[#FF8A5B]"
+                    className="inline-flex min-h-[44px] items-center text-sm text-[#9CA3AF] transition-colors hover:text-[#FF8A5B] md:min-h-[28px]"
                   >
                     {tr(item.label, locale)}
                   </a>
@@ -89,12 +89,12 @@ export function Footer({ block }: SectionComponentProps) {
             <h3 className="font-display text-sm font-bold tracking-wide text-[#F9FAFB]">
               {tr("Layanan", locale)}
             </h3>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-3 space-y-1 md:mt-4 md:space-y-2.5">
               {SERVICE_LINKS.map((svc) => (
                 <li key={svc}>
                   <a
                     href="#layanan"
-                    className="inline-flex min-h-[28px] items-center text-sm text-[#9CA3AF] transition-colors hover:text-[#FF8A5B]"
+                    className="inline-flex min-h-[44px] items-center text-sm text-[#9CA3AF] transition-colors hover:text-[#FF8A5B] md:min-h-[28px]"
                   >
                     {tr(svc, locale)}
                   </a>
@@ -219,15 +219,15 @@ export function Footer({ block }: SectionComponentProps) {
             {tr("Spesialis Tata Body CB & Rangka Presisi.", locale)}
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs text-[#9CA3AF]">
-            <a href="#hero" className="transition-colors hover:text-[#F9FAFB]">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-[#9CA3AF]">
+            <a href="#hero" className="inline-flex min-h-[44px] items-center transition-colors hover:text-[#F9FAFB] md:min-h-[28px]">
               {tr("Kembali ke Atas", locale)}
             </a>
             <a
               href={waQuickHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-[#FF8A5B]"
+              className="inline-flex min-h-[44px] items-center transition-colors hover:text-[#FF8A5B] md:min-h-[28px]"
             >
               {tr("Chat WhatsApp", locale)}
             </a>
@@ -235,7 +235,7 @@ export function Footer({ block }: SectionComponentProps) {
               href={site.contact.maps_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-[#FF8A5B]"
+              className="inline-flex min-h-[44px] items-center transition-colors hover:text-[#FF8A5B] md:min-h-[28px]"
             >
               {tr("Rute Bengkel", locale)}
             </a>

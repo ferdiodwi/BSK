@@ -28,7 +28,7 @@ export function AboutSection({ block }: SectionComponentProps) {
         <span className="mt-2 h-px w-24 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1440px] px-5 pt-10 pb-20 sm:px-8 sm:pt-14 sm:pb-24 lg:px-12 lg:pt-16 lg:pb-28 xl:px-14">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-5 pt-8 pb-14 sm:px-8 sm:pt-14 sm:pb-24 lg:px-12 lg:pt-16 lg:pb-28 xl:px-14">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
           {/* Left Editorial Photo Card: clean about.jpeg portrait */}
           <div {...revealLeft(0)} className="lg:col-span-5">
@@ -71,7 +71,7 @@ export function AboutSection({ block }: SectionComponentProps) {
 
             {/* 3 Dark Bento Workmanship Cards */}
             {pillars.length > 0 && (
-              <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div className="mt-8 grid grid-cols-1 gap-3.5 sm:mt-9 md:grid-cols-3 md:gap-4">
                 {pillars.map((item, idx) => {
                   const Icon = PILLAR_ICONS[idx % PILLAR_ICONS.length];
                   return (
@@ -101,7 +101,7 @@ export function AboutSection({ block }: SectionComponentProps) {
             )}
 
             {/* Primary CTA & Rounded Dark Social Actions */}
-            <div className="mt-9 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-7">
+            <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 sm:mt-9 sm:flex-row sm:items-center sm:justify-between sm:pt-7">
               <a
                 href={buildDirectWhatsAppUrl(
                   site.contact.whatsapp_number,
@@ -110,7 +110,7 @@ export function AboutSection({ block }: SectionComponentProps) {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-xl bg-white px-7 py-3.5 font-sans text-xs font-bold tracking-[0.12em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35] sm:text-sm"
+                className="inline-flex min-h-[50px] w-full items-center justify-center gap-2.5 rounded-xl bg-white px-7 py-3.5 font-sans text-xs font-bold tracking-[0.12em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35] sm:w-auto sm:text-sm"
               >
                 <span>{tr("Konsultasi Konsep Garapan", locale)}</span>
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

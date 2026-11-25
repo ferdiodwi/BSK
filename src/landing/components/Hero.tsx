@@ -15,6 +15,7 @@ export function Hero({ block }: SectionComponentProps) {
   const stageRef = useRef<HTMLElement>(null);
   const bikeLayerRef = useRef<HTMLDivElement>(null);
   const titleLayerRef = useRef<HTMLHeadingElement>(null);
+  const touchStartXRef = useRef<number | null>(null);
 
   const bikes = BSK_BIKES;
   const activeBike = bikes[activeIndex] ?? bikes[0];
@@ -25,6 +26,20 @@ export function Hero({ block }: SectionComponentProps) {
 
   const handlePrev = () => setActiveIndex(prevIndex);
   const handleNext = () => setActiveIndex(nextIndex);
+
+  const onStageTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const onStageTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartXRef.current;
+    touchStartXRef.current = null;
+    if (startX === null) return;
+    const dx = (e.changedTouches[0]?.clientX ?? startX) - startX;
+    if (Math.abs(dx) < 42) return;
+    if (dx < 0) handleNext();
+    else handlePrev();
+  };
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -67,9 +82,9 @@ export function Hero({ block }: SectionComponentProps) {
     <section
       id="hero"
       ref={stageRef}
-      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-[#07080A] pt-20 pb-8 text-white sm:pt-24 sm:pb-10 lg:pt-28 lg:pb-12"
+      className="bsk-dark-section relative flex min-h-[84dvh] flex-col justify-center overflow-hidden bg-[#07080A] pt-24 pb-10 text-white sm:min-h-[90dvh] md:min-h-[100dvh] md:justify-end md:pt-28 md:pb-12"
     >
-      {/* Anchor background to bottom so warm sunlit garage floor sits directly beneath the motorcycle stand and wheels */}
+      {/* Anchor background higher on portrait mobile so center stage stays framed in garage light */}
       <Image
         src="/background.webp"
         alt=""
@@ -78,7 +93,7 @@ export function Hero({ block }: SectionComponentProps) {
         priority
         quality={80}
         sizes="100vw"
-        className="pointer-events-none object-cover object-bottom select-none"
+        className="pointer-events-none object-cover object-[50%_76%] select-none md:object-bottom"
       />
 
       <div
@@ -96,26 +111,30 @@ export function Hero({ block }: SectionComponentProps) {
       <div className="relative z-20 mx-auto w-full max-w-[1440px] px-4 sm:px-8">
         {/* Title Lockup Flanking Overhead: single-line condensed lockup prevents height jumps */}
         <div {...heroEnterAttr(0)} className="mx-auto max-w-[940px]">
-          <div className="flex items-baseline justify-between gap-2 px-1">
-            <span className="font-condensed text-xs tracking-[0.06em] text-white uppercase whitespace-nowrap sm:text-xl lg:text-2xl">
+          <div className="flex items-baseline justify-between gap-3 px-1">
+            <span className="shrink-0 font-condensed text-[11px] tracking-[0.06em] text-white uppercase whitespace-nowrap sm:text-xl lg:text-2xl">
               {bind(block, "subtitle", "BSK CUSTOM")}
             </span>
-            <span className="font-condensed text-xs tracking-[0.06em] text-[#FF6B35] uppercase whitespace-nowrap sm:text-xl lg:text-2xl">
+            <span className="min-w-0 truncate text-right font-condensed text-[11px] tracking-[0.06em] text-[#FF6B35] uppercase sm:text-xl lg:text-2xl">
               {locale === "en" ? activeBike.categoryLabelEn : activeBike.categoryLabel}
             </span>
           </div>
 
           <h1
             ref={titleLayerRef}
-            className="mt-1 text-center font-condensed text-[clamp(2.4rem,10.5vw,10rem)] leading-[0.84] tracking-[-0.01em] text-white uppercase whitespace-nowrap drop-shadow-[0_10px_28px_rgba(0,0,0,0.5)] select-none"
+            className="mt-1.5 text-center font-condensed text-[clamp(2.65rem,12.5vw,10rem)] leading-[0.86] tracking-[-0.01em] text-white uppercase whitespace-nowrap drop-shadow-[0_10px_28px_rgba(0,0,0,0.5)] select-none"
           >
             {activeBike.heroTitle}
           </h1>
         </div>
 
-        {/* Fixed-Height Center Bike Stage with Left and Right Flank Arrows */}
-        <div className="relative mx-auto -mt-8 flex w-full max-w-[1060px] flex-col items-center sm:-mt-14 lg:-mt-22">
-          <div className="relative flex h-[230px] w-full items-end justify-center px-10 sm:h-[360px] sm:px-14 lg:h-[460px] lg:px-16 xl:h-[500px]">
+        {/* Fixed-Height Center Bike Stage with Left and Right Flank Arrows + Mobile Swipe */}
+        <div className="relative mx-auto -mt-3 flex w-full max-w-[1060px] flex-col items-center sm:-mt-12 lg:-mt-22">
+          <div
+            onTouchStart={onStageTouchStart}
+            onTouchEnd={onStageTouchEnd}
+            className="relative flex h-[260px] w-full items-end justify-center px-7 touch-pan-y sm:h-[360px] sm:px-14 lg:h-[460px] lg:px-16 xl:h-[500px]"
+          >
             {/* Left Arrow Flanking the Bike */}
             <button
               type="button"
@@ -164,8 +183,8 @@ export function Hero({ block }: SectionComponentProps) {
                   height={activeBike.height}
                   priority={activeIndex === 0}
                   quality={85}
-                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 76vw, 760px"
-                  className="relative z-20 block h-auto max-h-[230px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.75)] sm:max-h-[360px] lg:max-h-[460px] xl:max-h-[500px]"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 76vw, 760px"
+                  className="relative z-20 block h-auto max-h-[260px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.75)] sm:max-h-[360px] lg:max-h-[460px] xl:max-h-[500px]"
                 />
               </div>
             </div>
@@ -181,8 +200,32 @@ export function Hero({ block }: SectionComponentProps) {
             </button>
           </div>
 
+          {/* Mobile-only slide pagination indicator (desktop shows flanking peeking bikes) */}
+          <div className="relative z-30 mt-2 flex items-center justify-center md:hidden">
+            {bikes.map((bike, idx) => {
+              const isCur = idx === activeIndex;
+              return (
+                <button
+                  key={bike.id}
+                  type="button"
+                  onClick={() => setActiveIndex(idx)}
+                  aria-label={bike.name}
+                  aria-current={isCur ? "true" : undefined}
+                  className="flex h-10 w-8 items-center justify-center"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`h-1.5 rounded-full transition-all ${
+                      isCur ? "w-6 bg-[#FF6B35]" : "w-2 bg-white/30"
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
           {/* Bottom Centered Underlined Direct WhatsApp Action for Active Bike */}
-          <div {...heroEnterAttr(0.18)} className="relative z-30 mt-4 flex flex-col items-center">
+          <div {...heroEnterAttr(0.18)} className="relative z-30 mt-1 flex flex-col items-center md:mt-4">
             <a
               href={buildDirectWhatsAppUrl(site.contact.whatsapp_number, activeBike.name, locale)}
               target="_blank"
