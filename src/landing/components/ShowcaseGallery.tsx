@@ -31,8 +31,16 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffsetPx, setDragOffsetPx] = useState(0);
+
   const closeBtnRef = useRef<HTMLButtonElement>(null);
-  const dragStartX = useRef<number | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const lastClientXRef = useRef(0);
+  const totalMovementRef = useRef(0);
+  const accumDeltaRef = useRef(0);
+  const suppressClickRef = useRef(false);
+  const wheelAccumRef = useRef(0);
 
   const items = BSK_GALLERY;
   const safeIndex = items.length > 0 ? activeIndex % items.length : 0;
@@ -56,6 +64,90 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
     setLightboxItem(items[nextIdx]);
     setActiveIndex(nextIdx);
   };
+
+  // Continuous click-hold-drag scrubbing across window so moving past card bounds never stalls
+  useEffect(() => {
+    if (!isDragging) return;
+    const STEP_PX = 135;
+
+    const onPointerMove = (e: PointerEvent) => {
+      const dx = e.clientX - lastClientXRef.current;
+      lastClientXRef.current = e.clientX;
+      totalMovementRef.current += Math.abs(dx);
+      if (totalMovementRef.current > 7) {
+        suppressClickRef.current = true;
+      }
+
+      accumDeltaRef.current += dx;
+      while (accumDeltaRef.current >= STEP_PX) {
+        accumDeltaRef.current -= STEP_PX;
+        setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+      }
+      while (accumDeltaRef.current <= -STEP_PX) {
+        accumDeltaRef.current += STEP_PX;
+        setActiveIndex((prev) => (prev + 1) % items.length);
+      }
+
+      setDragOffsetPx(accumDeltaRef.current);
+    };
+
+    const finishDrag = () => {
+      if (accumDeltaRef.current >= 42) {
+        setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+      } else if (accumDeltaRef.current <= -42) {
+        setActiveIndex((prev) => (prev + 1) % items.length);
+      }
+      accumDeltaRef.current = 0;
+      setDragOffsetPx(0);
+      setIsDragging(false);
+      window.setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 0);
+    };
+
+    const prevCursor = document.body.style.cursor;
+    document.body.style.cursor = "grabbing";
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", finishDrag);
+    window.addEventListener("pointercancel", finishDrag);
+    return () => {
+      document.body.style.cursor = prevCursor;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", finishDrag);
+      window.removeEventListener("pointercancel", finishDrag);
+    };
+  }, [isDragging, items.length]);
+
+  // Horizontal trackpad scroll or Shift + Mouse Wheel navigation without blocking vertical scroll
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const WHEEL_STEP = 60;
+    const onWheel = (e: WheelEvent) => {
+      const isHorizontalIntent =
+        Math.abs(e.deltaX) > Math.abs(e.deltaY) || (e.shiftKey && Math.abs(e.deltaY) > 0);
+      if (!isHorizontalIntent) return;
+
+      e.preventDefault();
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      wheelAccumRef.current += delta;
+
+      while (wheelAccumRef.current >= WHEEL_STEP) {
+        wheelAccumRef.current -= WHEEL_STEP;
+        setActiveIndex((prev) => (prev + 1) % items.length);
+      }
+      while (wheelAccumRef.current <= -WHEEL_STEP) {
+        wheelAccumRef.current += WHEEL_STEP;
+        setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+      }
+    };
+
+    stage.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      stage.removeEventListener("wheel", onWheel);
+    };
+  }, [items.length]);
 
   // Lightbox keyboard navigation & accessible focus return
   useEffect(() => {
@@ -91,16 +183,13 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
   }, [lightboxItem, items]);
 
   const onStagePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    dragStartX.current = e.clientX;
-  };
-
-  const onStagePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (dragStartX.current === null) return;
-    const delta = e.clientX - dragStartX.current;
-    dragStartX.current = null;
-    if (Math.abs(delta) < 42) return;
-    if (delta > 0) handlePrev();
-    else handleNext();
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    lastClientXRef.current = e.clientX;
+    totalMovementRef.current = 0;
+    accumDeltaRef.current = 0;
+    suppressClickRef.current = false;
+    setDragOffsetPx(0);
+    setIsDragging(true);
   };
 
   const activeTitle =
@@ -134,16 +223,15 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
           </h2>
         </div>
 
-        {/* Center-Focus Coverflow Stacked Stage */}
+        {/* Center-Focus Coverflow Stacked Stage (Click-Hold Drag & Horizontal Scroll) */}
         {activeItem && (
           <div {...revealUp(0.08)} className="mt-12">
             <div
+              ref={stageRef}
               onPointerDown={onStagePointerDown}
-              onPointerUp={onStagePointerUp}
-              onPointerCancel={() => {
-                dragStartX.current = null;
-              }}
-              className="relative mx-auto h-[370px] w-full max-w-[1160px] touch-pan-y select-none sm:h-[470px] lg:h-[520px]"
+              className={`relative mx-auto h-[370px] w-full max-w-[1160px] touch-pan-y select-none sm:h-[470px] lg:h-[520px] ${
+                isDragging ? "cursor-grabbing" : "cursor-grab"
+              }`}
             >
               {items.map((item, idx) => {
                 const offset = circularOffset(idx, safeIndex, items.length);
@@ -165,6 +253,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                           ? "-96%"
                           : "96%";
 
+                const liveDragShift = Math.round(dragOffsetPx * 0.45);
                 const scaleVal = isCenter ? 1 : abs === 1 ? 0.84 : 0.68;
                 const zClass = isCenter ? "z-30" : abs === 1 ? "z-20" : "z-10";
                 const itemTitle = locale === "en" ? item.titleEn : item.title;
@@ -174,6 +263,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                     key={item.id}
                     type="button"
                     onClick={() => {
+                      if (suppressClickRef.current) return;
                       if (isCenter) setLightboxItem(item);
                       else setActiveIndex(idx);
                     }}
@@ -183,9 +273,15 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                         : `${itemTitle}`
                     }
                     style={{
-                      transform: `translate(-50%, -50%) translateX(${translatePercent}) scale(${scaleVal})`,
+                      transform: `translate(-50%, -50%) translateX(calc(${translatePercent} + ${liveDragShift}px)) scale(${scaleVal})`,
                     }}
-                    className={`group absolute top-1/2 left-1/2 aspect-[3/4] w-[250px] overflow-hidden rounded-2xl bg-[#141518] transition-all duration-300 ease-out sm:w-[325px] lg:w-[360px] ${zClass} ${
+                    className={`group absolute top-1/2 left-1/2 aspect-[3/4] w-[250px] overflow-hidden rounded-2xl bg-[#141518] sm:w-[325px] lg:w-[360px] ${
+                      isDragging
+                        ? "cursor-grabbing transition-[box-shadow,filter] duration-75"
+                        : isCenter
+                          ? "cursor-grab transition-all duration-300 ease-out"
+                          : "cursor-pointer transition-all duration-300 ease-out"
+                    } ${zClass} ${
                       isCenter
                         ? "shadow-[0_28px_70px_rgba(0,0,0,0.9)]"
                         : abs === 1
@@ -202,7 +298,9 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                       draggable={false}
                       className={`h-full w-full object-cover object-center transition-[transform,filter] duration-500 ${
                         isCenter
-                          ? "brightness-100 group-hover:scale-[1.03]"
+                          ? isDragging
+                            ? "brightness-100"
+                            : "brightness-100 group-hover:scale-[1.03]"
                           : abs === 1
                             ? "brightness-[0.5] group-hover:brightness-[0.76]"
                             : "brightness-[0.28] group-hover:brightness-[0.52]"
