@@ -19,12 +19,14 @@ import {
   type SectionComponentProps,
 } from "../lib/helpers";
 
-function circularOffset(idx: number, activeIdx: number, length: number): number {
-  let diff = idx - activeIdx;
-  const half = length / 2;
-  if (diff > half) diff -= length;
-  if (diff < -half) diff += length;
+function wrapContinuousOffset(idx: number, pos: number, length: number): number {
+  let diff = idx - pos;
+  diff -= Math.round(diff / length) * length;
   return diff;
+}
+
+function wrapIndex(pos: number, length: number): number {
+  return ((Math.round(pos) % length) + length) % length;
 }
 
 export function ShowcaseGallery({ block }: SectionComponentProps) {
@@ -32,74 +34,154 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [dragOffsetPx, setDragOffsetPx] = useState(0);
 
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  // Continuous motion refs: identical fluid glide for click-hold drag, wheel scroll, and arrow clicks
+  const targetPosRef = useRef(0);
+  const currentPosRef = useRef(0);
+  const isDraggingRef = useRef(false);
   const lastClientXRef = useRef(0);
+  const velocityPxRef = useRef(0);
   const totalMovementRef = useRef(0);
-  const accumDeltaRef = useRef(0);
   const suppressClickRef = useRef(false);
-  const wheelAccumRef = useRef(0);
+  const wheelSnapTimerRef = useRef<number | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const kickAnimationRef = useRef<() => void>(() => {});
 
   const items = BSK_GALLERY;
-  const safeIndex = items.length > 0 ? activeIndex % items.length : 0;
-  const activeItem = items[safeIndex] ?? items[0];
+  const activeItem = items[activeIndex] ?? items[0];
 
-  const handlePrev = () => {
-    if (items.length <= 1) return;
-    setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+  // Unified rAF coverflow render & damping loop (runs only while animating)
+  useEffect(() => {
+    const length = items.length;
+    if (length === 0) return;
+
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const applyCardTransforms = (pos: number) => {
+      for (let idx = 0; idx < length; idx++) {
+        const el = cardRefs.current[idx];
+        if (!el) continue;
+
+        const rel = wrapContinuousOffset(idx, pos, length);
+        const abs = Math.abs(rel);
+        el.dataset.ready = "true";
+
+        if (abs > 2.55) {
+          el.style.visibility = "hidden";
+          el.style.pointerEvents = "none";
+          continue;
+        }
+
+        const translatePct =
+          abs <= 1 ? rel * 54 : Math.sign(rel) * (54 + (abs - 1) * 42);
+        const scaleVal = Math.max(0.55, 1 - abs * 0.16);
+        const zVal = Math.round(40 - abs * 10);
+        const dim =
+          abs <= 1
+            ? Math.max(0.5, 1 - abs * 0.5)
+            : Math.max(0.2, 0.5 - (abs - 1) * 0.22);
+        const dimHover = Math.min(1, dim + 0.24);
+        const isCenterNow = abs < 0.35;
+
+        el.style.visibility = "visible";
+        el.style.pointerEvents = "auto";
+        el.style.zIndex = String(zVal);
+        el.style.transform = `translate(-50%, -50%) translateX(${translatePct.toFixed(2)}%) scale(${scaleVal.toFixed(4)})`;
+        el.style.setProperty("--dim", dim.toFixed(3));
+        el.style.setProperty("--dim-hover", dimHover.toFixed(3));
+        el.dataset.active = isCenterNow ? "true" : "false";
+        el.dataset.dragging = isDraggingRef.current ? "true" : "false";
+      }
+    };
+
+    const tick = () => {
+      const diff = targetPosRef.current - currentPosRef.current;
+      const draggingNow = isDraggingRef.current;
+
+      if (prefersReduced) {
+        currentPosRef.current = targetPosRef.current;
+      } else {
+        const factor = draggingNow ? 0.36 : 0.15;
+        currentPosRef.current += diff * factor;
+      }
+
+      applyCardTransforms(currentPosRef.current);
+
+      const nearest = wrapIndex(currentPosRef.current, length);
+      setActiveIndex((prev) => (prev === nearest ? prev : nearest));
+
+      const stillMoving = Math.abs(targetPosRef.current - currentPosRef.current) > 0.0012;
+      if (stillMoving || draggingNow) {
+        rafIdRef.current = window.requestAnimationFrame(tick);
+      } else {
+        currentPosRef.current = targetPosRef.current;
+        applyCardTransforms(currentPosRef.current);
+        rafIdRef.current = null;
+      }
+    };
+
+    const startLoop = () => {
+      if (rafIdRef.current === null) {
+        rafIdRef.current = window.requestAnimationFrame(tick);
+      }
+    };
+
+    kickAnimationRef.current = startLoop;
+    applyCardTransforms(currentPosRef.current);
+
+    return () => {
+      if (rafIdRef.current !== null) {
+        window.cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+    };
+  }, [items.length]);
+
+  const moveBySteps = (steps: number) => {
+    targetPosRef.current = Math.round(targetPosRef.current) + steps;
+    kickAnimationRef.current();
   };
 
-  const handleNext = () => {
-    if (items.length <= 1) return;
-    setActiveIndex((prev) => (prev + 1) % items.length);
+  const focusNearestItem = (idx: number) => {
+    const rel = wrapContinuousOffset(idx, targetPosRef.current, items.length);
+    targetPosRef.current = Math.round(targetPosRef.current + rel);
+    kickAnimationRef.current();
   };
 
-  const handleLightboxStep = (dir: -1 | 1) => {
-    if (!lightboxItem || items.length <= 1) return;
-    const curIdx = items.findIndex((i) => i.id === lightboxItem.id);
-    if (curIdx === -1) return;
-    const nextIdx = (curIdx + dir + items.length) % items.length;
-    setLightboxItem(items[nextIdx]);
-    setActiveIndex(nextIdx);
-  };
-
-  // Continuous click-hold-drag scrubbing across window so moving past card bounds never stalls
+  // Continuous click-hold-drag scrubbing with momentum snap on release
   useEffect(() => {
     if (!isDragging) return;
-    const STEP_PX = 135;
+    const DRAG_PX_PER_CARD = 210;
 
     const onPointerMove = (e: PointerEvent) => {
       const dx = e.clientX - lastClientXRef.current;
       lastClientXRef.current = e.clientX;
+      velocityPxRef.current = dx;
       totalMovementRef.current += Math.abs(dx);
       if (totalMovementRef.current > 7) {
         suppressClickRef.current = true;
       }
 
-      accumDeltaRef.current += dx;
-      while (accumDeltaRef.current >= STEP_PX) {
-        accumDeltaRef.current -= STEP_PX;
-        setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-      }
-      while (accumDeltaRef.current <= -STEP_PX) {
-        accumDeltaRef.current += STEP_PX;
-        setActiveIndex((prev) => (prev + 1) % items.length);
-      }
-
-      setDragOffsetPx(accumDeltaRef.current);
+      targetPosRef.current -= dx / DRAG_PX_PER_CARD;
+      kickAnimationRef.current();
     };
 
     const finishDrag = () => {
-      if (accumDeltaRef.current >= 42) {
-        setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-      } else if (accumDeltaRef.current <= -42) {
-        setActiveIndex((prev) => (prev + 1) % items.length);
-      }
-      accumDeltaRef.current = 0;
-      setDragOffsetPx(0);
+      isDraggingRef.current = false;
       setIsDragging(false);
+
+      // Apply slight inertial carry on quick flicks before snapping cleanly to nearest card
+      const flickCarry = Math.max(-0.65, Math.min(0.65, -velocityPxRef.current / 28));
+      targetPosRef.current = Math.round(targetPosRef.current + flickCarry);
+      velocityPxRef.current = 0;
+      kickAnimationRef.current();
+
       window.setTimeout(() => {
         suppressClickRef.current = false;
       }, 0);
@@ -116,40 +198,54 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       window.removeEventListener("pointerup", finishDrag);
       window.removeEventListener("pointercancel", finishDrag);
     };
-  }, [isDragging, items.length]);
+  }, [isDragging]);
 
-  // Horizontal trackpad scroll or Shift + Mouse Wheel navigation without blocking vertical scroll
+  // Continuous horizontal trackpad swipe / Shift + Mouse Wheel with identical snap glide
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
+    const WHEEL_PX_PER_CARD = 190;
 
-    const WHEEL_STEP = 60;
     const onWheel = (e: WheelEvent) => {
       const isHorizontalIntent =
-        Math.abs(e.deltaX) > Math.abs(e.deltaY) || (e.shiftKey && Math.abs(e.deltaY) > 0);
+        Math.abs(e.deltaX) > Math.abs(e.deltaY) ||
+        (e.shiftKey && Math.abs(e.deltaY) > 0);
       if (!isHorizontalIntent) return;
 
       e.preventDefault();
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      wheelAccumRef.current += delta;
+      targetPosRef.current += delta / WHEEL_PX_PER_CARD;
+      kickAnimationRef.current();
 
-      while (wheelAccumRef.current >= WHEEL_STEP) {
-        wheelAccumRef.current -= WHEEL_STEP;
-        setActiveIndex((prev) => (prev + 1) % items.length);
+      if (wheelSnapTimerRef.current !== null) {
+        window.clearTimeout(wheelSnapTimerRef.current);
       }
-      while (wheelAccumRef.current <= -WHEEL_STEP) {
-        wheelAccumRef.current += WHEEL_STEP;
-        setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-      }
+      wheelSnapTimerRef.current = window.setTimeout(() => {
+        targetPosRef.current = Math.round(targetPosRef.current);
+        kickAnimationRef.current();
+        wheelSnapTimerRef.current = null;
+      }, 130);
     };
 
     stage.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       stage.removeEventListener("wheel", onWheel);
+      if (wheelSnapTimerRef.current !== null) {
+        window.clearTimeout(wheelSnapTimerRef.current);
+      }
     };
-  }, [items.length]);
+  }, []);
 
   // Lightbox keyboard navigation & accessible focus return
+  const handleLightboxStep = (dir: -1 | 1) => {
+    if (!lightboxItem || items.length <= 1) return;
+    const curIdx = items.findIndex((i) => i.id === lightboxItem.id);
+    if (curIdx === -1) return;
+    const nextIdx = (curIdx + dir + items.length) % items.length;
+    setLightboxItem(items[nextIdx]);
+    focusNearestItem(nextIdx);
+  };
+
   useEffect(() => {
     if (!lightboxItem) return;
     const previous = activeElementRef();
@@ -162,7 +258,9 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       if (curIdx === -1) return;
       const nextIdx = (curIdx + dir + items.length) % items.length;
       setLightboxItem(items[nextIdx]);
-      setActiveIndex(nextIdx);
+      const rel = wrapContinuousOffset(nextIdx, targetPosRef.current, items.length);
+      targetPosRef.current = Math.round(targetPosRef.current + rel);
+      kickAnimationRef.current();
     };
 
     const detachKeys = attachKeydown((key) => {
@@ -184,12 +282,13 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
 
   const onStagePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    isDraggingRef.current = true;
     lastClientXRef.current = e.clientX;
+    velocityPxRef.current = 0;
     totalMovementRef.current = 0;
-    accumDeltaRef.current = 0;
     suppressClickRef.current = false;
-    setDragOffsetPx(0);
     setIsDragging(true);
+    kickAnimationRef.current();
   };
 
   const activeTitle =
@@ -223,70 +322,44 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
           </h2>
         </div>
 
-        {/* Center-Focus Coverflow Stacked Stage (Click-Hold Drag & Horizontal Scroll) */}
+        {/* Continuous 60fps Center-Focus Coverflow Stage */}
         {activeItem && (
           <div {...revealUp(0.08)} className="mt-12">
             <div
               ref={stageRef}
               onPointerDown={onStagePointerDown}
+              onDragStart={(e) => e.preventDefault()}
               className={`relative mx-auto h-[370px] w-full max-w-[1160px] touch-pan-y select-none sm:h-[470px] lg:h-[520px] ${
                 isDragging ? "cursor-grabbing" : "cursor-grab"
               }`}
             >
               {items.map((item, idx) => {
-                const offset = circularOffset(idx, safeIndex, items.length);
-                const abs = Math.abs(offset);
-                if (abs > 2) return null;
-                if (items.length < 3 && abs === 2) return null;
-                if (items.length === 1 && offset !== 0) return null;
-
-                const isCenter = offset === 0;
-
-                const translatePercent =
-                  offset === 0
-                    ? "0%"
-                    : offset === -1
-                      ? "-54%"
-                      : offset === 1
-                        ? "54%"
-                        : offset === -2
-                          ? "-96%"
-                          : "96%";
-
-                const liveDragShift = Math.round(dragOffsetPx * 0.45);
-                const scaleVal = isCenter ? 1 : abs === 1 ? 0.84 : 0.68;
-                const zClass = isCenter ? "z-30" : abs === 1 ? "z-20" : "z-10";
                 const itemTitle = locale === "en" ? item.titleEn : item.title;
+                const isActive = idx === activeIndex;
 
                 return (
                   <button
                     key={item.id}
+                    ref={(el) => {
+                      cardRefs.current[idx] = el;
+                    }}
                     type="button"
                     onClick={() => {
                       if (suppressClickRef.current) return;
-                      if (isCenter) setLightboxItem(item);
-                      else setActiveIndex(idx);
+                      if (isActive) setLightboxItem(item);
+                      else focusNearestItem(idx);
                     }}
                     aria-label={
-                      isCenter
+                      isActive
                         ? `${tr("Show Foto Penuh", locale)}: ${itemTitle}`
                         : `${itemTitle}`
                     }
-                    style={{
-                      transform: `translate(-50%, -50%) translateX(calc(${translatePercent} + ${liveDragShift}px)) scale(${scaleVal})`,
-                    }}
-                    className={`group absolute top-1/2 left-1/2 aspect-[3/4] w-[250px] overflow-hidden rounded-2xl bg-[#141518] sm:w-[325px] lg:w-[360px] ${
+                    className={`bsk-coverflow-card group absolute top-1/2 left-1/2 aspect-[3/4] w-[250px] overflow-hidden rounded-2xl bg-[#141518] shadow-[0_24px_60px_rgba(0,0,0,0.85)] sm:w-[325px] lg:w-[360px] ${
                       isDragging
-                        ? "cursor-grabbing transition-[box-shadow,filter] duration-75"
-                        : isCenter
-                          ? "cursor-grab transition-all duration-300 ease-out"
-                          : "cursor-pointer transition-all duration-300 ease-out"
-                    } ${zClass} ${
-                      isCenter
-                        ? "shadow-[0_28px_70px_rgba(0,0,0,0.9)]"
-                        : abs === 1
-                          ? "shadow-[0_20px_45px_rgba(0,0,0,0.85)]"
-                          : "hidden shadow-[0_14px_35px_rgba(0,0,0,0.8)] sm:block"
+                        ? "cursor-grabbing"
+                        : isActive
+                          ? "cursor-grab"
+                          : "cursor-pointer"
                     }`}
                   >
                     <img
@@ -296,26 +369,18 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                       height={item.height}
                       {...imgPerfProps()}
                       draggable={false}
-                      className={`h-full w-full object-cover object-center transition-[transform,filter] duration-500 ${
-                        isCenter
-                          ? isDragging
-                            ? "brightness-100"
-                            : "brightness-100 group-hover:scale-[1.03]"
-                          : abs === 1
-                            ? "brightness-[0.5] group-hover:brightness-[0.76]"
-                            : "brightness-[0.28] group-hover:brightness-[0.52]"
-                      }`}
+                      className="bsk-coverflow-img h-full w-full object-cover object-center"
                     />
                   </button>
                 );
               })}
             </div>
 
-            {/* Clean Bottom Controls + Caption (no extra action pill clutter) */}
+            {/* Clean Bottom Controls + Caption */}
             <div className="mx-auto mt-6 flex max-w-2xl items-center justify-between gap-4">
               <button
                 type="button"
-                onClick={handlePrev}
+                onClick={() => moveBySteps(-1)}
                 aria-label={tr("Foto Sebelumnya", locale)}
                 className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[#141518] text-[#D1D5DB] transition-colors hover:border-[#FF6B35] hover:text-white"
               >
@@ -333,7 +398,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
 
               <button
                 type="button"
-                onClick={handleNext}
+                onClick={() => moveBySteps(1)}
                 aria-label={tr("Foto Berikutnya", locale)}
                 className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[#141518] text-[#D1D5DB] transition-colors hover:border-[#FF6B35] hover:text-white"
               >
