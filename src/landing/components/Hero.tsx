@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import gsap from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BSK_BIKES, site } from "../content/site";
@@ -23,6 +23,19 @@ export function Hero({ block }: SectionComponentProps) {
   const nextIndex = (activeIndex + 1) % bikes.length;
   const prevBike = bikes[prevIndex];
   const nextBike = bikes[nextIndex];
+
+  const commonBg = {
+    alt: "",
+    fill: true,
+    quality: 80,
+    sizes: "100vw",
+  };
+  const {
+    props: { srcSet: mobileBgSrcSet },
+  } = getImageProps({ ...commonBg, src: "/background-mobile.webp" });
+  const {
+    props: { srcSet: desktopBgSrcSet, ...desktopBgRest },
+  } = getImageProps({ ...commonBg, src: "/background.webp" });
 
   const handlePrev = () => setActiveIndex(prevIndex);
   const handleNext = () => setActiveIndex(nextIndex);
@@ -84,17 +97,18 @@ export function Hero({ block }: SectionComponentProps) {
       ref={stageRef}
       className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#07080A] pt-14 pb-12 text-white sm:pt-24 sm:pb-10 md:justify-end md:pt-28 md:pb-12"
     >
-      {/* Anchor garage backdrop at bottom so brick floor frames lower section naturally */}
-      <Image
-        src="/background.webp"
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        quality={80}
-        sizes="100vw"
-        className="pointer-events-none object-cover object-bottom select-none"
-      />
+      {/* Art-directed garage backdrop: portrait floor-aligned crop on mobile, full 16:9 workshop on desktop */}
+      <picture className="pointer-events-none absolute inset-0 select-none">
+        <source media="(max-width: 767px)" srcSet={mobileBgSrcSet} sizes="100vw" />
+        <source media="(min-width: 768px)" srcSet={desktopBgSrcSet} sizes="100vw" />
+        <img
+          {...desktopBgRest}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          className="pointer-events-none h-full w-full object-cover object-bottom select-none"
+        />
+      </picture>
 
       <div
         aria-hidden="true"
