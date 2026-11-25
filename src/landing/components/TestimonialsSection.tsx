@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Quote } from "lucide-react";
 import { BSK_TESTIMONIALS, type TestimonialItem } from "../content/site";
 import { bind } from "../lib/bind";
@@ -12,15 +13,27 @@ function getInitials(name: string): string {
   return `${parts[0][0] ?? ""}${parts[1][0] ?? ""}`.toUpperCase();
 }
 
+function wrapTrackOffset(x: number, setWidth: number): number {
+  if (setWidth <= 0) return 0;
+  const mod = ((x % setWidth) + setWidth) % setWidth;
+  return mod - setWidth;
+}
+
 function TestimonialCard({
   item,
   locale,
+  onCardHover,
 }: {
   item: TestimonialItem;
   locale: "id" | "en";
+  onCardHover: (hovered: boolean) => void;
 }) {
   return (
-    <article className="bsk-testimonial-card flex h-full w-[310px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:w-[370px] sm:p-7 lg:w-[400px]">
+    <article
+      onMouseEnter={() => onCardHover(true)}
+      onMouseLeave={() => onCardHover(false)}
+      className="bsk-testimonial-card flex h-full w-[310px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:w-[370px] sm:p-7 lg:w-[400px]"
+    >
       <div>
         <Quote className="h-6 w-6 fill-[#FF6B35] text-[#FF6B35]" aria-hidden="true" />
         <p className="mt-4 text-sm leading-relaxed text-[#E5E7EB] sm:text-[15px]">
@@ -59,32 +72,195 @@ function MarqueeRow({
   locale: "id" | "en";
   ariaLabel: string;
 }) {
-  const animClass =
-    direction === "right" ? "bsk-marquee-right" : "bsk-marquee-left";
+  const [isDragging, setIsDragging] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const regionRef = useRef<HTMLDivElement>(null);
+
+  const offsetPxRef = useRef(0);
+  const isHoveredRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const lastClientXRef = useRef(0);
+  const velocityPxRef = useRef(0);
+  const setWidthRef = useRef(0);
+
+  // Measure single-set width (3 identical sets make loop seamless even on ultrawide displays)
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    let initialized = false;
+
+    const measure = () => {
+      const single = track.scrollWidth / 3;
+      if (single > 0) {
+        setWidthRef.current = single;
+        if (!initialized && direction === "left") {
+          offsetPxRef.current = -210;
+        }
+        initialized = true;
+        offsetPxRef.current = wrapTrackOffset(offsetPxRef.current, single);
+        track.style.transform = `translate3d(${offsetPxRef.current.toFixed(2)}px, 0, 0)`;
+      }
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [items.length, direction]);
+
+  // Continuous 60fps auto-scroll + inertial release + hover pause
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const baseSpeed = prefersReduced ? 0 : direction === "right" ? 38 : -38;
+
+    let rafId = 0;
+    let lastTime = performance.now();
+
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+      const setWidth = setWidthRef.current;
+
+      if (setWidth > 0 && !isDraggingRef.current) {
+        if (Math.abs(velocityPxRef.current) > 0.25) {
+          offsetPxRef.current = wrapTrackOffset(
+            offsetPxRef.current + velocityPxRef.current,
+            setWidth
+          );
+          velocityPxRef.current *= 0.92;
+        } else {
+          velocityPxRef.current = 0;
+          if (!isHoveredRef.current && baseSpeed !== 0) {
+            offsetPxRef.current = wrapTrackOffset(
+              offsetPxRef.current + baseSpeed * dt,
+              setWidth
+            );
+          }
+        }
+        track.style.transform = `translate3d(${offsetPxRef.current.toFixed(2)}px, 0, 0)`;
+      }
+
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    rafId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(rafId);
+  }, [direction]);
+
+  // Global drag-hold tracking so dragging continues smoothly beyond card edges
+  useEffect(() => {
+    if (!isDragging) return;
+    const track = trackRef.current;
+
+    const onPointerMove = (e: PointerEvent) => {
+      const dx = e.clientX - lastClientXRef.current;
+      lastClientXRef.current = e.clientX;
+      velocityPxRef.current = dx * 0.75;
+
+      const setWidth = setWidthRef.current;
+      if (track && setWidth > 0) {
+        offsetPxRef.current = wrapTrackOffset(offsetPxRef.current + dx, setWidth);
+        track.style.transform = `translate3d(${offsetPxRef.current.toFixed(2)}px, 0, 0)`;
+      }
+    };
+
+    const finishDrag = (e: PointerEvent) => {
+      isDraggingRef.current = false;
+      setIsDragging(false);
+      const underCursor = document.elementFromPoint(e.clientX, e.clientY);
+      isHoveredRef.current = Boolean(underCursor?.closest(".bsk-testimonial-card"));
+    };
+
+    const prevCursor = document.body.style.cursor;
+    document.body.style.cursor = "grabbing";
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", finishDrag);
+    window.addEventListener("pointercancel", finishDrag);
+    return () => {
+      document.body.style.cursor = prevCursor;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", finishDrag);
+      window.removeEventListener("pointercancel", finishDrag);
+    };
+  }, [isDragging]);
+
+  // Support horizontal trackpad / Shift + Mouse Wheel scrolling cleanly
+  useEffect(() => {
+    const region = regionRef.current;
+    const track = trackRef.current;
+    if (!region || !track) return;
+
+    const onWheel = (e: WheelEvent) => {
+      const isHorizontalIntent =
+        Math.abs(e.deltaX) > Math.abs(e.deltaY) ||
+        (e.shiftKey && Math.abs(e.deltaY) > 0);
+      if (!isHorizontalIntent) return;
+
+      e.preventDefault();
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      const setWidth = setWidthRef.current;
+      if (setWidth > 0) {
+        offsetPxRef.current = wrapTrackOffset(offsetPxRef.current - delta, setWidth);
+        track.style.transform = `translate3d(${offsetPxRef.current.toFixed(2)}px, 0, 0)`;
+      }
+    };
+
+    region.addEventListener("wheel", onWheel, { passive: false });
+    return () => region.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    isDraggingRef.current = true;
+    lastClientXRef.current = e.clientX;
+    velocityPxRef.current = 0;
+    setIsDragging(true);
+  };
 
   return (
     <div
+      ref={regionRef}
       role="region"
       aria-label={ariaLabel}
-      className="relative flex overflow-hidden"
+      onPointerDown={onPointerDown}
+      onDragStart={(e) => e.preventDefault()}
+      className={`relative flex overflow-hidden touch-pan-y select-none ${
+        isDragging ? "cursor-grabbing" : "cursor-grab"
+      }`}
     >
-      <div
-        className={`bsk-marquee-track flex w-max will-change-transform motion-reduce:w-full motion-reduce:overflow-x-auto motion-reduce:[animation:none] ${animClass}`}
-      >
+      <div ref={trackRef} className="flex w-max will-change-transform">
         {items.map((item) => (
           <div key={item.id} className="flex pr-4 sm:pr-5">
-            <TestimonialCard item={item} locale={locale} />
+            <TestimonialCard
+              item={item}
+              locale={locale}
+              onCardHover={(hovered) => {
+                isHoveredRef.current = hovered;
+              }}
+            />
           </div>
         ))}
 
-        {/* Seamless loop duplicate hidden from screen readers and motion-reduce fallback */}
-        <div aria-hidden="true" className="flex motion-reduce:hidden">
-          {items.map((item) => (
-            <div key={`${item.id}-dup`} className="flex pr-4 sm:pr-5">
-              <TestimonialCard item={item} locale={locale} />
-            </div>
-          ))}
-        </div>
+        {/* Duplicate sets for seamless wrap and ultrawide screens (hidden from screen readers) */}
+        {[1, 2].map((copyIdx) => (
+          <div key={copyIdx} aria-hidden="true" className="flex">
+            {items.map((item) => (
+              <div key={`${item.id}-dup-${copyIdx}`} className="flex pr-4 sm:pr-5">
+                <TestimonialCard
+                  item={item}
+                  locale={locale}
+                  onCardHover={(hovered) => {
+                    isHoveredRef.current = hovered;
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -124,9 +300,8 @@ export function TestimonialsSection({ block }: SectionComponentProps) {
         </div>
       </div>
 
-      {/* Opposing Dual-Row Scrolling Marquee Track */}
+      {/* Opposing Dual-Row Draggable & Hover-Pausable Marquee */}
       <div {...revealUp(0.08)} className="relative mx-auto mt-12 max-w-[1600px] pb-20 sm:pb-24 lg:pb-28">
-        {/* Soft Left & Right Edge Vignettes */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#090A0D] to-transparent sm:w-28 lg:w-44"
@@ -137,7 +312,6 @@ export function TestimonialsSection({ block }: SectionComponentProps) {
         />
 
         <div className="space-y-4 sm:space-y-5">
-          {/* Top Row Scrolling Right */}
           <MarqueeRow
             items={topRow}
             direction="right"
@@ -145,7 +319,6 @@ export function TestimonialsSection({ block }: SectionComponentProps) {
             ariaLabel={tr("Testimoni pelanggan baris atas", locale)}
           />
 
-          {/* Bottom Row Scrolling Left */}
           <MarqueeRow
             items={bottomRow}
             direction="left"
