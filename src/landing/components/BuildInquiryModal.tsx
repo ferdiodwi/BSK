@@ -9,78 +9,80 @@ import {
   ariaLabelAttr,
   ariaModalAttrs,
   attachKeydown,
-  buildEstimateSummaryText,
+  buildBuildInquiryText,
   buildWorkshopWhatsAppUrl,
   focusElement,
-  formatIDR,
   isEscapeKey,
   lockDocumentScroll,
 } from "../lib/helpers";
 import { WhatsAppLogo } from "../ui/BrandLogos";
 
-export type EstimatorBike = {
+export type InquiryBike = {
   id: string;
   name: string;
   desc: string;
-  baseModifier: number;
 };
 
-export type EstimatorPackage = {
+export type InquiryPackage = {
   id: string;
   name: string;
   desc: string;
-  price: number;
+  duration: string;
 };
 
-export type EstimatorAddon = {
+export type InquiryAddon = {
   id: string;
   name: string;
-  price: number;
 };
 
-const BIKES: EstimatorBike[] = [
-  { id: "cb-gelatik", name: "Honda CB Gelatik / 100", desc: "Setting tangki tipis & jok rata rangka", baseModifier: 0 },
-  { id: "cb-dream", name: "Honda CB Dream / Twin", desc: "Setting bodi montok & subframe kekar", baseModifier: 50000 },
-  { id: "gl-series", name: "Honda GL 100 / Pro / Max", desc: "Setting postur herex / restomod klasik", baseModifier: 50000 },
-  { id: "megapro", name: "Megapro Hiu / Primus", desc: "Setting rangka belakang & dudukan shock dobel", baseModifier: 100000 },
-  { id: "tiger", name: "Honda Tiger 2000 / Revo", desc: "Tata bodi total & penyesuaian dudukan mesin", baseModifier: 150000 },
+const BIKES: InquiryBike[] = [
+  { id: "cb-gelatik", name: "Honda CB Gelatik / 100", desc: "Setting tangki tipis & jok rata rangka" },
+  { id: "cb-dream", name: "Honda CB Dream / Twin", desc: "Setting bodi montok & subframe kekar" },
+  { id: "gl-series", name: "Honda GL 100 / Pro / Max", desc: "Setting postur herex / restomod klasik" },
+  { id: "megapro", name: "Megapro Hiu / Primus", desc: "Setting rangka belakang & dudukan shock dobel" },
+  { id: "tiger", name: "Honda Tiger 2000 / Revo", desc: "Tata bodi total & penyesuaian dudukan mesin" },
 ];
 
-const PACKAGES: EstimatorPackage[] = [
+const PACKAGES: InquiryPackage[] = [
   {
     id: "standar",
     name: "Paket Tata Body Standar",
     desc: "Fitting dudukan tangki, jok ngepress rapi, slebor depan/belakang, begel",
-    price: 450000,
+    duration: "3 - 5 Hari Kerja",
   },
   {
     id: "full-rangka",
     name: "Paket Full Rangka & Senter Kaki",
     desc: "Bikin subframe baru, setting kemiringan shock, as roda center",
-    price: 850000,
+    duration: "5 - 7 Hari Kerja",
   },
   {
     id: "restorasi",
     name: "Paket Restorasi Komplit + Cat Oven",
     desc: "Tata bodi, repaint oven rangka & bodi, serta rakit kelistrikan rapi",
-    price: 2200000,
+    duration: "10 - 14 Hari Kerja",
   },
   {
     id: "tune-up",
     name: "Paket Tune-Up & Setting Herex",
     desc: "Servis karbu/injeksi, klep, pengapian, dan uji jalan",
-    price: 350000,
+    duration: "1 - 2 Hari Kerja",
   },
 ];
 
-const ADDONS: EstimatorAddon[] = [
-  { id: "repaint-rangka", name: "Repaint Rangka Oven Anti Gores", price: 450000 },
-  { id: "custom-jok", name: "Jok Custom Busa Latex / Kulit Mbtech", price: 250000 },
-  { id: "kabel-rapi", name: "Penyembunyian Kabel Bodi Rapi", price: 150000 },
-  { id: "polish-mesin", name: "Poles Blok Mesin / Bak Kopling Kilap", price: 200000 },
+const ADDONS: InquiryAddon[] = [
+  { id: "repaint-rangka", name: "Repaint Rangka Oven Anti Gores" },
+  { id: "custom-jok", name: "Jok Custom Busa Latex / Kulit Mbtech" },
+  { id: "kabel-rapi", name: "Penyembunyian Kabel Bodi Rapi" },
+  { id: "polish-mesin", name: "Poles Blok Mesin / Bak Kopling Kilap" },
 ];
 
-export function ServiceEstimatorModal({
+const PARTS_OPTIONS = [
+  "Part & bodi bawa sendiri",
+  "Minta dicarikan bengkel",
+] as const;
+
+export function BuildInquiryModal({
   isOpen,
   onClose,
   initialBikeId,
@@ -95,40 +97,38 @@ export function ServiceEstimatorModal({
   const [selectedBike, setSelectedBike] = useState<string>(initialBikeId || BIKES[0].id);
   const [selectedPackage, setSelectedPackage] = useState<string>(initialPackageId || PACKAGES[1].id);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
+  const [partsStatus, setPartsStatus] = useState<string>(PARTS_OPTIONS[0]);
+  const [notes, setNotes] = useState<string>("");
   const [copied, setCopied] = useState(false);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const activeBikeObj = BIKES.find((b) => b.id === selectedBike) ?? BIKES[0];
   const activePackageObj = PACKAGES.find((p) => p.id === selectedPackage) ?? PACKAGES[0];
 
-  const totalEstimate =
-    activePackageObj.price +
-    activeBikeObj.baseModifier +
-    selectedAddons.reduce((sum, addonId) => {
-      const addon = ADDONS.find((a) => a.id === addonId);
-      return sum + (addon ? addon.price : 0);
-    }, 0);
-
   const selectedAddonsText =
     selectedAddons.length > 0
       ? selectedAddons.map((id) => ADDONS.find((a) => a.id === id)?.name).join(", ")
-      : "Tanpa tambahan";
+      : "Tidak ada tambahan";
+
+  const translatedPartsStatus = tr(partsStatus, locale);
 
   const waHref = buildWorkshopWhatsAppUrl(
     site.contact.whatsapp_number,
     activeBikeObj.name,
     activePackageObj.name,
     selectedAddonsText,
-    totalEstimate,
+    translatedPartsStatus,
+    notes,
     locale
   );
 
   const handleCopySummary = async () => {
-    const summary = buildEstimateSummaryText(
+    const summary = buildBuildInquiryText(
       activeBikeObj.name,
       activePackageObj.name,
       selectedAddonsText,
-      totalEstimate,
+      translatedPartsStatus,
+      notes,
       locale
     );
     try {
@@ -169,21 +169,21 @@ export function ServiceEstimatorModal({
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3 backdrop-blur-xs sm:p-6"
       role="dialog"
-      {...ariaModalAttrs("estimator-modal-title")}
+      {...ariaModalAttrs("inquiry-modal-title")}
     >
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
 
       <div className="bsk-dialog-in relative z-10 w-full max-w-[880px] overflow-hidden border border-black/15 bg-white text-[#111216] shadow-2xl">
         {/* Modal Header */}
         <div className="flex items-center justify-between border-b border-black/10 bg-[#141518] px-6 py-4 text-white">
-          <h3 id="estimator-modal-title" className="font-hero text-lg font-bold tracking-wider uppercase sm:text-xl">
-            {tr("Kalkulator Estimasi Biaya Tata Body", locale)}
+          <h3 id="inquiry-modal-title" className="font-hero text-lg font-bold tracking-wider uppercase sm:text-xl">
+            {tr("Pengajuan Konsep & Konsultasi Bengkel", locale)}
           </h3>
           <button
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            {...ariaLabelAttr("Tutup modal estimasi")}
+            {...ariaLabelAttr("Tutup formulir pengajuan konsep")}
             className="flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:bg-[#D62810]"
           >
             <X className="h-5 w-5" aria-hidden="true" />
@@ -225,7 +225,7 @@ export function ServiceEstimatorModal({
           {/* 2. Package Selector */}
           <fieldset className="mt-6">
             <legend className="font-mono text-xs font-bold tracking-wider text-[#D62810] uppercase">
-              {tr("2. Pilih Paket Jasa", locale)}
+              {tr("2. Pilih Paket Layanan", locale)}
             </legend>
             <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {PACKAGES.map((pkg) => {
@@ -243,13 +243,13 @@ export function ServiceEstimatorModal({
                     }`}
                   >
                     <div>
-                      <span className="font-hero text-sm font-bold uppercase">{pkg.name}</span>
+                      <span className="font-hero text-sm font-bold uppercase">{tr(pkg.name, locale)}</span>
                       <p className={`mt-1 text-xs leading-snug ${isSelected ? "text-white/90" : "text-[#4B5563]"}`}>
                         {pkg.desc}
                       </p>
                     </div>
-                    <div className={`mt-3 font-hero text-base font-bold tabular-nums ${isSelected ? "text-[#FFE600]" : "text-[#D62810]"}`}>
-                      {formatIDR(pkg.price)}
+                    <div className={`mt-3 font-mono text-xs font-bold uppercase ${isSelected ? "text-[#FFE600]" : "text-[#D62810]"}`}>
+                      {tr(pkg.duration, locale)}
                     </div>
                   </button>
                 );
@@ -271,46 +271,89 @@ export function ServiceEstimatorModal({
                     type="button"
                     aria-pressed={isChecked}
                     onClick={() => toggleAddon(addon.id)}
-                    className={`flex min-h-[48px] items-center justify-between border p-3.5 text-left transition-colors ${
+                    className={`flex min-h-[48px] items-center gap-2.5 border p-3.5 text-left transition-colors ${
                       isChecked
                         ? "border-[#141518] bg-[#141518] text-white"
                         : "border-black/15 bg-white text-[#111216] hover:bg-[#F5F5F6]"
                     }`}
                   >
-                    <span className="flex items-center gap-2.5">
-                      <span
-                        aria-hidden="true"
-                        className={`flex h-4 w-4 shrink-0 items-center justify-center border ${
-                          isChecked
-                            ? "border-[#FFE600] bg-[#FFE600] text-[#111216]"
-                            : "border-black/30 bg-white"
-                        }`}
-                      >
-                        {isChecked && <Check className="h-3 w-3 stroke-[3]" />}
-                      </span>
-                      <span className="text-xs font-semibold">{addon.name}</span>
+                    <span
+                      aria-hidden="true"
+                      className={`flex h-4 w-4 shrink-0 items-center justify-center border ${
+                        isChecked
+                          ? "border-[#FFE600] bg-[#FFE600] text-[#111216]"
+                          : "border-black/30 bg-white"
+                      }`}
+                    >
+                      {isChecked && <Check className="h-3 w-3 stroke-[3]" />}
                     </span>
-                    <span className={`font-hero text-xs font-bold tabular-nums ${isChecked ? "text-[#FFE600]" : "text-[#111216]"}`}>
-                      +{formatIDR(addon.price)}
-                    </span>
+                    <span className="text-xs font-semibold">{tr(addon.name, locale)}</span>
                   </button>
                 );
               })}
             </div>
           </fieldset>
 
-          {/* Estimate Output & Actions */}
+          {/* 4. Parts Availability Status */}
+          <fieldset className="mt-6">
+            <legend className="font-mono text-xs font-bold tracking-wider text-[#D62810] uppercase">
+              {tr("4. Status Part & Bodi", locale)}
+            </legend>
+            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {PARTS_OPTIONS.map((opt) => {
+                const isSelected = partsStatus === opt;
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => setPartsStatus(opt)}
+                    className={`flex min-h-[48px] items-center border px-4 py-3 text-left text-xs font-bold transition-colors ${
+                      isSelected
+                        ? "border-[#141518] bg-[#141518] text-white"
+                        : "border-black/15 bg-[#F5F5F6] text-[#111216] hover:border-black/40"
+                    }`}
+                  >
+                    {tr(opt, locale)}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          {/* Optional Condition Notes with Explicit Label */}
+          <div className="mt-6">
+            <label
+              htmlFor="motor-condition-notes"
+              className="block font-mono text-xs font-bold tracking-wider text-[#D62810] uppercase"
+            >
+              {tr("Catatan Kondisi Motor (Opsional)", locale)}
+            </label>
+            <textarea
+              id="motor-condition-notes"
+              rows={2}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder={tr("Contoh: Rangka bekas las lama, tangki bawa sendiri, butuh setel komstir.", locale)}
+              className="mt-2 w-full border border-black/20 bg-[#F5F5F6] p-3 text-xs text-[#111216] placeholder:text-[#6B7280] focus:border-[#D62810] focus:bg-white focus:outline-none"
+            />
+          </div>
+
+          {/* Summary Brief & WhatsApp Routing (No Pricing Shown) */}
           <div className="mt-8 border border-black/15 bg-[#141518] p-5 text-white">
-            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-              <div>
-                <span className="font-mono text-xs text-[#D1D5DB] uppercase">
-                  {tr("Total Estimasi Jasa", locale)}
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div className="space-y-1">
+                <span className="font-mono text-xs font-bold text-[#FFE600] uppercase">
+                  {tr("Ringkasan Pengajuan Konsep", locale)}
                 </span>
-                <div className="mt-1 font-hero text-3xl font-bold text-[#FFE600] tabular-nums">
-                  {formatIDR(totalEstimate)}
+                <div className="font-hero text-lg font-bold text-white uppercase">
+                  {activeBikeObj.name} · {tr(activePackageObj.name, locale)}
                 </div>
+                <p className="font-mono text-xs text-[#D1D5DB]">
+                  {translatedPartsStatus} · {tr(activePackageObj.duration, locale)}
+                </p>
                 {site.contact.whatsapp_is_placeholder && (
-                  <p className="mt-1 font-mono text-[11px] text-[#9CA3AF]">
+                  <p className="pt-1 font-mono text-[11px] text-[#9CA3AF]">
                     Catatan: Nomor WA admin masih placeholder di site.ts.
                   </p>
                 )}
@@ -325,12 +368,12 @@ export function ServiceEstimatorModal({
                   {copied ? (
                     <>
                       <Check className="h-4 w-4" aria-hidden="true" />
-                      <span>{tr("Ringkasan Tersalin", locale)}</span>
+                      <span>{tr("Format Tersalin", locale)}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="h-4 w-4" aria-hidden="true" />
-                      <span>{tr("Salin Ringkasan", locale)}</span>
+                      <span>{tr("Salin Format Konsultasi", locale)}</span>
                     </>
                   )}
                 </button>
@@ -342,7 +385,7 @@ export function ServiceEstimatorModal({
                   className="inline-flex min-h-[48px] items-center justify-center gap-2 bg-[#047857] px-6 py-3 font-hero text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#065F46]"
                 >
                   <WhatsAppLogo className="h-4 w-4" aria-hidden="true" />
-                  <span>{tr("Kirim ke WhatsApp", locale)}</span>
+                  <span>{tr("Tanya Jadwal & Penawaran via WA", locale)}</span>
                 </a>
               </div>
             </div>

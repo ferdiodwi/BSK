@@ -53,7 +53,7 @@ export type LandingPayload = {
 export type SectionComponentProps = {
   section?: LandingSection;
   block: LandingBlock;
-  onOpenEstimator?: (opts?: { bikeId?: string; packageId?: string }) => void;
+  onOpenInquiry?: (opts?: { bikeId?: string; packageId?: string }) => void;
 };
 
 export function sortedBlocks(blocks?: LandingBlock[]): LandingBlock[] {
@@ -68,14 +68,6 @@ export function sortedItems(items?: LandingItem[]): LandingItem[] {
 
 export function blockRenderKey(pIdx: number, sIdx: number, bIdx: number): string {
   return `block-${pIdx}-${sIdx}-${bIdx}`;
-}
-
-export function formatIDR(amount: number): string {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  }).format(amount);
 }
 
 export function revealUp(delay = 0) {
@@ -170,18 +162,24 @@ export function attachWindowScroll(threshold: number, onStateChange: (scrolled: 
   return () => window.removeEventListener("scroll", onScroll);
 }
 
-export function buildEstimateSummaryText(
+export function buildBuildInquiryText(
   bikeModel: string,
   packageName: string,
   customNeeds: string,
-  totalEstimate: number,
+  partsStatus: string,
+  notes: string,
   locale: Locale,
 ): string {
-  const formattedPrice = formatIDR(totalEstimate);
+  const cleanNotes = notes.trim();
+  if (locale === "en") {
+    return `Hello BSK Custom, I would like to consult on a bodywork build and ask for workshop availability:\n\n• Bike Platform: ${bikeModel}\n• Package: ${packageName}\n• Add-Ons: ${customNeeds}\n• Parts Status: ${partsStatus}${
+      cleanNotes ? `\n• Notes: ${cleanNotes}` : ""
+    }\n\nCould you let me know the estimated schedule and quotation? Thank you.`;
+  }
 
-  return locale === "en"
-    ? `Hello BSK Custom, I would like to book a bodywork & frame alignment slot:\n\n• Bike Model: ${bikeModel}\n• Package: ${packageName}\n• Add-Ons: ${customNeeds}\n• Estimated Service Total: ${formattedPrice}\n\nWhen is the next available workshop slot?`
-    : `Halo BSK Custom, saya ingin konsultasi / booking slot tata body:\n\n• Basis Motor: ${bikeModel}\n• Paket Jasa: ${packageName}\n• Tambahan Pekerjaan: ${customNeeds}\n• Estimasi Jasa: ${formattedPrice}\n\nKira-kira slot pengerjaan terdekat ready kapan ya?`;
+  return `Halo BSK Custom, saya mau konsultasi garapan dan tanya jadwal bengkel:\n\n• Basis Motor: ${bikeModel}\n• Layanan: ${packageName}\n• Tambahan: ${customNeeds}\n• Status Part: ${partsStatus}${
+    cleanNotes ? `\n• Catatan Kondisi: ${cleanNotes}` : ""
+  }\n\nKira-kira rincian pengerjaan dan slot terdekat kapan ya? Terima kasih.`;
 }
 
 export function buildWorkshopWhatsAppUrl(
@@ -189,15 +187,17 @@ export function buildWorkshopWhatsAppUrl(
   bikeModel: string,
   packageName: string,
   customNeeds: string,
-  totalEstimate: number,
+  partsStatus: string,
+  notes: string,
   locale: Locale,
 ): string {
   const cleanPhone = phone.replace(/\D/g, "");
-  const text = buildEstimateSummaryText(
+  const text = buildBuildInquiryText(
     bikeModel,
     packageName,
     customNeeds,
-    totalEstimate,
+    partsStatus,
+    notes,
     locale,
   );
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;

@@ -6,9 +6,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BSK_BIKES } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
-import { formatIDR, heroEnterAttr, type SectionComponentProps } from "../lib/helpers";
+import { heroEnterAttr, type SectionComponentProps } from "../lib/helpers";
 
-export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
+export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -26,7 +26,6 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
     setActiveIndex((prev) => (prev + 1) % bikes.length);
   };
 
-  // Mouse parallax depth for the motorcycle cutout against giant background type (desktop pointer only)
   useEffect(() => {
     const stage = stageRef.current;
     const bikeEl = bikeLayerRef.current;
@@ -122,16 +121,16 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
                 )}
               </p>
 
-              {/* Active Bike Key Specs Table */}
+              {/* Active Bike Key Specs Table (price-free technical focus) */}
               <dl {...heroEnterAttr(0.24)} className="mt-6 space-y-3 border-t border-black/10 pt-5 text-xs sm:text-sm">
                 <div className="flex items-baseline justify-between gap-4">
                   <dt className="font-mono font-semibold text-[#4B5563] uppercase">{tr("Basis", locale)}</dt>
                   <dd className="text-right font-semibold text-[#111216]">{activeBike.platform}</dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="font-mono font-semibold text-[#4B5563] uppercase">{tr("Mulai Dari", locale)}</dt>
-                  <dd className="text-right font-hero text-lg font-bold text-[#D62810] tabular-nums">
-                    {formatIDR(activeBike.basePrice)}
+                  <dt className="font-mono font-semibold text-[#4B5563] uppercase">{tr("Aliran", locale)}</dt>
+                  <dd className="text-right font-hero text-base font-bold text-[#D62810] uppercase">
+                    {locale === "en" ? activeBike.categoryLabelEn : activeBike.categoryLabel}
                   </dd>
                 </div>
                 <div className="border-t border-black/5 pt-2.5">
@@ -149,10 +148,10 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
             <div {...heroEnterAttr(0.3)} className="mt-8 flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                onClick={() => onOpenEstimator?.({ bikeId: activeBike.estimatorBikeId })}
+                onClick={() => onOpenInquiry?.({ bikeId: activeBike.inquiryBikeId })}
                 className="inline-flex min-h-[48px] items-center justify-center bg-[#D62810] px-6 py-3 font-hero text-sm font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A] active:scale-[0.98]"
               >
-                {tr(bind(block, "extra.primary_cta_label", "Hitung Estimasi Biaya"), locale)}
+                {tr(bind(block, "extra.primary_cta_label", "Konsultasi Konsep"), locale)}
               </button>
 
               <a
@@ -164,18 +163,16 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
             </div>
           </div>
 
-          {/* Right Motorcycle Showcase Stage (KTM layered typography + PNG cutout) */}
+          {/* Right Motorcycle Showcase Stage */}
           <div
             ref={stageRef}
             className="relative flex min-h-[360px] flex-col items-center justify-center overflow-hidden px-4 py-8 sm:min-h-[460px] lg:col-span-7 lg:min-h-[580px] lg:px-8"
           >
-            {/* Solid accent block behind bike on mobile/tablet so split motif remains consistent */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute top-0 right-0 h-full w-[38%] bg-[#D62810] lg:hidden"
             />
 
-            {/* Giant Background Watermark Typography */}
             <div
               ref={watermarkRef}
               aria-hidden="true"
@@ -186,7 +183,6 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
               </span>
             </div>
 
-            {/* Active Bike Cutout Image (Hero LCP image: no lazy, fetchPriority=high) */}
             <div ref={bikeLayerRef} className="relative z-10 w-full max-w-[600px]">
               <div key={activeBike.id} className="bsk-bike-swap relative flex flex-col items-center">
                 <img
@@ -198,7 +194,6 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
                   decoding="async"
                   className="h-auto max-h-[320px] w-full object-contain drop-shadow-[0_18px_20px_rgba(17,18,22,0.28)] sm:max-h-[410px] lg:max-h-[470px]"
                 />
-                {/* Ground contact shadow */}
                 <div
                   aria-hidden="true"
                   className="-mt-3 h-4 w-[68%] rounded-full bg-black/25 blur-md"
@@ -206,7 +201,6 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
               </div>
             </div>
 
-            {/* Floating Step Control Arrows on Stage */}
             <div className="relative z-20 mt-4 flex w-full items-center justify-between lg:px-2">
               <div className="flex items-center gap-2">
                 <button
@@ -234,7 +228,7 @@ export function Hero({ block, onOpenEstimator }: SectionComponentProps) {
           </div>
         </div>
 
-        {/* Bottom Interactive Thumbnail Selector Bar (KTM Panel 1 & 4 style) */}
+        {/* Bottom Interactive Thumbnail Selector Bar */}
         <div className="border-t border-black/10 bg-white">
           <div
             role="tablist"

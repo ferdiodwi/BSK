@@ -11,7 +11,6 @@ import {
   ariaModalAttrs,
   attachKeydown,
   focusElement,
-  formatIDR,
   imgPerfProps,
   isEscapeKey,
   lockDocumentScroll,
@@ -21,7 +20,7 @@ import {
 
 type FilterCategory = "Semua" | "Tata Body Rangka" | "Full Build";
 
-export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProps) {
+export function ShowcaseGallery({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const [filter, setFilter] = useState<FilterCategory>("Semua");
   const [inspectedBike, setInspectedBike] = useState<BikeSpec | null>(null);
@@ -152,7 +151,6 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
                 }`}
               >
                 <div>
-                  {/* Bike Stage Box */}
                   <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden bg-[#F5F5F6] p-5">
                     <span
                       aria-hidden="true"
@@ -173,18 +171,17 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
                     </span>
                   </div>
 
-                  {/* Specs Summary */}
                   <div className="p-6">
                     <div className="flex items-baseline justify-between gap-4">
                       <h3 className="font-hero text-xl font-bold text-[#111216] uppercase sm:text-2xl">
                         {bike.name}
                       </h3>
-                      <span className="shrink-0 font-hero text-base font-bold text-[#D62810] tabular-nums">
-                        {formatIDR(bike.basePrice)}
+                      <span className="shrink-0 font-mono text-xs font-bold text-[#D62810] uppercase">
+                        0{idx + 1}
                       </span>
                     </div>
 
-                    <p className="mt-2 text-xs font-mono font-semibold text-[#4B5563]">
+                    <p className="mt-2 font-mono text-xs font-semibold text-[#4B5563]">
                       {bike.platform}
                     </p>
                     <p className="mt-2.5 text-sm leading-relaxed text-[#4B5563]">
@@ -193,7 +190,6 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
                   </div>
                 </div>
 
-                {/* Card Action Bar */}
                 <div className="flex items-center justify-between border-t border-black/10 px-6 py-4">
                   <button
                     type="button"
@@ -204,10 +200,10 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
                   </button>
                   <button
                     type="button"
-                    onClick={() => onOpenEstimator?.({ bikeId: bike.estimatorBikeId })}
+                    onClick={() => onOpenInquiry?.({ bikeId: bike.inquiryBikeId })}
                     className="inline-flex min-h-[44px] items-center bg-[#141518] px-4 py-2 font-hero text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#D62810]"
                   >
-                    {tr("Hitung Estimasi", locale)}
+                    {tr("Konsultasi Konsep Ini", locale)}
                   </button>
                 </div>
               </article>
@@ -216,7 +212,7 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
         )}
       </div>
 
-      {/* Build Case-Study Modal */}
+      {/* Build Case-Study Modal (no prices) */}
       {inspectedBike && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs"
@@ -265,10 +261,10 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
                 </div>
                 <div className="flex justify-between gap-4 border-b border-black/5 pb-2">
                   <dt className="font-mono text-xs font-bold text-[#4B5563] uppercase">
-                    {tr("Mulai Dari", locale)}
+                    {tr("Aliran", locale)}
                   </dt>
-                  <dd className="font-hero text-lg font-bold text-[#D62810] tabular-nums">
-                    {formatIDR(inspectedBike.basePrice)}
+                  <dd className="font-hero text-sm font-bold text-[#D62810] uppercase">
+                    {locale === "en" ? inspectedBike.categoryLabelEn : inspectedBike.categoryLabel}
                   </dd>
                 </div>
                 <div className="border-b border-black/5 pb-2">
@@ -300,13 +296,13 @@ export function ShowcaseGallery({ block, onOpenEstimator }: SectionComponentProp
                 <button
                   type="button"
                   onClick={() => {
-                    const targetBike = inspectedBike.estimatorBikeId;
+                    const targetBike = inspectedBike.inquiryBikeId;
                     setInspectedBike(null);
-                    onOpenEstimator?.({ bikeId: targetBike });
+                    onOpenInquiry?.({ bikeId: targetBike });
                   }}
                   className="min-h-[44px] bg-[#D62810] px-6 py-2 font-hero text-xs font-bold tracking-wider text-white uppercase hover:bg-[#C41E0A]"
                 >
-                  {tr("Hitung Estimasi Biaya", locale)}
+                  {tr("Konsultasi Konsep Ini", locale)}
                 </button>
               </div>
             </div>

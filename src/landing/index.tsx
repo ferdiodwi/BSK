@@ -9,7 +9,7 @@ import { ServicePackages } from "./components/ServicePackages";
 import { ShowcaseGallery } from "./components/ShowcaseGallery";
 import { WorkshopSection } from "./components/WorkshopSection";
 import { Footer } from "./components/Footer";
-import { ServiceEstimatorModal } from "./components/ServiceEstimatorModal";
+import { BuildInquiryModal } from "./components/BuildInquiryModal";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
 import {
@@ -31,7 +31,7 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
 
 export function Landing() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [estimatorState, setEstimatorState] = useState<{
+  const [inquiryState, setInquiryState] = useState<{
     open: boolean;
     bikeId?: string;
     packageId?: string;
@@ -39,16 +39,16 @@ export function Landing() {
 
   usePageMotion(rootRef);
 
-  const openEstimator = (opts?: { bikeId?: string; packageId?: string }) => {
-    setEstimatorState({
+  const openInquiry = (opts?: { bikeId?: string; packageId?: string }) => {
+    setInquiryState({
       open: true,
       bikeId: opts?.bikeId,
       packageId: opts?.packageId,
     });
   };
 
-  const closeEstimator = () => {
-    setEstimatorState((prev) => ({ ...prev, open: false }));
+  const closeInquiry = () => {
+    setInquiryState((prev) => ({ ...prev, open: false }));
   };
 
   const pages = [...(site.pages ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -67,7 +67,7 @@ export function Landing() {
         key={blockRenderKey(entry.pIdx, entry.sIdx, bIdx)}
         section={entry.section}
         block={block}
-        onOpenEstimator={openEstimator}
+        onOpenInquiry={openInquiry}
       />
     ));
   };
@@ -88,13 +88,13 @@ export function Landing() {
 
       {footerSections.map(renderSection)}
 
-      {estimatorState.open && (
-        <ServiceEstimatorModal
-          key={`${estimatorState.bikeId || "default"}-${estimatorState.packageId || "default"}`}
-          isOpen={estimatorState.open}
-          onClose={closeEstimator}
-          initialBikeId={estimatorState.bikeId}
-          initialPackageId={estimatorState.packageId}
+      {inquiryState.open && (
+        <BuildInquiryModal
+          key={`${inquiryState.bikeId || "default"}-${inquiryState.packageId || "default"}`}
+          isOpen={inquiryState.open}
+          onClose={closeInquiry}
+          initialBikeId={inquiryState.bikeId}
+          initialPackageId={inquiryState.packageId}
         />
       )}
     </div>

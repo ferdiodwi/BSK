@@ -14,7 +14,7 @@ import {
   type SectionComponentProps,
 } from "../lib/helpers";
 
-export function Navbar({ block, onOpenEstimator }: SectionComponentProps) {
+export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const locale = useLocale();
@@ -100,10 +100,10 @@ export function Navbar({ block, onOpenEstimator }: SectionComponentProps) {
 
           <button
             type="button"
-            onClick={() => onOpenEstimator?.()}
+            onClick={() => onOpenInquiry?.()}
             className="hidden min-h-[44px] items-center bg-[#D62810] px-5 text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A] active:scale-[0.98] md:inline-flex"
           >
-            {tr("Hitung Estimasi", locale)}
+            {tr("Ajukan Konsep", locale)}
           </button>
 
           <button
@@ -158,11 +158,11 @@ export function Navbar({ block, onOpenEstimator }: SectionComponentProps) {
                 type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onOpenEstimator?.();
+                  onOpenInquiry?.();
                 }}
                 className="flex min-h-[44px] items-center justify-center bg-[#D62810] px-3 text-xs font-bold tracking-wider text-white uppercase"
               >
-                {tr("Hitung Estimasi", locale)}
+                {tr("Ajukan Konsep", locale)}
               </button>
             </div>
           </div>

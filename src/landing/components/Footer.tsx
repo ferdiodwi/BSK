@@ -6,7 +6,7 @@ import { tr, useLocale } from "../lib/i18n";
 import { type SectionComponentProps } from "../lib/helpers";
 import { InstagramLogo, TikTokLogo } from "../ui/BrandLogos";
 
-export function Footer({ block, onOpenEstimator }: SectionComponentProps) {
+export function Footer({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const copyright = bind(
     block,
@@ -39,27 +39,27 @@ export function Footer({ block, onOpenEstimator }: SectionComponentProps) {
 
           {/* Anchor Navigation matching actual sections */}
           <nav aria-label="Navigasi footer" className="flex flex-wrap items-center gap-5 text-xs font-semibold text-[#D1D5DB]">
-            <a href="#hero" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+            <a href="#hero" className="inline-flex min-h-[44px] items-center hover:text-[#FFE600]">
               {tr("Showcase", locale)}
             </a>
-            <a href="#anatomi" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+            <a href="#anatomi" className="inline-flex min-h-[44px] items-center hover:text-[#FFE600]">
               {tr("Anatomi Presisi", locale)}
             </a>
-            <a href="#paket" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
-              {tr("Paket & Biaya", locale)}
+            <a href="#paket" className="inline-flex min-h-[44px] items-center hover:text-[#FFE600]">
+              {tr("Layanan & Paket", locale)}
             </a>
-            <a href="#galeri" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+            <a href="#galeri" className="inline-flex min-h-[44px] items-center hover:text-[#FFE600]">
               {tr("Galeri Unit", locale)}
             </a>
-            <a href="#bengkel" className="min-h-[44px] inline-flex items-center hover:text-[#FFE600]">
+            <a href="#bengkel" className="inline-flex min-h-[44px] items-center hover:text-[#FFE600]">
               {tr("Bengkel", locale)}
             </a>
             <button
               type="button"
-              onClick={() => onOpenEstimator?.()}
-              className="min-h-[44px] inline-flex items-center text-[#FFE600] hover:underline"
+              onClick={() => onOpenInquiry?.()}
+              className="inline-flex min-h-[44px] items-center text-[#FFE600] hover:underline"
             >
-              {tr("Hitung Estimasi", locale)}
+              {tr("Ajukan Konsep", locale)}
             </button>
           </nav>
 

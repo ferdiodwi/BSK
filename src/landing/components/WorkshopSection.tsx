@@ -6,7 +6,7 @@ import { tr, useLocale } from "../lib/i18n";
 import { revealUp, sortedItems, type SectionComponentProps } from "../lib/helpers";
 import { InstagramLogo, WhatsAppLogo } from "../ui/BrandLogos";
 
-export function WorkshopSection({ block, onOpenEstimator }: SectionComponentProps) {
+export function WorkshopSection({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const steps = sortedItems(block.items);
 
@@ -62,7 +62,6 @@ export function WorkshopSection({ block, onOpenEstimator }: SectionComponentProp
 
         {/* Part B: Split Consultation Banner + Honest Workshop Details */}
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* Left 7 Cols: Bold Red-Orange CTA Block */}
           <div
             {...revealUp(0.05)}
             className="flex flex-col justify-between bg-[#D62810] p-7 text-white sm:p-10 lg:col-span-7"
@@ -76,7 +75,7 @@ export function WorkshopSection({ block, onOpenEstimator }: SectionComponentProp
               </h3>
               <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/95">
                 {tr(
-                  "Kirim foto kondisi motor saat ini atau pilih paket yang diinginkan lewat kalkulator estimasi sebelum datang ke bengkel.",
+                  "Kirim foto kondisi motor saat ini atau pilih paket yang diinginkan lewat formulir pengajuan konsep sebelum datang ke bengkel.",
                   locale
                 )}
               </p>
@@ -85,10 +84,10 @@ export function WorkshopSection({ block, onOpenEstimator }: SectionComponentProp
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => onOpenEstimator?.()}
+                onClick={() => onOpenInquiry?.()}
                 className="inline-flex min-h-[48px] items-center justify-center bg-[#141518] px-6 py-3 font-hero text-sm font-bold tracking-wider text-white uppercase transition-colors hover:bg-black"
               >
-                {tr("Hitung Estimasi Biaya", locale)}
+                {tr("Ajukan Konsep Garapan", locale)}
               </button>
 
               <a
@@ -103,7 +102,6 @@ export function WorkshopSection({ block, onOpenEstimator }: SectionComponentProp
             </div>
           </div>
 
-          {/* Right 5 Cols: Workshop Contact & Honest Editable Fields */}
           <div
             {...revealUp(0.1)}
             className="flex flex-col justify-between border border-black/10 bg-[#F5F5F6] p-7 sm:p-8 lg:col-span-5"

@@ -6,7 +6,7 @@ import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
 import { imgPerfProps, revealUp, type SectionComponentProps } from "../lib/helpers";
 
-export function AnatomySection({ block, onOpenEstimator }: SectionComponentProps) {
+export function AnatomySection({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const [activePointId, setActivePointId] = useState(ANATOMY_POINTS[1].id);
   const [unitKey, setUnitKey] = useState<"black-gold" | "raw-frame">("raw-frame");
@@ -183,10 +183,10 @@ export function AnatomySection({ block, onOpenEstimator }: SectionComponentProps
 
               <button
                 type="button"
-                onClick={() => onOpenEstimator?.({ bikeId: inspectionBike.estimatorBikeId })}
+                onClick={() => onOpenInquiry?.({ bikeId: inspectionBike.inquiryBikeId })}
                 className="mt-6 inline-flex min-h-[44px] items-center bg-[#D62810] px-5 py-2.5 font-hero text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A]"
               >
-                {tr("Hitung Estimasi Biaya", locale)}
+                {tr("Konsultasi Konsep", locale)}
               </button>
             </div>
           </div>

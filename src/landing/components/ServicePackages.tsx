@@ -2,9 +2,9 @@
 
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
-import { formatIDR, revealUp, sortedItems, type SectionComponentProps } from "../lib/helpers";
+import { revealUp, sortedItems, type SectionComponentProps } from "../lib/helpers";
 
-export function ServicePackages({ block, onOpenEstimator }: SectionComponentProps) {
+export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps) {
   const locale = useLocale();
   const packages = sortedItems(block.items);
 
@@ -19,17 +19,17 @@ export function ServicePackages({ block, onOpenEstimator }: SectionComponentProp
           <div className="lg:col-span-4">
             <div {...revealUp(0)} className="lg:sticky lg:top-28">
               <span className="font-mono text-xs font-bold tracking-widest text-[#FFE600] uppercase">
-                {tr(bind(block, "subtitle", "ESTIMASI TRANSPARAN"), locale)}
+                {tr(bind(block, "subtitle", "RUANG LINGKUP GARAPAN"), locale)}
               </span>
               <h2 className="mt-3 font-hero text-3xl font-bold leading-tight tracking-tight text-white uppercase sm:text-4xl lg:text-5xl">
-                {tr(bind(block, "title", "Paket Tata Body & Jasa Bengkel"), locale)}
+                {tr(bind(block, "title", "Layanan Tata Body & Jasa Bengkel"), locale)}
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-[#D1D5DB]">
                 {tr(
                   bind(
                     block,
                     "description",
-                    "Biaya jasa dihitung transparan sesuai basis motor dan tingkat pengerjaan rangka. Persetujuan pemilik selalu diminta sebelum pengerjaan dimulai."
+                    "Penentuan rincian pengerjaan disesuaikan dengan kondisi rangka awal, basis motor, dan kelengkapan part. Kirim konsep motor Anda untuk cek jadwal dan penawaran langsung via WhatsApp."
                   ),
                   locale
                 )}
@@ -37,10 +37,10 @@ export function ServicePackages({ block, onOpenEstimator }: SectionComponentProp
 
               <button
                 type="button"
-                onClick={() => onOpenEstimator?.({ packageId: "full-rangka" })}
+                onClick={() => onOpenInquiry?.({ packageId: "full-rangka" })}
                 className="mt-8 inline-flex min-h-[48px] items-center justify-center bg-[#D62810] px-6 py-3 font-hero text-sm font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A]"
               >
-                {tr("Buka Kalkulator Estimasi", locale)}
+                {tr("Ajukan Konsep Garapan", locale)}
               </button>
 
               <p className="mt-4 font-mono text-xs leading-relaxed text-[#9CA3AF]">
@@ -48,7 +48,7 @@ export function ServicePackages({ block, onOpenEstimator }: SectionComponentProp
                   bind(
                     block,
                     "extra.note",
-                    "Durasi pengerjaan 1 sampai 14 hari kerja bergantung antrean bengkel dan ketersediaan part."
+                    "Waktu pengerjaan bergantung pada antrean bengkel, kondisi rangka awal, dan ketersediaan part."
                   ),
                   locale
                 )}
@@ -63,11 +63,7 @@ export function ServicePackages({ block, onOpenEstimator }: SectionComponentProp
                 const isFeatured = Boolean(pkg.extra?.featured);
                 const highlights = (pkg.extra?.highlights as string[]) ?? [];
                 const duration = (pkg.extra?.duration as string) ?? "3 - 5 Hari Kerja";
-                const priceDisplay = bind(
-                  pkg,
-                  "extra.price_display",
-                  formatIDR(Number(pkg.extra?.price ?? 450000))
-                );
+                const scope = (pkg.extra?.scope as string) ?? "Tata Body & Rangka";
 
                 return (
                   <div
@@ -98,11 +94,11 @@ export function ServicePackages({ block, onOpenEstimator }: SectionComponentProp
                       </div>
 
                       <div className="shrink-0 sm:text-right">
-                        <div className="font-hero text-2xl font-bold text-[#FFE600] tabular-nums sm:text-3xl">
-                          {priceDisplay}
+                        <div className="font-hero text-lg font-bold text-[#FFE600] uppercase sm:text-xl">
+                          {tr(duration, locale)}
                         </div>
                         <div className="mt-1 font-mono text-xs text-[#9CA3AF]">
-                          {tr("Estimasi Pengerjaan", locale)}: {duration}
+                          {tr(scope, locale)}
                         </div>
                       </div>
                     </div>
@@ -112,17 +108,17 @@ export function ServicePackages({ block, onOpenEstimator }: SectionComponentProp
                         {highlights.map((feat, fIdx) => (
                           <li key={fIdx} className="flex items-center gap-2">
                             <span className="h-1.5 w-1.5 shrink-0 bg-[#D62810]" aria-hidden="true" />
-                            <span>{feat}</span>
+                            <span>{tr(feat, locale)}</span>
                           </li>
                         ))}
                       </ul>
 
                       <button
                         type="button"
-                        onClick={() => onOpenEstimator?.({ packageId: pkg.id || "full-rangka" })}
+                        onClick={() => onOpenInquiry?.({ packageId: pkg.id || "full-rangka" })}
                         className="inline-flex min-h-[44px] shrink-0 items-center justify-center border border-white/25 bg-transparent px-5 py-2 font-hero text-xs font-bold tracking-wider text-white uppercase transition-colors hover:border-[#FFE600] hover:bg-[#FFE600] hover:text-[#111216]"
                       >
-                        {tr("Pilih & Hitung", locale)}
+                        {tr("Konsultasi Paket Ini", locale)}
                       </button>
                     </div>
                   </div>

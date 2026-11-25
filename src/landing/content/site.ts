@@ -1,6 +1,6 @@
 export type BikeSpec = {
   id: string;
-  estimatorBikeId: string;
+  inquiryBikeId: string;
   name: string;
   watermark: string;
   category: "Tata Body Rangka" | "Full Build";
@@ -8,7 +8,6 @@ export type BikeSpec = {
   categoryLabelEn: string;
   imageUrl: string;
   facing: "right" | "left";
-  basePrice: number;
   platform: string;
   focus: string;
   focusEn: string;
@@ -32,7 +31,7 @@ export type AnatomyPoint = {
 export const BSK_BIKES: BikeSpec[] = [
   {
     id: "cb-black-gold",
-    estimatorBikeId: "cb-gelatik",
+    inquiryBikeId: "cb-gelatik",
     name: "CB 100 Black Gold",
     watermark: "CB 100",
     category: "Tata Body Rangka",
@@ -40,7 +39,6 @@ export const BSK_BIKES: BikeSpec[] = [
     categoryLabelEn: "Bodywork & Rolling Chassis",
     imageUrl: "/bikes/5.png",
     facing: "right",
-    basePrice: 850000,
     platform: "Rangka CB 100 / 125",
     focus: "Fitting tangki hitam lis emas, jok slim kotak, sok depan gold, dan senter as roda.",
     focusEn: "Black-gold tank fitting, slim checkered seat, gold front fork, and axle alignment.",
@@ -49,7 +47,7 @@ export const BSK_BIKES: BikeSpec[] = [
   },
   {
     id: "cb-raw-frame",
-    estimatorBikeId: "cb-gelatik",
+    inquiryBikeId: "cb-gelatik",
     name: "CB Raw Frame",
     watermark: "RAW CB",
     category: "Tata Body Rangka",
@@ -57,7 +55,6 @@ export const BSK_BIKES: BikeSpec[] = [
     categoryLabelEn: "Raw Frame Alignment",
     imageUrl: "/bikes/8.png",
     facing: "right",
-    basePrice: 650000,
     platform: "Rangka Klasik CB / GL",
     focus: "Penataan tangki bahan primer, dudukan jok tipis presisi, subframe belakang, dan slebor chrome.",
     focusEn: "Primer tank alignment, tight slim seat fitment, rear subframe, and chrome fender setup.",
@@ -66,7 +63,7 @@ export const BSK_BIKES: BikeSpec[] = [
   },
   {
     id: "gl-slate-blue",
-    estimatorBikeId: "gl-series",
+    inquiryBikeId: "gl-series",
     name: "GL / CB Slate Blue",
     watermark: "RESTOMOD",
     category: "Full Build",
@@ -74,7 +71,6 @@ export const BSK_BIKES: BikeSpec[] = [
     categoryLabelEn: "Full Build Restoration",
     imageUrl: "/bikes/4.png",
     facing: "right",
-    basePrice: 2200000,
     platform: "GL Series Restomod",
     focus: "Tata body utuh, bak mesin & begel chrome, shock tabung merah, rem cakram lebar depan.",
     focusEn: "Complete bodywork, chrome engine cover & grab rail, reservoir shocks, wide front disc.",
@@ -83,7 +79,7 @@ export const BSK_BIKES: BikeSpec[] = [
   },
   {
     id: "mp-herex",
-    estimatorBikeId: "megapro",
+    inquiryBikeId: "megapro",
     name: "Megapro / GL Herex",
     watermark: "HEREX",
     category: "Full Build",
@@ -91,7 +87,6 @@ export const BSK_BIKES: BikeSpec[] = [
     categoryLabelEn: "Daily Racing Herex Build",
     imageUrl: "/bikes/7.png",
     facing: "right",
-    basePrice: 1850000,
     platform: "Megapro / GL Racing",
     focus: "Postur rangka herex harian, jok datar presisi, knalpot racing stainless, dan shock belakang kuning.",
     focusEn: "Daily herex stance, flush flat seat, stainless racing exhaust, yellow twin shocks.",
@@ -100,7 +95,7 @@ export const BSK_BIKES: BikeSpec[] = [
   },
   {
     id: "cb-blue-track",
-    estimatorBikeId: "cb-dream",
+    inquiryBikeId: "cb-dream",
     name: "CB Blue Track",
     watermark: "CLASSIC",
     category: "Tata Body Rangka",
@@ -108,7 +103,6 @@ export const BSK_BIKES: BikeSpec[] = [
     categoryLabelEn: "Bodywork & Suspension Setup",
     imageUrl: "/bikes/6.png",
     facing: "left",
-    basePrice: 900000,
     platform: "Rangka CB Silver",
     focus: "Fitting tangki biru metalik, arm kotak kokoh, shock tabung, dan penyetelan kelurusan ban belakang.",
     focusEn: "Metallic blue tank fitment, box swingarm, reservoir shock, and rear wheel centering.",
@@ -177,7 +171,6 @@ export const site = {
     "Bengkel spesialis tata body CB, penataan rangka center, fitting tangki dan jok presisi, serta custom kaki-kaki motor klasik dan harian.",
   preview_image_url: "/logo.png",
   contact: {
-    // Placeholder kontak bengkel yang mudah diperbarui di satu tempat
     whatsapp_number: "6280000000000",
     whatsapp_is_placeholder: true,
     whatsapp_display: "[Nomor WA Admin, atur di site.ts]",
@@ -212,7 +205,7 @@ export const site = {
               items: [
                 { order: 0, title: "Showcase", icon: "#hero" },
                 { order: 1, title: "Anatomi Presisi", icon: "#anatomi" },
-                { order: 2, title: "Paket & Biaya", icon: "#paket" },
+                { order: 2, title: "Layanan & Paket", icon: "#paket" },
                 { order: 3, title: "Galeri Unit", icon: "#galeri" },
                 { order: 4, title: "Bengkel", icon: "#bengkel" },
               ],
@@ -232,7 +225,7 @@ export const site = {
                 "Penataan tangki, jok, subframe, dan kelurusan kaki-kaki motor klasik maupun harian. Rapi di mata, lurus saat dikendarai.",
               extra: {
                 section_id: "hero",
-                primary_cta_label: "Hitung Estimasi Biaya",
+                primary_cta_label: "Konsultasi Konsep",
                 secondary_cta_label: "Lihat Detail Garapan",
               },
             },
@@ -259,12 +252,12 @@ export const site = {
           blocks: [
             {
               order: 0,
-              title: "Paket Tata Body & Jasa Bengkel",
-              subtitle: "ESTIMASI TRANSPARAN",
+              title: "Layanan Tata Body & Jasa Bengkel",
+              subtitle: "RUANG LINGKUP GARAPAN",
               description:
-                "Biaya jasa dihitung transparan sesuai basis motor dan tingkat pengerjaan rangka. Persetujuan pemilik selalu diminta sebelum pengerjaan dimulai.",
+                "Penentuan rincian pengerjaan disesuaikan dengan kondisi rangka awal, basis motor, dan kelengkapan part. Kirim konsep motor Anda untuk cek jadwal dan penawaran langsung via WhatsApp.",
               extra: {
-                note: "Durasi pengerjaan 1 sampai 14 hari kerja bergantung antrean bengkel dan ketersediaan part.",
+                note: "Waktu pengerjaan bergantung pada antrean bengkel, kondisi rangka awal, dan ketersediaan part.",
               },
               items: [
                 {
@@ -274,9 +267,8 @@ export const site = {
                   description:
                     "Pemasangan set bodi lengkap: dudukan tangki, setting jok presisi, dudukan slebor depan dan belakang, serta begel.",
                   extra: {
-                    price: 450000,
-                    price_display: "Rp 450.000",
                     duration: "3 - 5 Hari Kerja",
+                    scope: "Fitting Bodi & Braket",
                     highlights: [
                       "Fitting tangki rata tidak mendongak",
                       "Dudukan jok presisi tanpa celah",
@@ -291,9 +283,8 @@ export const site = {
                   description:
                     "Penyelarasan rangka total, bikin subframe pipa seamless baru, dudukan shock dobel simetris, dan senter as roda depan-belakang.",
                   extra: {
-                    price: 850000,
-                    price_display: "Rp 850.000",
                     duration: "5 - 7 Hari Kerja",
+                    scope: "Fabrikasi Subframe & Alignment",
                     featured: true,
                     highlights: [
                       "Semua cakupan Paket Standar",
@@ -309,9 +300,8 @@ export const site = {
                   description:
                     "Bangun motor dari rangka dasar: tata body penuh, repaint oven 3 lapis rangka dan bodi, serta perakitan kabel bodi tersembunyi.",
                   extra: {
-                    price: 2200000,
-                    price_display: "Mulai Rp 2.200.000",
                     duration: "10 - 14 Hari Kerja",
+                    scope: "Bangun Ulang & Finishing",
                     highlights: [
                       "Full tata body & alignment rangka",
                       "Repaint oven 3 lapis rangka dan tangki",
@@ -326,9 +316,8 @@ export const site = {
                   description:
                     "Perawatan performa mesin dan kelistrikan: servis karburator atau throttle body, setel klep, cek pengapian, dan ganti oli.",
                   extra: {
-                    price: 350000,
-                    price_display: "Rp 350.000",
                     duration: "1 - 2 Hari Kerja",
+                    scope: "Performa Mesin & Kelistrikan",
                     highlights: [
                       "Servis karburator atau throttle body",
                       "Setting celah klep dan kelistrikan",
@@ -374,7 +363,7 @@ export const site = {
                 {
                   order: 1,
                   title: "02. Penentuan Konsep",
-                  description: "Pemilihan tangki, jok, dan jarak main suspensi serta persetujuan estimasi biaya.",
+                  description: "Pemilihan tangki, jok, dan jarak main suspensi serta persetujuan rincian pengerjaan.",
                 },
                 {
                   order: 2,
