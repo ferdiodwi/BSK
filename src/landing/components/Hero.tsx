@@ -82,9 +82,9 @@ export function Hero({ block }: SectionComponentProps) {
     <section
       id="hero"
       ref={stageRef}
-      className="bsk-dark-section relative flex min-h-[84dvh] flex-col justify-center overflow-hidden bg-[#07080A] pt-24 pb-10 text-white sm:min-h-[90dvh] md:min-h-[100dvh] md:justify-end md:pt-28 md:pb-12"
+      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#07080A] pt-16 pb-10 text-white sm:pt-24 sm:pb-10 md:justify-end md:pt-28 md:pb-12"
     >
-      {/* Anchor background higher on portrait mobile so center stage stays framed in garage light */}
+      {/* Anchor background slightly higher on portrait mobile so floor glow meets centered motorcycle */}
       <Image
         src="/background.webp"
         alt=""
@@ -93,7 +93,7 @@ export function Hero({ block }: SectionComponentProps) {
         priority
         quality={80}
         sizes="100vw"
-        className="pointer-events-none object-cover object-[50%_76%] select-none md:object-bottom"
+        className="pointer-events-none object-cover object-[50%_72%] select-none md:object-bottom"
       />
 
       <div
@@ -109,8 +109,8 @@ export function Hero({ block }: SectionComponentProps) {
 
       {/* Main Centered Showcase Block */}
       <div className="relative z-20 mx-auto w-full max-w-[1440px] px-4 sm:px-8">
-        {/* Title Lockup Flanking Overhead: single-line condensed lockup prevents height jumps */}
-        <div {...heroEnterAttr(0)} className="mx-auto max-w-[940px]">
+        {/* Bold Poster Title Lockup positioned cleanly behind motorcycle layer (z-10 vs z-20) */}
+        <div {...heroEnterAttr(0)} className="relative z-10 mx-auto max-w-[940px]">
           <div className="flex items-baseline justify-between gap-3 px-1">
             <span className="shrink-0 font-condensed text-[11px] tracking-[0.06em] text-white uppercase whitespace-nowrap sm:text-xl lg:text-2xl">
               {bind(block, "subtitle", "BSK CUSTOM")}
@@ -122,14 +122,14 @@ export function Hero({ block }: SectionComponentProps) {
 
           <h1
             ref={titleLayerRef}
-            className="mt-1.5 text-center font-condensed text-[clamp(2.65rem,12.5vw,10rem)] leading-[0.86] tracking-[-0.01em] text-white uppercase whitespace-nowrap drop-shadow-[0_10px_28px_rgba(0,0,0,0.5)] select-none"
+            className="mt-1.5 origin-top scale-y-[1.22] text-center font-condensed text-[clamp(2.85rem,13.8vw,10rem)] leading-[0.84] tracking-[-0.01em] text-white uppercase whitespace-nowrap drop-shadow-[0_10px_28px_rgba(0,0,0,0.55)] select-none sm:mt-1 sm:scale-y-100"
           >
             {activeBike.heroTitle}
           </h1>
         </div>
 
-        {/* Fixed-Height Center Bike Stage with Left and Right Flank Arrows + Mobile Swipe */}
-        <div className="relative mx-auto -mt-3 flex w-full max-w-[1060px] flex-col items-center sm:-mt-12 lg:-mt-22">
+        {/* Fixed-Height Center Bike Stage overlapping in front of bold poster text */}
+        <div className="relative z-20 mx-auto -mt-6 flex w-full max-w-[1060px] flex-col items-center sm:-mt-14 lg:-mt-22">
           <div
             onTouchStart={onStageTouchStart}
             onTouchEnd={onStageTouchEnd}
