@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Oswald:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+.bsk-landing {
+  --bsk-dark: #0b0c10;
+  --bsk-surface: #14161f;
+  --bsk-surface-elevated: #1b1e2a;
+  --bsk-border: rgba(255, 255, 255, 0.08);
+  --bsk-red: #e51919;
+  --bsk-orange: #ff5722;
+  --bsk-yellow: #ffe600;
+  --bsk-text: #f3f4f6;
+  --bsk-muted: #94a3b8;
+  --bsk-font-hero: var(--font-bricolage, "Bricolage Grotesque"), sans-serif;
+  --bsk-font-display: var(--font-oswald, "Oswald"), sans-serif;
+  --bsk-font-sans: var(--font-jakarta, "Plus Jakarta Sans"), sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bsk-dark);
+  color: var(--bsk-text);
+  font-family: var(--bsk-font-sans);
+  scroll-behavior: smooth;
+}
+
+.bsk-landing .font-hero {
+  font-family: var(--bsk-font-hero);
+}
+
+.bsk-landing .font-display {
+  font-family: var(--bsk-font-display);
+}
+
+.bsk-landing .font-sans {
+  font-family: var(--bsk-font-sans);
+}
+
+.bsk-landing a[href],
+.bsk-landing button,
+.bsk-landing summary,
+.bsk-landing select,
+.bsk-landing label[for],
+.bsk-landing [role="button"],
+.bsk-landing [role="link"],
+.bsk-landing [role="tab"] {
+  cursor: pointer;
+}
+
+.bsk-landing :disabled,
+.bsk-landing [aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.bsk-landing :focus-visible {
+  outline: 2px solid #e51919;
+  outline-offset: 3px;
+}
+
+.bsk-landing .hero-grid-field {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
+}
+
+.bsk-landing .carbon-pattern {
+  background: 
+    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  background-size: 20px 20px;
+}
+
+@keyframes bskGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(229, 25, 25, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 87, 34, 0.45);
+  }
+}
+
+.bsk-pulse-glow {
+  animation: bskGlowPulse 3s infinite ease-in-out;
+}
+
+@keyframes bskFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bsk-dialog-in {
+  animation: bskFadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
