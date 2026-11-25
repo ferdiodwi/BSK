@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import {
+  Anton,
   Bricolage_Grotesque,
   JetBrains_Mono,
   Oswald,
   Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
+
+const anton = Anton({
+  variable: "--font-anton",
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -50,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${bricolage.variable} ${oswald.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
+      className={`${anton.variable} ${bricolage.variable} ${oswald.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#F5F5F6] text-[#111216] font-sans selection:bg-[#D62810] selection:text-[#FFFFFF]">
         <a href="#main-content" className="skip-link">

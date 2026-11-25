@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { tr, toggleLocale, useLocale } from "../lib/i18n";
-import { FlagIcon } from "../ui/FlagIcon";
 import {
   ariaLabelAttr,
   attachKeydown,
@@ -36,11 +35,11 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
       className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
         scrolled
           ? "border-b border-white/15 bg-[#141518]/95 shadow-lg"
-          : "bg-gradient-to-b from-black/80 via-black/45 to-transparent"
+          : "bg-gradient-to-b from-black/75 via-black/35 to-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3.5 sm:px-8 lg:px-12">
-        {/* Trimmed BSK Custom Brand Sticker Logo */}
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 sm:px-8 lg:px-14">
+        {/* Left: Brand Logo */}
         <a
           href="#hero"
           aria-label="Beranda BSK Custom"
@@ -51,39 +50,38 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
             alt="BSK Custom - Tata Body CB"
             width={1935}
             height={828}
-            className="h-9 w-auto object-contain sm:h-11 lg:h-12"
+            className="h-9 w-auto object-contain sm:h-11"
           />
         </a>
 
-        {/* Centered Editorial Nav Links */}
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-6 lg:flex xl:gap-8">
+        {/* Center: Clean Horizontal Nav Links */}
+        <nav aria-label="Navigasi utama" className="hidden items-center gap-7 lg:flex xl:gap-9">
           {links.map((item, idx) => (
             <a
               key={idx}
               href={item.icon || "#hero"}
-              className="inline-flex min-h-[44px] items-center px-1 font-hero text-xs font-semibold tracking-widest text-[#F3F4F6] uppercase transition-colors hover:text-[#FF6B35]"
+              className="inline-flex min-h-[44px] items-center px-1 font-hero text-[13px] font-medium tracking-[0.14em] text-[#E5E7EB] uppercase transition-colors hover:text-[#FF6B35]"
             >
               {tr(item.title || "", locale)}
             </a>
           ))}
         </nav>
 
-        {/* Right Controls: Language Toggle + Rectangular Bordered Action (Harley TEST RIDE motif) */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        {/* Right: Minimal Language Toggle + Sharp Orange-Bordered CTA (Harley TEST RIDE style) */}
+        <div className="flex items-center gap-4">
           <button
             type="button"
             onClick={toggleLocale}
             {...ariaLabelAttr(locale === "id" ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian")}
-            className="inline-flex min-h-[44px] items-center gap-2 border border-white/25 bg-[#141518]/80 px-3 text-xs font-bold text-[#F3F4F6] transition-colors hover:border-white"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-2 font-mono text-[11px] font-bold tracking-wider text-[#D1D5DB] uppercase transition-colors hover:text-white"
           >
-            <span>{locale.toUpperCase()}</span>
-            <FlagIcon isEn={locale === "en"} />
+            {locale.toUpperCase()}
           </button>
 
           <button
             type="button"
             onClick={() => onOpenInquiry?.()}
-            className="hidden min-h-[44px] items-center border border-[#FF5722] bg-[#141518]/75 px-5 font-hero text-xs font-bold tracking-widest text-[#FF6B35] uppercase transition-colors hover:border-[#D62810] hover:bg-[#D62810] hover:text-white active:scale-[0.98] md:inline-flex"
+            className="hidden min-h-[44px] items-center border border-[#FF5722] bg-transparent px-6 font-hero text-xs font-semibold tracking-[0.16em] text-[#FF6B35] uppercase transition-colors hover:border-[#D62810] hover:bg-[#D62810] hover:text-white active:scale-[0.98] md:inline-flex"
           >
             {tr("Ajukan Konsep", locale)}
           </button>

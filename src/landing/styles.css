@@ -9,6 +9,7 @@
   --bsk-red-hover: #c41e0a;
   --bsk-yellow: #ffe600;
   --bsk-font-hero: var(--font-oswald, "Oswald"), sans-serif;
+  --bsk-font-condensed: var(--font-anton, "Anton"), var(--font-oswald, "Oswald"), sans-serif;
   --bsk-font-display: var(--font-bricolage, "Bricolage Grotesque"), sans-serif;
   --bsk-font-sans: var(--font-jakarta, "Plus Jakarta Sans"), sans-serif;
   --bsk-font-mono: var(--font-jetbrains, "JetBrains Mono"), monospace;
@@ -23,6 +24,10 @@
 
 .bsk-landing .font-hero {
   font-family: var(--bsk-font-hero);
+}
+
+.bsk-landing .font-condensed {
+  font-family: var(--bsk-font-condensed);
 }
 
 .bsk-landing .font-display {
