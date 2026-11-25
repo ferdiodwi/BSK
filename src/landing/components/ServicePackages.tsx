@@ -36,26 +36,26 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
     >
       <div
         aria-hidden="true"
-        className="mx-auto h-px w-full max-w-[1320px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
+        className="mx-auto h-px w-full max-w-[1440px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
       />
 
-      <div className="mx-auto max-w-[1320px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+      <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
         {/* Left-Aligned Bold Two-Line Editorial Header */}
-        <div {...revealUp(0)} className="max-w-3xl">
+        <div {...revealUp(0)} className="max-w-4xl">
           <div className="flex items-center gap-3">
-            <span className="h-[1px] w-7 bg-[#FF6B35]" aria-hidden="true" />
-            <p className="font-mono text-[11px] font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
+            <span className="h-[1px] w-8 bg-[#FF6B35]" aria-hidden="true" />
+            <p className="font-mono text-xs font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
               {tr(bind(block, "subtitle", "LAYANAN BENGKEL & GARAPAN CUSTOM"), locale)}
             </p>
           </div>
-          <h2 className="mt-4 font-display text-3xl leading-[1.06] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl">
+          <h2 className="mt-4 font-display text-[2.15rem] leading-[1.04] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl lg:text-[3.5rem] xl:text-[3.85rem]">
             <span className="block">{tr(bind(block, "title", "Rapi di tata body."), locale)}</span>
             <span className="block">{tr(lineTwo, locale)}</span>
           </h2>
         </div>
 
         {/* Asymmetric 4-Col Bento Grid matching AboutSection card language */}
-        <div className="mt-10 grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {services.map((svc, idx) => {
             const isWide = Number(svc.extra?.span ?? 1) === 2;
             const iconKey = (svc.extra?.iconKey as ServiceIconKey) ?? "rangka";
@@ -67,33 +67,33 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
               <article
                 key={svc.id ?? idx}
                 {...revealUp(Number((idx * 0.05).toFixed(2)))}
-                className={`group flex min-h-[260px] flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] lg:min-h-[290px] ${
+                className={`group flex min-h-[290px] flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] sm:p-7 xl:p-8 lg:min-h-[330px] ${
                   isWide ? "md:col-span-2 lg:col-span-2" : "lg:col-span-1"
                 }`}
               >
                 <div>
                   {/* Card Index + Technical Icon (matched to AboutSection cards) */}
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-semibold text-[#FF8A5B]">
+                    <span className="font-mono text-sm font-semibold text-[#FF8A5B]">
                       0{idx + 1}
                     </span>
                     <Icon
-                      className="h-4 w-4 text-[#9CA3AF] transition-colors group-hover:text-[#FF6B35]"
+                      className="h-5 w-5 text-[#9CA3AF] transition-colors group-hover:text-[#FF6B35]"
                       aria-hidden="true"
                     />
                   </div>
 
                   {/* Service Name & Description */}
                   <h3
-                    className={`mt-6 font-display leading-snug font-bold tracking-tight text-[#F9FAFB] ${
-                      isWide ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
+                    className={`mt-7 font-display leading-snug font-bold tracking-tight text-[#F9FAFB] ${
+                      isWide ? "text-2xl sm:text-[1.75rem]" : "text-xl sm:text-[1.35rem]"
                     }`}
                   >
                     {tr(svc.title || "", locale)}
                   </h3>
                   <p
-                    className={`mt-2.5 text-xs leading-relaxed text-[#A1A1AA] sm:text-[13px] ${
-                      isWide ? "max-w-lg" : ""
+                    className={`mt-3 text-sm leading-relaxed text-[#A1A1AA] sm:text-[15px] ${
+                      isWide ? "max-w-xl" : ""
                     }`}
                   >
                     {tr(svc.description || "", locale)}
@@ -101,13 +101,13 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
                 </div>
 
                 {/* Bottom Pill Tags + Inline Consultation Trigger */}
-                <div className="mt-auto pt-7">
+                <div className="mt-auto pt-8">
                   {tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {tags.map((tag, tIdx) => (
                         <span
                           key={tIdx}
-                          className="rounded-full border border-white/10 bg-[#1A1C22]/85 px-3 py-1 text-[11px] font-medium text-[#D1D5DB]"
+                          className="rounded-full border border-white/10 bg-[#1A1C22]/85 px-3.5 py-1.5 text-xs font-medium text-[#D1D5DB]"
                         >
                           {tr(tag, locale)}
                         </span>
@@ -118,13 +118,13 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
                   <button
                     type="button"
                     onClick={() => onOpenInquiry?.({ packageId: svc.id || "full-rangka" })}
-                    className={`mt-5 inline-flex min-h-[44px] w-full items-center text-left text-xs font-semibold text-[#FF8A5B] transition-colors hover:text-[#F9FAFB] ${
+                    className={`mt-5 inline-flex min-h-[44px] w-full items-center text-left text-[13px] font-semibold text-[#FF8A5B] transition-colors hover:text-[#F9FAFB] sm:text-sm ${
                       isWide ? "justify-start gap-2.5" : "justify-between gap-2"
                     }`}
                   >
                     <span>{tr(ctaLabel, locale)}</span>
                     <ArrowRight
-                      className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
                       aria-hidden="true"
                     />
                   </button>
