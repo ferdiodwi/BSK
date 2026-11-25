@@ -177,8 +177,9 @@ export const site = {
               items: [
                 { order: 0, title: "Showcase", icon: "#hero" },
                 { order: 1, title: "Tentang", icon: "#about" },
-                { order: 2, title: "Konsultasi Konsep", icon: "#inquiry" },
-                { order: 3, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
+                { order: 2, title: "Layanan", icon: "#layanan" },
+                { order: 3, title: "Konsultasi Konsep", icon: "#inquiry" },
+                { order: 4, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
               ],
             },
           ],
@@ -227,6 +228,90 @@ export const site = {
                   order: 2,
                   title: "Fitting Tanpa Celah",
                   description: "Pertemuan tangki, jok, dan slebor ditata proporsional tanpa celah renggang.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "ServicePackages",
+          order: 3,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Layanan Tata Body & Jasa Bengkel",
+              subtitle: "RUANG LINGKUP GARAPAN",
+              description:
+                "Penentuan rincian pengerjaan disesuaikan dengan kondisi rangka awal, basis motor, dan kelengkapan part. Kirim konsep motor Anda untuk cek jadwal dan penawaran langsung via WhatsApp.",
+              extra: {
+                note: "Waktu pengerjaan bergantung pada antrean bengkel, kondisi rangka awal, dan ketersediaan part.",
+              },
+              items: [
+                {
+                  order: 0,
+                  id: "standar",
+                  title: "Paket Tata Body Standar",
+                  description:
+                    "Pemasangan set bodi lengkap: dudukan tangki, setting jok presisi, dudukan slebor depan dan belakang, serta begel.",
+                  extra: {
+                    duration: "3 - 5 Hari Kerja",
+                    scope: "Fitting Bodi & Braket",
+                    highlights: [
+                      "Fitting tangki rata tidak mendongak",
+                      "Dudukan jok presisi tanpa celah",
+                      "Penataan slebor, begel, dan stoplamp",
+                    ],
+                  },
+                },
+                {
+                  order: 1,
+                  id: "full-rangka",
+                  title: "Paket Full Rangka & Senter Kaki",
+                  description:
+                    "Penyelarasan rangka total, bikin subframe pipa seamless baru, dudukan shock dobel simetris, dan senter as roda depan-belakang.",
+                  extra: {
+                    duration: "5 - 7 Hari Kerja",
+                    scope: "Fabrikasi Subframe & Alignment",
+                    featured: true,
+                    highlights: [
+                      "Semua cakupan Paket Standar",
+                      "Potong dan sambung subframe pipa tebal",
+                      "Senter as roda depan, swingarm, dan gir",
+                    ],
+                  },
+                },
+                {
+                  order: 2,
+                  id: "restorasi",
+                  title: "Paket Restorasi Komplit + Cat Oven",
+                  description:
+                    "Bangun motor dari rangka dasar: tata body penuh, repaint oven 3 lapis rangka dan bodi, serta perakitan kabel bodi tersembunyi.",
+                  extra: {
+                    duration: "10 - 14 Hari Kerja",
+                    scope: "Bangun Ulang & Finishing",
+                    highlights: [
+                      "Full tata body & alignment rangka",
+                      "Repaint oven 3 lapis rangka dan tangki",
+                      "Rakit kabel bodi rapi tersembunyi",
+                    ],
+                  },
+                },
+                {
+                  order: 3,
+                  id: "tune-up",
+                  title: "Paket Tune-Up & Setting Harian / Herex",
+                  description:
+                    "Perawatan performa mesin dan kelistrikan: servis karburator atau throttle body, setel klep, cek pengapian, dan ganti oli.",
+                  extra: {
+                    duration: "1 - 2 Hari Kerja",
+                    scope: "Performa Mesin & Kelistrikan",
+                    highlights: [
+                      "Servis karburator atau throttle body",
+                      "Setting celah klep dan kelistrikan",
+                      "Uji jalan respons tarikan",
+                    ],
+                  },
                 },
               ],
             },

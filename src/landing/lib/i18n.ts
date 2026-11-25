@@ -80,6 +80,7 @@ const EN_MAP: Record<string, string> = {
   // Navigation
   "Showcase": "Showcase",
   "Tentang": "About",
+  "Layanan": "Services",
   "Anatomi Presisi": "Frame Anatomy",
   "Layanan & Paket": "Services & Packages",
   "Galeri Unit": "Build Gallery",
