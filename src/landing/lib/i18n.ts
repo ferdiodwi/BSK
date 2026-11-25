@@ -232,6 +232,15 @@ const EN_MAP: Record<string, string> = {
     "Confirm workshop hours and queue via WhatsApp before visiting.",
   "Buka di Google Maps": "Open in Google Maps",
 
+  // Footer
+  "Tata body rapi. Rangka presisi. Siap turun jalan.":
+    "Clean bodywork. Precision frame alignment. Built for the road.",
+  "Spesialis Tata Body CB & Rangka Presisi.":
+    "CB Bodywork & Precision Frame Specialist.",
+  "Kembali ke Atas": "Back to Top",
+  "Chat WhatsApp": "WhatsApp Chat",
+  "Rute Bengkel": "Workshop Directions",
+
   // SOP & Workshop
   "KONSULTASI & LOKASI": "CONSULTATION & LOCATION",
   "Alur Kerja Bengkel": "Workshop Workflow",

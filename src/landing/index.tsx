@@ -9,6 +9,7 @@ import { ServicePackages } from "./components/ServicePackages";
 import { ShowcaseGallery } from "./components/ShowcaseGallery";
 import { TestimonialsSection } from "./components/TestimonialsSection";
 import { ContactSection } from "./components/ContactSection";
+import { Footer } from "./components/Footer";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
 import {
@@ -26,6 +27,7 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   ShowcaseGallery,
   TestimonialsSection,
   ContactSection,
+  Footer,
 };
 
 export function Landing() {
@@ -54,7 +56,10 @@ export function Landing() {
   };
 
   const headerSections = activeSections.filter((s) => s.section.type === "Navbar");
-  const mainSections = activeSections.filter((s) => s.section.type !== "Navbar");
+  const footerSections = activeSections.filter((s) => s.section.type === "Footer");
+  const mainSections = activeSections.filter(
+    (s) => s.section.type !== "Navbar" && s.section.type !== "Footer"
+  );
 
   return (
     <div ref={rootRef} className="bsk-landing">
@@ -63,6 +68,8 @@ export function Landing() {
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         {mainSections.map(renderSection)}
       </main>
+
+      {footerSections.map(renderSection)}
     </div>
   );
 }

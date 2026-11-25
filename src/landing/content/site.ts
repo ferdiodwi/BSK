@@ -780,6 +780,18 @@ export const site = {
             },
           ],
         },
+        {
+          type: "Footer",
+          order: 7,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "BSK Custom",
+              description: "Tata body rapi. Rangka presisi. Siap turun jalan.",
+            },
+          ],
+        },
       ],
     },
   ],
