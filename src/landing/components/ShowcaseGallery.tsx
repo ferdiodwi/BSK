@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { BSK_GALLERY, site, type GalleryItem } from "../content/site";
 import { bind } from "../lib/bind";
@@ -12,7 +13,6 @@ import {
   attachKeydown,
   buildDirectWhatsAppUrl,
   focusElement,
-  imgPerfProps,
   isEscapeKey,
   lockDocumentScroll,
   revealUp,
@@ -31,7 +31,20 @@ function wrapIndex(pos: number, length: number): number {
 
 export function ShowcaseGallery({ block }: SectionComponentProps) {
   const locale = useLocale();
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [galleryState, setGalleryState] = useState<{
+    activeIndex: number;
+    warm: number[];
+  }>(() => {
+    const initial: number[] = [];
+    for (let i = 0; i < BSK_GALLERY.length; i++) {
+      if (Math.abs(wrapContinuousOffset(i, 0, BSK_GALLERY.length)) <= 5) {
+        initial.push(i);
+      }
+    }
+    return { activeIndex: 0, warm: initial };
+  });
+  const activeIndex = galleryState.activeIndex;
+  const loadedSet = useMemo(() => new Set(galleryState.warm), [galleryState.warm]);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -124,7 +137,19 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       applyCardTransforms(currentPosRef.current);
 
       const nearest = wrapIndex(currentPosRef.current, length);
-      setActiveIndex((prev) => (prev === nearest ? prev : nearest));
+      setGalleryState((prev) => {
+        if (prev.activeIndex === nearest) return prev;
+        const nextWarm = new Set(prev.warm);
+        for (let i = 0; i < length; i++) {
+          if (Math.abs(wrapContinuousOffset(i, nearest, length)) <= 5) {
+            nextWarm.add(i);
+          }
+        }
+        return {
+          activeIndex: nearest,
+          warm: nextWarm.size === prev.warm.length ? prev.warm : Array.from(nextWarm),
+        };
+      });
 
       const stillMoving = Math.abs(targetPosRef.current - currentPosRef.current) > 0.0012;
       if (stillMoving || draggingNow) {
@@ -375,15 +400,18 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                           : "cursor-pointer"
                     }`}
                   >
-                    <img
-                      src={item.imageUrl}
-                      alt={itemTitle}
-                      width={item.width}
-                      height={item.height}
-                      {...imgPerfProps()}
-                      draggable={false}
-                      className="bsk-coverflow-img h-full w-full object-cover object-center"
-                    />
+                    {loadedSet.has(idx) && (
+                      <Image
+                        src={item.imageUrl}
+                        alt={itemTitle}
+                        width={item.width}
+                        height={item.height}
+                        quality={75}
+                        sizes="(max-width: 640px) 250px, (max-width: 1024px) 325px, 360px"
+                        draggable={false}
+                        className="bsk-coverflow-img h-full w-full object-cover object-center"
+                      />
+                    )}
                   </button>
                 );
               })}
@@ -469,12 +497,15 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                 </button>
               )}
 
-              <img
+              <Image
                 src={lightboxItem.imageUrl}
                 alt={locale === "en" ? lightboxItem.titleEn : lightboxItem.title}
                 width={lightboxItem.width}
                 height={lightboxItem.height}
-                className="max-h-[64vh] w-auto max-w-full rounded-xl object-contain"
+                quality={85}
+                priority
+                sizes="(max-width: 768px) 92vw, 900px"
+                className="h-auto max-h-[64vh] w-auto max-w-full rounded-xl object-contain"
               />
 
               {items.length > 1 && (

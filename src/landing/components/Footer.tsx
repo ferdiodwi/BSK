@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ChevronDown, Globe, MapPin, Phone } from "lucide-react";
 import { site } from "../content/site";
 import { bind } from "../lib/bind";
@@ -44,11 +45,12 @@ export function Footer({ block }: SectionComponentProps) {
             aria-label="BSK Custom"
             className="inline-flex min-h-[44px] items-center gap-3 self-start transition-opacity hover:opacity-90"
           >
-            <img
-              src="/logo.png"
+            <Image
+              src="/logo.webp"
               alt="BSK Custom"
-              width={1935}
-              height={828}
+              width={560}
+              height={240}
+              sizes="112px"
               className="h-9 w-auto object-contain sm:h-10"
             />
           </a>

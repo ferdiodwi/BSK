@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Globe, Menu, X } from "lucide-react";
 import { site } from "../content/site";
 import { tr, toggleLocale, useLocale } from "../lib/i18n";
@@ -83,11 +84,13 @@ export function Navbar({ block }: SectionComponentProps) {
           aria-label="Beranda BSK Custom"
           className="flex min-h-[44px] shrink-0 items-center transition-transform hover:scale-[1.02]"
         >
-          <img
-            src="/logo.png"
+          <Image
+            src="/logo.webp"
             alt="BSK Custom - Tata Body CB"
-            width={1935}
-            height={828}
+            width={560}
+            height={240}
+            sizes="112px"
+            priority
             className="h-9 w-auto object-contain sm:h-10"
           />
         </a>

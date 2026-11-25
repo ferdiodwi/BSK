@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight, Compass, Layers, Wrench } from "lucide-react";
 import { site } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
-import { imgPerfProps, revealLeft, revealRight, sortedItems, buildDirectWhatsAppUrl, type SectionComponentProps } from "../lib/helpers";
+import { revealLeft, revealRight, sortedItems, buildDirectWhatsAppUrl, type SectionComponentProps } from "../lib/helpers";
 import { InstagramLogo, TikTokLogo, WhatsAppLogo } from "../ui/BrandLogos";
 
 const PILLAR_ICONS = [Compass, Wrench, Layers] as const;
@@ -32,12 +33,13 @@ export function AboutSection({ block }: SectionComponentProps) {
           {/* Left Editorial Photo Card: clean about.jpeg portrait */}
           <div {...revealLeft(0)} className="lg:col-span-5">
             <div className="group mx-auto max-w-[460px] overflow-hidden rounded-2xl border border-white/10 bg-[#141518] shadow-[0_24px_60px_rgba(0,0,0,0.6)] lg:max-w-none">
-              <img
-                src="/about.jpeg"
+              <Image
+                src="/about.webp"
                 alt={tr("Proses pengerjaan tata body dan perakitan rangka di bengkel BSK Custom", locale)}
-                width={1792}
-                height={2400}
-                {...imgPerfProps()}
+                width={960}
+                height={1286}
+                quality={82}
+                sizes="(max-width: 1023px) 92vw, 520px"
                 className="aspect-[3/4] h-auto w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
             </div>

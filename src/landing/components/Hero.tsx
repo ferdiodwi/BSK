@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BSK_BIKES, site } from "../content/site";
@@ -69,15 +70,15 @@ export function Hero({ block }: SectionComponentProps) {
       className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-[#07080A] pt-20 pb-8 text-white sm:pt-24 sm:pb-10 lg:pt-28 lg:pb-12"
     >
       {/* Anchor background to bottom so warm sunlit garage floor sits directly beneath the motorcycle stand and wheels */}
-      <img
-        src="/background.png"
+      <Image
+        src="/background.webp"
         alt=""
         aria-hidden="true"
-        width={2048}
-        height={1143}
-        fetchPriority="high"
-        decoding="async"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom select-none"
+        fill
+        priority
+        quality={80}
+        sizes="100vw"
+        className="pointer-events-none object-cover object-bottom select-none"
       />
 
       <div
@@ -156,14 +157,15 @@ export function Hero({ block }: SectionComponentProps) {
                   className="pointer-events-none absolute -bottom-1 z-10 h-4 w-[16%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.8)_45%,transparent_78%)] blur-[1.5px]"
                 />
 
-                <img
+                <Image
                   src={activeBike.imageUrl}
                   alt={`${activeBike.name} - ${activeBike.categoryLabel}`}
                   width={activeBike.width}
                   height={activeBike.height}
-                  fetchPriority="high"
-                  decoding="async"
-                  className="relative z-20 block max-h-[230px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.75)] sm:max-h-[360px] lg:max-h-[460px] xl:max-h-[500px]"
+                  priority={activeIndex === 0}
+                  quality={85}
+                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 76vw, 760px"
+                  className="relative z-20 block h-auto max-h-[230px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.75)] sm:max-h-[360px] lg:max-h-[460px] xl:max-h-[500px]"
                 />
               </div>
             </div>
@@ -205,12 +207,15 @@ export function Hero({ block }: SectionComponentProps) {
             aria-hidden="true"
             className="pointer-events-none absolute right-[6%] -bottom-1 left-[55%] z-10 block h-5 rounded-full bg-black/85 blur-sm"
           />
-          <img
+          <Image
             src={prevBike.imageUrl}
             alt=""
             aria-hidden="true"
             width={prevBike.width}
             height={prevBike.height}
+            quality={80}
+            loading="lazy"
+            sizes="(max-width: 767px) 1px, (min-width: 1024px) 480px, 380px"
             className="relative z-20 h-full w-auto object-contain object-bottom brightness-75 drop-shadow-[0_14px_18px_rgba(0,0,0,0.9)]"
           />
         </button>
@@ -228,12 +233,15 @@ export function Hero({ block }: SectionComponentProps) {
             aria-hidden="true"
             className="pointer-events-none absolute right-[55%] -bottom-1 left-[6%] z-10 block h-5 rounded-full bg-black/85 blur-sm"
           />
-          <img
+          <Image
             src={nextBike.imageUrl}
             alt=""
             aria-hidden="true"
             width={nextBike.width}
             height={nextBike.height}
+            quality={80}
+            loading="lazy"
+            sizes="(max-width: 767px) 1px, (min-width: 1024px) 480px, 380px"
             className="relative z-20 h-full w-auto object-contain object-bottom brightness-75 drop-shadow-[0_14px_18px_rgba(0,0,0,0.9)]"
           />
         </button>
