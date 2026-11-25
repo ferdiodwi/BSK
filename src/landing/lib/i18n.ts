@@ -184,9 +184,9 @@ const EN_MAP: Record<string, string> = {
   "Daftar foto galeri BSK Custom": "BSK Custom gallery photo strip",
 
   // Testimonials
-  "CATATAN OWNER & ANAK BENGKEL": "RIDER & WORKSHOP NOTES",
-  "Kata Pemilik Motor.": "What Riders Say.",
-  "Lempeng, Rapi, Siap Jalan.": "Straight, Tight, Road Ready.",
+  "CERITA DARI BENGKEL": "RIDER & WORKSHOP STORIES",
+  "Kata Anak Motor.": "What Riders Say.",
+  "Lempeng, Rapi, Enak Dipake.": "Straight, Tight, Road Ready.",
   "Testimoni pelanggan baris atas": "Customer testimonials top row",
   "Testimoni pelanggan baris bawah": "Customer testimonials bottom row",
 

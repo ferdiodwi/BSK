@@ -455,9 +455,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda CB 100 · Jember",
     bikeEn: "Honda CB 100 · Jember",
     quote:
-      "Dulu pangkon tangki CB ku ndongak parah, jok nya juga renggang. Habis digarap BSK langsung nempel rapet rek, dibawa kenceng tetep lempeng gak narik.",
+      "Dulu pangkon tangki CB-ku ndongak, joknya juga renggang. Habis masuk BSK langsung rapet nempel rek, diajak lari kenceng tetep lempeng gak narik.",
     quoteEn:
-      "My CB tank mount used to nose up with a huge seat gap. After BSK aligned the mounts, the fitment sits tight and the bike tracks dead straight at speed.",
+      "My CB tank mount used to nose up with a huge seat gap. After BSK aligned it, the fitment sits tight and the bike tracks straight at speed.",
     is_sample: true,
   },
   {
@@ -466,9 +466,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Megapro Primus · Bondowoso",
     bikeEn: "Megapro Primus · Bondowoso",
     quote:
-      "Las subframe nya rapi pol sih, beneran niat ngerjainnya. Dipake harian sama turing luar kota anteng, posturnya juga mbois pas dilihat dari samping.",
+      "Las subframenya rapi pol mas, gak asal tempel. Dipake turing luar kota tetep anteng, dilihat dari samping juga makin mbois.",
     quoteEn:
-      "The seamless pipe subframe fabrication is clean and solid. Reliable for both commuting and touring, and the side stance looks sharp.",
+      "The subframe welds are super clean and solid. Steady out on long rides, and the side stance looks sharp.",
     is_sample: true,
   },
   {
@@ -477,9 +477,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda GL 100 · Jember",
     bikeEn: "Honda GL 100 · Jember",
     quote:
-      "Komstir sama arm belakang dicek senter beneran di sini. Kemarin sempat miring dikit, sekarang lepas stang bentar aja wis lurus anteng, gak ngelawan.",
+      "Komstir sama arm belakang beneran disenter ulang di sini. Dulu motorku agak buang ke kiri, sekarang lepas stang bentar aja wis lurus anteng.",
     quoteEn:
-      "Steering neck and swingarm centering were measured properly. Before BSK the bike pulled left; now it tracks steady and straight without effort.",
+      "Steering neck and swingarm centering were dialed back in properly. My bike used to pull left; now it tracks dead straight.",
     is_sample: true,
   },
   {
@@ -488,9 +488,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "CB Gelatik · Bondowoso",
     bikeEn: "CB Gelatik · Bondowoso",
     quote:
-      "Enak diajak rembukan konsep pas bawa part sendiri. Jok tipis sama slebor belakang di fitting pas bener, gak ada celah renggang, tinggal gas naik cat.",
+      "Enak diajak rembukan konsep pas bawa part sendiri. Jok tipis sama slebornya pas bener gak ada celah, tinggal langsung naik cat.",
     quoteEn:
-      "Consulting about bringing my own parts was straightforward. Slim seat and rear fender sit flush with zero awkward gaps, ready for paint.",
+      "Easy to bounce ideas around even when bringing my own parts. Slim seat and rear fender sit flush with zero gap, ready for paint.",
     is_sample: true,
   },
   {
@@ -499,9 +499,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "GL Pro Herex · Bondowoso",
     bikeEn: "GL Pro Herex · Bondowoso",
     quote:
-      "Niat awal cuma tata bodi, eh sekalian tune-up harian juga. Setting karbu sama klep nya dapet banget, tarikan bawahnya ngisi buat gas tipis-tipis.",
+      "Tadinya cuma mau tata bodi, eh sekalian tune-up harian juga. Setting karbu sama klepnya pas pol, tarikan bawahnya ngisi buat gas tipis-tipis.",
     quoteEn:
-      "Besides frame work, I got a daily engine tune-up here too. Carburetor and valve clearance tuning gave punchy low-end pull while staying smooth in traffic.",
+      "Came in just for bodywork and ended up getting a daily tune-up too. Carb and valve setup feels crisp right off idle.",
     is_sample: true,
   },
   {
@@ -510,9 +510,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda Tiger 2000 · Jember",
     bikeEn: "Honda Tiger 2000 · Jember",
     quote:
-      "Kabel bodi dirapikan ngumpet di balik tangki cek gak semrawut. Kelistrikan jadi aman, lampu terang terus, dibawa malam udah gak was-was lagi.",
+      "Kabel bodi dirapiin ngumpet di balik tangki cek gak semrawut. Kelistrikan aman, lampu terang, dibawa jalan malem udah gak was-was.",
     quoteEn:
-      "Wiring loom tucked cleanly under the tank and frame rails so the chassis looks uncluttered. Solid electricals and bright headlight at night.",
+      "Wiring loom tucked neatly under the tank so nothing looks messy. Solid electricals and bright headlight at night.",
     is_sample: true,
   },
   {
@@ -521,9 +521,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "CB Dream · Situbondo",
     bikeEn: "CB Dream · Situbondo",
     quote:
-      "Senter as roda sama jalur rantai diukur teliti bener lur. Undur-undur arm gampang disetel, ban belakang lurus persis sama slebor.",
+      "As roda sama jalur rantai diukur teliti tenan di sini lur, bukan asal pasang. Setelan rantai enteng, ban belakang lempeng sejajar slebor.",
     quoteEn:
-      "Everything from front axle alignment to chain line gets real attention here. Chain adjusters set easily and the rear wheel aligns dead center with the fender.",
+      "Front axle and chain tracking are measured carefully here, not slapped together. Adjusters turn smooth and the rear tire sits dead center.",
     is_sample: true,
   },
   {
@@ -532,9 +532,9 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda GL Max · Jember",
     bikeEn: "Honda GL Max · Jember",
     quote:
-      "Garapan pangkon shock dobelnya simetris kiri kanan. Buat boncengan tetep stabil gak goyang, dapet tampilannya, dapet juga enaknya pas dipake.",
+      "Pangkon shock dobelnya pas kiri-kanan rek. Buat boncengan tetep anteng gak oleng, tampilannya dapet, dipake harian juga nyaman pol.",
     quoteEn:
-      "The twin shock mount welds are strong and dead symmetrical left-to-right. Handles two-up riding with confidence while looking clean.",
+      "Twin shock mounts sit dead even left and right. Stable even riding two-up, looks clean, and rides comfortable every day.",
     is_sample: true,
   },
 ];
@@ -754,10 +754,10 @@ export const site = {
           blocks: [
             {
               order: 0,
-              title: "Kata Pemilik Motor.",
-              subtitle: "CATATAN OWNER & ANAK BENGKEL",
+              title: "Kata Anak Motor.",
+              subtitle: "CERITA DARI BENGKEL",
               extra: {
-                title_line2: "Lempeng, Rapi, Siap Jalan.",
+                title_line2: "Lempeng, Rapi, Enak Dipake.",
               },
             },
           ],

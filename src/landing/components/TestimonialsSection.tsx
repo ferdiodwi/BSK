@@ -268,7 +268,7 @@ function MarqueeRow({
 
 export function TestimonialsSection({ block }: SectionComponentProps) {
   const locale = useLocale();
-  const lineTwo = bind(block, "extra.title_line2", "Lempeng, Rapi, Siap Jalan.");
+  const lineTwo = bind(block, "extra.title_line2", "Lempeng, Rapi, Enak Dipake.");
   const mid = Math.ceil(BSK_TESTIMONIALS.length / 2);
   const topRow = BSK_TESTIMONIALS.slice(0, mid);
   const bottomRow = BSK_TESTIMONIALS.slice(mid);
@@ -289,12 +289,12 @@ export function TestimonialsSection({ block }: SectionComponentProps) {
           <div className="inline-flex items-center justify-center gap-3">
             <span className="h-[1px] w-7 bg-[#FF6B35]" aria-hidden="true" />
             <p className="font-mono text-xs font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
-              {tr(bind(block, "subtitle", "CATATAN OWNER & ANAK BENGKEL"), locale)}
+              {tr(bind(block, "subtitle", "CERITA DARI BENGKEL"), locale)}
             </p>
             <span className="h-[1px] w-7 bg-[#FF6B35]" aria-hidden="true" />
           </div>
           <h2 className="mt-4 font-display text-[2.15rem] leading-[1.06] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl lg:text-[3.5rem] xl:text-[3.85rem]">
-            <span className="block">{tr(bind(block, "title", "Kata Pemilik Motor."), locale)}</span>
+            <span className="block">{tr(bind(block, "title", "Kata Anak Motor."), locale)}</span>
             <span className="block">{tr(lineTwo, locale)}</span>
           </h2>
         </div>
