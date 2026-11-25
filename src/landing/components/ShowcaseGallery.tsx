@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
-import { BSK_GALLERY, site, type GalleryCategory, type GalleryItem } from "../content/site";
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { BSK_GALLERY, site, type GalleryItem } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
 import {
@@ -19,8 +19,6 @@ import {
   type SectionComponentProps,
 } from "../lib/helpers";
 
-type FilterOption = "Semua" | GalleryCategory;
-
 function circularOffset(idx: number, activeIdx: number, length: number): number {
   let diff = idx - activeIdx;
   const half = length / 2;
@@ -31,28 +29,15 @@ function circularOffset(idx: number, activeIdx: number, length: number): number 
 
 export function ShowcaseGallery({ block }: SectionComponentProps) {
   const locale = useLocale();
-  const [filter, setFilter] = useState<FilterOption>("Semua");
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const dragStartX = useRef<number | null>(null);
 
-  const items = useMemo(
-    () =>
-      filter === "Semua"
-        ? BSK_GALLERY
-        : BSK_GALLERY.filter((item) => item.category === filter),
-    [filter]
-  );
-
+  const items = BSK_GALLERY;
   const safeIndex = items.length > 0 ? activeIndex % items.length : 0;
   const activeItem = items[safeIndex] ?? items[0];
-
-  const handleFilterChange = (next: FilterOption) => {
-    setFilter(next);
-    setActiveIndex(0);
-  };
 
   const handlePrev = () => {
     if (items.length <= 1) return;
@@ -73,7 +58,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
     setActiveIndex(nextIdx);
   };
 
-  // Center the active thumbnail horizontally inside the filmstrip without vertical page jump
+  // Center active thumbnail inside the horizontal rail without vertical page scroll
   useEffect(() => {
     const rail = railRef.current;
     if (!rail) return;
@@ -82,7 +67,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
     const targetLeft =
       activeThumb.offsetLeft - rail.clientWidth / 2 + activeThumb.clientWidth / 2;
     rail.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
-  }, [safeIndex, filter]);
+  }, [safeIndex]);
 
   // Lightbox keyboard navigation & accessible focus return
   useEffect(() => {
@@ -116,20 +101,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       focusElement(previous);
     };
   }, [lightboxItem, items]);
-
-  const filterOptions: Array<{ key: FilterOption; label: string; count: number }> = [
-    { key: "Semua", label: tr("Semua", locale), count: BSK_GALLERY.length },
-    {
-      key: "Rangka & Kaki-Kaki",
-      label: tr("Rangka & Kaki-Kaki", locale),
-      count: BSK_GALLERY.filter((i) => i.category === "Rangka & Kaki-Kaki").length,
-    },
-    {
-      key: "Unit & Proses Bengkel",
-      label: tr("Unit & Proses Bengkel", locale),
-      count: BSK_GALLERY.filter((i) => i.category === "Unit & Proses Bengkel").length,
-    },
-  ];
 
   const onStagePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragStartX.current = e.clientX;
@@ -166,58 +137,20 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       />
 
       <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28 xl:px-14">
-        {/* Editorial Header + Category Filter Pills */}
-        <div
-          {...revealUp(0)}
-          className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end"
-        >
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <span className="h-[1px] w-8 bg-[#FF6B35]" aria-hidden="true" />
-              <p className="font-mono text-xs font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
-                {tr(bind(block, "subtitle", "DOKUMENTASI GARAPAN NYATA"), locale)}
-              </p>
-            </div>
-            <h2 className="mt-4 font-display text-[2.15rem] leading-[1.04] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl lg:text-[3.5rem] xl:text-[3.85rem]">
-              {tr(bind(block, "title", "Galeri Unit & Rangka BSK"), locale)}
-            </h2>
+        {/* Clean Minimal Editorial Header */}
+        <div {...revealUp(0)} className="max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="h-[1px] w-8 bg-[#FF6B35]" aria-hidden="true" />
+            <p className="font-mono text-xs font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
+              {tr(bind(block, "subtitle", "DOKUMENTASI GARAPAN NYATA"), locale)}
+            </p>
           </div>
-
-          <div
-            role="tablist"
-            aria-label={tr("Filter kategori galeri bengkel", locale)}
-            className="flex flex-wrap gap-2"
-          >
-            {filterOptions.map((opt) => {
-              const isSelected = filter === opt.key;
-              return (
-                <button
-                  key={opt.key}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => handleFilterChange(opt.key)}
-                  className={`inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold tracking-wide uppercase transition-colors ${
-                    isSelected
-                      ? "bg-[#FF6B35] text-[#111216]"
-                      : "border border-white/10 bg-[#141518] text-[#D1D5DB] hover:border-white/25"
-                  }`}
-                >
-                  <span>{opt.label}</span>
-                  <span
-                    className={`font-mono text-[11px] ${
-                      isSelected ? "text-[#111216]/80" : "text-[#9CA3AF]"
-                    }`}
-                  >
-                    {opt.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <h2 className="mt-4 font-display text-[2.15rem] leading-[1.04] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl lg:text-[3.5rem] xl:text-[3.85rem]">
+            {tr(bind(block, "title", "Galeri Unit & Rangka BSK"), locale)}
+          </h2>
         </div>
 
-        {/* Center-Focus Coverflow Stacked Stage (Swipeable, Click Flanking Cards or Controls) */}
+        {/* Center-Focus Coverflow Stacked Stage */}
         {activeItem && (
           <div {...revealUp(0.08)} className="mt-12">
             <div
@@ -289,21 +222,12 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
                           : "brightness-[0.72] group-hover:brightness-90"
                       }`}
                     />
-                    {isCenter && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute top-3.5 right-3.5 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0B0C0E]/85 px-3 py-1.5 font-mono text-[11px] font-semibold text-[#F9FAFB] opacity-90 transition-opacity group-hover:opacity-100"
-                      >
-                        <Maximize2 className="h-3.5 w-3.5 text-[#FF6B35]" />
-                        <span>SHOW</span>
-                      </span>
-                    )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Active Caption + Flanking Prev/Next Controls (matching reference bottom bar) */}
+            {/* Clean Bottom Controls + Caption (no extra action pill clutter) */}
             <div className="mx-auto mt-6 flex max-w-2xl items-center justify-between gap-4">
               <button
                 type="button"
@@ -316,7 +240,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
 
               <div className="min-w-0 flex-1 text-center">
                 <p className="font-mono text-xs font-semibold tracking-[0.14em] text-[#FF8A5B] uppercase">
-                  {tr(activeItem.category, locale)} ·{" "}
                   {String(safeIndex + 1).padStart(2, "0")} /{" "}
                   {String(items.length).padStart(2, "0")}
                 </p>
@@ -338,33 +261,8 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               </button>
             </div>
 
-            {/* Primary Actions for Active Photo */}
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => setLightboxItem(activeItem)}
-                className="inline-flex min-h-[46px] items-center gap-2 rounded-xl bg-white px-5 py-2.5 font-sans text-xs font-bold tracking-[0.1em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35]"
-              >
-                <Maximize2 className="h-4 w-4" aria-hidden="true" />
-                <span>{tr("Show Foto Penuh", locale)}</span>
-              </button>
-
-              <a
-                href={buildDirectWhatsAppUrl(
-                  site.contact.whatsapp_number,
-                  activeTitle || "garapan BSK Custom",
-                  locale
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[46px] items-center justify-center rounded-xl border border-white/15 bg-[#141518] px-5 py-2.5 font-sans text-xs font-bold tracking-[0.1em] text-[#F9FAFB] uppercase transition-colors hover:border-[#FF6B35] hover:text-[#FF8A5B]"
-              >
-                {tr("Tanya Garapan Ini", locale)}
-              </a>
-            </div>
-
-            {/* Horizontal Scrollable Filmstrip for All Filtered Photos */}
-            <div className="mt-9 border-t border-white/[0.08] pt-6">
+            {/* Horizontal Scrollable Thumbnail Filmstrip */}
+            <div className="mt-8 border-t border-white/[0.08] pt-6">
               <div
                 ref={railRef}
                 role="region"
@@ -405,7 +303,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
         )}
       </div>
 
-      {/* Show Lightbox Overlay */}
+      {/* Show Lightbox Overlay (opens on clicking active center photo) */}
       {lightboxItem && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-3 backdrop-blur-md sm:p-6"
@@ -419,11 +317,9 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
           />
 
           <div className="bsk-dialog-in relative z-10 flex max-h-[92vh] w-full max-w-[1040px] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#121419] text-[#F9FAFB] shadow-2xl">
-            {/* Top Bar */}
             <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-3.5 sm:px-6">
               <div className="min-w-0">
                 <p className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#FF8A5B] uppercase">
-                  {tr(lightboxItem.category, locale)} ·{" "}
                   {String((lightboxIndex >= 0 ? lightboxIndex : 0) + 1).padStart(2, "0")} /{" "}
                   {String(items.length).padStart(2, "0")}
                 </p>
@@ -446,7 +342,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               </button>
             </div>
 
-            {/* Center High-Resolution Photo */}
             <div className="relative flex flex-1 items-center justify-center bg-[#090A0D] p-3 sm:p-5">
               {items.length > 1 && (
                 <button
@@ -479,7 +374,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               )}
             </div>
 
-            {/* Footer Details & Direct WhatsApp */}
             <div className="flex flex-col justify-between gap-4 border-t border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:px-6">
               <p className="text-sm leading-relaxed text-[#D1D5DB]">
                 {locale === "en" ? lightboxItem.descriptionEn : lightboxItem.description}
