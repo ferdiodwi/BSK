@@ -42,20 +42,22 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
       <div className="mx-auto max-w-[1320px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         {/* Left-Aligned Bold Two-Line Editorial Header */}
         <div {...revealUp(0)} className="max-w-3xl">
-          <p className="font-mono text-[11px] font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
-            {tr(bind(block, "subtitle", "LAYANAN BENGKEL & GARAPAN CUSTOM"), locale)}
-          </p>
-          <h2 className="mt-3 font-display text-3xl leading-[1.06] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl">
+          <div className="flex items-center gap-3">
+            <span className="h-[1px] w-7 bg-[#FF6B35]" aria-hidden="true" />
+            <p className="font-mono text-[11px] font-semibold tracking-[0.2em] text-[#FF6B35] uppercase">
+              {tr(bind(block, "subtitle", "LAYANAN BENGKEL & GARAPAN CUSTOM"), locale)}
+            </p>
+          </div>
+          <h2 className="mt-4 font-display text-3xl leading-[1.06] font-bold tracking-[-0.025em] text-[#F9FAFB] sm:text-5xl">
             <span className="block">{tr(bind(block, "title", "Rapi di tata body."), locale)}</span>
             <span className="block">{tr(lineTwo, locale)}</span>
           </h2>
         </div>
 
-        {/* Asymmetric 4-Col Bento Grid (Row 1: 2+1+1 | Row 2: 2+1+1) */}
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {/* Asymmetric 4-Col Bento Grid matching AboutSection card language */}
+        <div className="mt-10 grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
           {services.map((svc, idx) => {
             const isWide = Number(svc.extra?.span ?? 1) === 2;
-            const isFeatured = Boolean(svc.extra?.featured);
             const iconKey = (svc.extra?.iconKey as ServiceIconKey) ?? "rangka";
             const Icon = SERVICE_ICONS[iconKey] ?? Compass;
             const tags = (svc.extra?.tags as string[]) ?? [];
@@ -65,38 +67,25 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
               <article
                 key={svc.id ?? idx}
                 {...revealUp(Number((idx * 0.05).toFixed(2)))}
-                className={`group flex min-h-[260px] flex-col justify-between rounded-[4px] border p-6 transition-colors duration-200 sm:p-7 lg:min-h-[295px] ${
+                className={`group flex min-h-[260px] flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#141518] p-6 transition-colors duration-200 hover:border-[#FF6B35]/45 hover:bg-[#16181D] lg:min-h-[290px] ${
                   isWide ? "md:col-span-2 lg:col-span-2" : "lg:col-span-1"
-                } ${
-                  isFeatured
-                    ? "border-[#FF6B35]/40 bg-[#15171F] hover:border-[#FF6B35]/75"
-                    : "border-white/[0.08] bg-[#121419] hover:border-white/25 hover:bg-[#15171E]"
                 }`}
               >
                 <div>
-                  {/* Card Index + Technical Icon */}
+                  {/* Card Index + Technical Icon (matched to AboutSection cards) */}
                   <div className="flex items-center justify-between">
-                    <span
-                      className={`font-mono text-xs ${
-                        isFeatured ? "font-semibold text-[#FF8A5B]" : "text-[#9CA3AF]"
-                      }`}
-                    >
+                    <span className="font-mono text-xs font-semibold text-[#FF8A5B]">
                       0{idx + 1}
                     </span>
                     <Icon
-                      className={`h-[18px] w-[18px] transition-colors ${
-                        isFeatured
-                          ? "text-[#FF8A5B]"
-                          : "text-[#9CA3AF] group-hover:text-[#FF6B35]"
-                      }`}
-                      strokeWidth={1.6}
+                      className="h-4 w-4 text-[#9CA3AF] transition-colors group-hover:text-[#FF6B35]"
                       aria-hidden="true"
                     />
                   </div>
 
                   {/* Service Name & Description */}
                   <h3
-                    className={`mt-7 font-display leading-snug font-bold tracking-tight text-[#F9FAFB] ${
+                    className={`mt-6 font-display leading-snug font-bold tracking-tight text-[#F9FAFB] ${
                       isWide ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
                     }`}
                   >
