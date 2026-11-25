@@ -64,6 +64,9 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const applyCardTransforms = (pos: number) => {
+      const stageWidth = stageRef.current?.clientWidth ?? 1280;
+      const maxVisible = stageWidth >= 960 ? 3.55 : stageWidth >= 600 ? 2.55 : 1.55;
+
       for (let idx = 0; idx < length; idx++) {
         const el = cardRefs.current[idx];
         if (!el) continue;
@@ -72,20 +75,27 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
         const abs = Math.abs(rel);
         el.dataset.ready = "true";
 
-        if (abs > 2.55) {
+        if (abs > maxVisible) {
           el.style.visibility = "hidden";
           el.style.pointerEvents = "none";
           continue;
         }
 
         const translatePct =
-          abs <= 1 ? rel * 54 : Math.sign(rel) * (54 + (abs - 1) * 42);
-        const scaleVal = Math.max(0.55, 1 - abs * 0.16);
-        const zVal = Math.round(40 - abs * 10);
+          abs <= 1
+            ? rel * 54
+            : abs <= 2
+              ? Math.sign(rel) * (54 + (abs - 1) * 42)
+              : Math.sign(rel) * (96 + (abs - 2) * 34);
+        const scaleVal =
+          abs <= 2 ? 1 - abs * 0.16 : Math.max(0.42, 0.68 - (abs - 2) * 0.14);
+        const zVal = Math.round(50 - abs * 10);
         const dim =
           abs <= 1
             ? Math.max(0.5, 1 - abs * 0.5)
-            : Math.max(0.2, 0.5 - (abs - 1) * 0.22);
+            : abs <= 2
+              ? Math.max(0.28, 0.5 - (abs - 1) * 0.22)
+              : Math.max(0.12, 0.28 - (abs - 2) * 0.12);
         const dimHover = Math.min(1, dim + 0.24);
         const isCenterNow = abs < 0.35;
 
@@ -132,10 +142,13 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       }
     };
 
+    const onResize = () => applyCardTransforms(currentPosRef.current);
     kickAnimationRef.current = startLoop;
     applyCardTransforms(currentPosRef.current);
+    window.addEventListener("resize", onResize);
 
     return () => {
+      window.removeEventListener("resize", onResize);
       if (rafIdRef.current !== null) {
         window.cancelAnimationFrame(rafIdRef.current);
         rafIdRef.current = null;
@@ -329,7 +342,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               ref={stageRef}
               onPointerDown={onStagePointerDown}
               onDragStart={(e) => e.preventDefault()}
-              className={`relative mx-auto h-[370px] w-full max-w-[1160px] touch-pan-y select-none sm:h-[470px] lg:h-[520px] ${
+              className={`relative mx-auto h-[370px] w-full max-w-[1320px] touch-pan-y select-none sm:h-[470px] lg:h-[520px] ${
                 isDragging ? "cursor-grabbing" : "cursor-grab"
               }`}
             >
