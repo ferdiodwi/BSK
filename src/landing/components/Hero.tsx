@@ -66,7 +66,7 @@ export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
     <section
       id="hero"
       ref={stageRef}
-      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-[#141518] pt-20 pb-8 text-white sm:pt-24 sm:pb-10 lg:pt-28 lg:pb-12"
+      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-[#07080A] pt-20 pb-8 text-white sm:pt-24 sm:pb-10 lg:pt-28 lg:pb-12"
     >
       {/* Anchor background to bottom so warm sunlit garage floor sits directly beneath the motorcycle stand and wheels */}
       <img
@@ -82,7 +82,13 @@ export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.16)_42%,rgba(0,0,0,0.48)_78%,rgba(0,0,0,0.84)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.16)_42%,rgba(0,0,0,0.48)_78%,rgba(7,8,10,0.9)_100%)]"
+      />
+
+      {/* Seamless floor fade so bottom edge dissolves into AboutSection (#07080A) without a hard horizontal cut */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[12] h-28 bg-gradient-to-b from-transparent via-[#07080A]/75 to-[#07080A]"
       />
 
       {/* Main Centered Showcase Block */}

@@ -16,19 +16,18 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
   return (
     <section
       id="about"
-      className="bsk-dark-section relative overflow-hidden border-t border-white/[0.08] bg-[#0B0C0E] text-[#F9FAFB]"
+      className="bsk-dark-section relative overflow-hidden bg-[linear-gradient(to_bottom,#07080A_0%,#0B0C10_22%,#0E1015_100%)] text-[#F9FAFB]"
     >
-      {/* Subtle overhead ember ambient tint linking the Hero garage floor into the workshop section */}
+      {/* Minimal vertical scroll guide fading seamlessly from Hero (#07080A) into About (#0E1015) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-1/2 h-px w-full max-w-[1320px] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#FF6B35]/35 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(255,107,53,0.07)_0%,transparent_70%)]"
-      />
+        className="pointer-events-none mx-auto flex max-w-[1320px] flex-col items-center pt-6"
+      >
+        <span className="h-10 w-px bg-gradient-to-b from-transparent via-[#FF6B35]/65 to-transparent" />
+        <span className="mt-2 h-px w-24 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      </div>
 
-      <div className="relative z-10 mx-auto max-w-[1320px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+      <div className="relative z-10 mx-auto max-w-[1320px] px-5 pt-10 pb-20 sm:px-8 sm:pt-12 lg:px-12 lg:pt-14 lg:pb-28">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
           {/* Left Editorial Photo Card: about.jpeg with frosted bottom caption */}
           <div {...revealLeft(0)} className="lg:col-span-5">
