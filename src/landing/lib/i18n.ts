@@ -81,6 +81,7 @@ const EN_MAP: Record<string, string> = {
   "Showcase": "Showcase",
   "Tentang": "About",
   "Layanan": "Services",
+  "Galeri": "Gallery",
   "Anatomi Presisi": "Frame Anatomy",
   "Layanan & Paket": "Services & Packages",
   "Galeri Unit": "Build Gallery",
@@ -167,18 +168,19 @@ const EN_MAP: Record<string, string> = {
     "Example: Frame has previous welds, bringing my own tank, steering head needs alignment.",
 
   // Gallery
-  "UNIT NYATA WORKSHOP": "REAL WORKSHOP BUILDS",
-  "Galeri 5 Unit Garapan BSK": "BSK Custom 5 Build Showcase",
-  "Lima contoh hasil penataan rangka dan full build dari studio BSK Custom. Klik unit untuk melihat spesifikasi ubahan lengkap.":
-    "Five real frame alignment and full build examples from BSK Custom. Select any build to inspect its specifications.",
+  "DOKUMENTASI GARAPAN NYATA": "REAL WORKSHOP ARCHIVE",
+  "Galeri Unit & Rangka BSK": "BSK Frame & Build Gallery",
+  "Filter kategori galeri bengkel": "Filter workshop gallery category",
   "Semua": "All",
-  "Tata Body Rangka": "Rolling Chassis",
-  "Full Build": "Full Build",
-  "Lihat Detail Spek": "Inspect Build Specs",
-  "Konsultasi Konsep Ini": "Consult This Build",
-  "Tutup": "Close",
-  "Tidak ada unit pada kategori ini.": "No builds match this filter.",
-  "Tampilkan Semua Unit": "Show All Builds",
+  "Rangka & Kaki-Kaki": "Frame & Chassis",
+  "Unit & Proses Bengkel": "Complete Units & Bench",
+  "Show Foto Penuh": "Full View",
+  "Tanya Garapan Ini": "Ask About This Build",
+  "Konsultasi Unit Serupa": "Consult Similar Build",
+  "Foto Sebelumnya": "Previous Photo",
+  "Foto Berikutnya": "Next Photo",
+  "Tutup preview foto": "Close photo preview",
+  "Daftar foto galeri BSK Custom": "BSK Custom gallery photo strip",
 
   // SOP & Workshop
   "KONSULTASI & LOKASI": "CONSULTATION & LOCATION",

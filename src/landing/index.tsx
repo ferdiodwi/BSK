@@ -6,6 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { AboutSection } from "./components/AboutSection";
 import { ServicePackages } from "./components/ServicePackages";
+import { ShowcaseGallery } from "./components/ShowcaseGallery";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
 import {
@@ -20,6 +21,7 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   Hero,
   AboutSection,
   ServicePackages,
+  ShowcaseGallery,
 };
 
 export function Landing() {
