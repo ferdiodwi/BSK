@@ -82,9 +82,9 @@ export function Hero({ block }: SectionComponentProps) {
     <section
       id="hero"
       ref={stageRef}
-      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#07080A] pt-16 pb-10 text-white sm:pt-24 sm:pb-10 md:justify-end md:pt-28 md:pb-12"
+      className="bsk-dark-section relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#07080A] pt-14 pb-12 text-white sm:pt-24 sm:pb-10 md:justify-end md:pt-28 md:pb-12"
     >
-      {/* Anchor background slightly higher on portrait mobile so floor glow meets centered motorcycle */}
+      {/* Anchor garage backdrop at bottom so brick floor frames lower section naturally */}
       <Image
         src="/background.webp"
         alt=""
@@ -93,7 +93,7 @@ export function Hero({ block }: SectionComponentProps) {
         priority
         quality={80}
         sizes="100vw"
-        className="pointer-events-none object-cover object-[50%_72%] select-none md:object-bottom"
+        className="pointer-events-none object-cover object-bottom select-none"
       />
 
       <div
@@ -122,18 +122,18 @@ export function Hero({ block }: SectionComponentProps) {
 
           <h1
             ref={titleLayerRef}
-            className="mt-1.5 origin-top scale-y-[1.22] text-center font-condensed text-[clamp(2.85rem,13.8vw,10rem)] leading-[0.84] tracking-[-0.01em] text-white uppercase whitespace-nowrap drop-shadow-[0_10px_28px_rgba(0,0,0,0.55)] select-none sm:mt-1 sm:scale-y-100"
+            className="mt-1 text-center font-condensed text-[clamp(2.9rem,14.8vw,10rem)] leading-[0.83] tracking-[-0.01em] text-white uppercase whitespace-nowrap drop-shadow-[0_10px_28px_rgba(0,0,0,0.55)] select-none"
           >
             {activeBike.heroTitle}
           </h1>
         </div>
 
         {/* Fixed-Height Center Bike Stage overlapping in front of bold poster text */}
-        <div className="relative z-20 mx-auto -mt-6 flex w-full max-w-[1060px] flex-col items-center sm:-mt-14 lg:-mt-22">
+        <div className="relative z-20 mx-auto -mt-9 flex w-full max-w-[1060px] flex-col items-center sm:-mt-14 lg:-mt-22">
           <div
             onTouchStart={onStageTouchStart}
             onTouchEnd={onStageTouchEnd}
-            className="relative flex h-[260px] w-full items-end justify-center px-7 touch-pan-y sm:h-[360px] sm:px-14 lg:h-[460px] lg:px-16 xl:h-[500px]"
+            className="relative flex h-[195px] w-full items-end justify-center px-8 touch-pan-y sm:h-[360px] sm:px-14 lg:h-[460px] lg:px-16 xl:h-[500px]"
           >
             {/* Left Arrow Flanking the Bike */}
             <button
@@ -184,7 +184,7 @@ export function Hero({ block }: SectionComponentProps) {
                   priority={activeIndex === 0}
                   quality={85}
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 76vw, 760px"
-                  className="relative z-20 block h-auto max-h-[260px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.75)] sm:max-h-[360px] lg:max-h-[460px] xl:max-h-[500px]"
+                  className="relative z-20 block h-auto max-h-[195px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.75)] sm:max-h-[360px] lg:max-h-[460px] xl:max-h-[500px]"
                 />
               </div>
             </div>
@@ -200,32 +200,8 @@ export function Hero({ block }: SectionComponentProps) {
             </button>
           </div>
 
-          {/* Mobile-only slide pagination indicator (desktop shows flanking peeking bikes) */}
-          <div className="relative z-30 mt-2 flex items-center justify-center md:hidden">
-            {bikes.map((bike, idx) => {
-              const isCur = idx === activeIndex;
-              return (
-                <button
-                  key={bike.id}
-                  type="button"
-                  onClick={() => setActiveIndex(idx)}
-                  aria-label={bike.name}
-                  aria-current={isCur ? "true" : undefined}
-                  className="flex h-10 w-8 items-center justify-center"
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`h-1.5 rounded-full transition-all ${
-                      isCur ? "w-6 bg-[#FF6B35]" : "w-2 bg-white/30"
-                    }`}
-                  />
-                </button>
-              );
-            })}
-          </div>
-
           {/* Bottom Centered Underlined Direct WhatsApp Action for Active Bike */}
-          <div {...heroEnterAttr(0.18)} className="relative z-30 mt-1 flex flex-col items-center md:mt-4">
+          <div {...heroEnterAttr(0.18)} className="relative z-30 mt-4 flex flex-col items-center">
             <a
               href={buildDirectWhatsAppUrl(site.contact.whatsapp_number, activeBike.name, locale)}
               target="_blank"
