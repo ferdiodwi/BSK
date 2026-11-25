@@ -455,7 +455,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda CB 100 · Jember",
     bikeEn: "Honda CB 100 · Jember",
     quote:
-      "Awalnya pangkon tangki CB saya mendongak terus joknya renggang parah. Setelah ditata di BSK, dudukannya rapet presisi dan dibawa lari kencang tetap lempeng tidak narik.",
+      "Dulu pangkon tangki CB ku ndongak parah, jok nya juga renggang. Habis digarap BSK langsung nempel rapet rek, dibawa kenceng tetep lempeng gak narik.",
     quoteEn:
       "My CB tank mount used to nose up with a huge seat gap. After BSK aligned the mounts, the fitment sits tight and the bike tracks dead straight at speed.",
     is_sample: true,
@@ -466,7 +466,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Megapro Primus · Bondowoso",
     bikeEn: "Megapro Primus · Bondowoso",
     quote:
-      "Garapan subframe pipa seamless-nya rapi dan kokoh. Dipakai harian maupun touring ke luar kota aman, posturnya juga jadi lebih mbois dilihat dari samping.",
+      "Las subframe nya rapi pol sih, beneran niat ngerjainnya. Dipake harian sama turing luar kota anteng, posturnya juga mbois pas dilihat dari samping.",
     quoteEn:
       "The seamless pipe subframe fabrication is clean and solid. Reliable for both commuting and touring, and the side stance looks sharp.",
     is_sample: true,
@@ -477,7 +477,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda GL 100 · Jember",
     bikeEn: "Honda GL 100 · Jember",
     quote:
-      "Komstir sama kelurusan arm belakang benar-benar diukur senter. Sebelum masuk BSK motor agak buang ke kiri, sekarang lepas tangan sebentar langsung anteng lurus.",
+      "Komstir sama arm belakang dicek senter beneran di sini. Kemarin sempat miring dikit, sekarang lepas stang bentar aja wis lurus anteng, gak ngelawan.",
     quoteEn:
       "Steering neck and swingarm centering were measured properly. Before BSK the bike pulled left; now it tracks steady and straight without effort.",
     is_sample: true,
@@ -488,7 +488,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "CB Gelatik · Bondowoso",
     bikeEn: "CB Gelatik · Bondowoso",
     quote:
-      "Konsultasi dulu soal part bawa sendiri dibantu enak banget. Fitting jok tipis sama slebor belakang pas nempel semua, tinggal naik cat sesuai selera.",
+      "Enak diajak rembukan konsep pas bawa part sendiri. Jok tipis sama slebor belakang di fitting pas bener, gak ada celah renggang, tinggal gas naik cat.",
     quoteEn:
       "Consulting about bringing my own parts was straightforward. Slim seat and rear fender sit flush with zero awkward gaps, ready for paint.",
     is_sample: true,
@@ -499,7 +499,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "GL Pro Herex · Bondowoso",
     bikeEn: "GL Pro Herex · Bondowoso",
     quote:
-      "Selain rangka, kemarin sekalian tune-up dan korek harian di sini. Setting karbu sama klepnya pas, tarikan bawahnya isi dan enak dipakai riding santai.",
+      "Niat awal cuma tata bodi, eh sekalian tune-up harian juga. Setting karbu sama klep nya dapet banget, tarikan bawahnya ngisi buat gas tipis-tipis.",
     quoteEn:
       "Besides frame work, I got a daily engine tune-up here too. Carburetor and valve clearance tuning gave punchy low-end pull while staying smooth in traffic.",
     is_sample: true,
@@ -510,7 +510,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda Tiger 2000 · Jember",
     bikeEn: "Honda Tiger 2000 · Jember",
     quote:
-      "Kabel bodi dirapikan ulang ngumpet di balik tangki dan rangka jadi kelihatan bersih pol. Kelistrikan aman, lampu terang, tidak bikin was-was pas malam.",
+      "Kabel bodi dirapikan ngumpet di balik tangki cek gak semrawut. Kelistrikan jadi aman, lampu terang terus, dibawa malam udah gak was-was lagi.",
     quoteEn:
       "Wiring loom tucked cleanly under the tank and frame rails so the chassis looks uncluttered. Solid electricals and bright headlight at night.",
     is_sample: true,
@@ -521,7 +521,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "CB Dream · Situbondo",
     bikeEn: "CB Dream · Situbondo",
     quote:
-      "Senter as roda depan sampai jalur rantai diperhatikan betul di sini. Undur-undur arm gampang disetel dan ban belakang lurus persis sama slebor.",
+      "Senter as roda sama jalur rantai diukur teliti bener lur. Undur-undur arm gampang disetel, ban belakang lurus persis sama slebor.",
     quoteEn:
       "Everything from front axle alignment to chain line gets real attention here. Chain adjusters set easily and the rear wheel aligns dead center with the fender.",
     is_sample: true,
@@ -532,7 +532,7 @@ export const BSK_TESTIMONIALS: TestimonialItem[] = [
     bike: "Honda GL Max · Jember",
     bikeEn: "Honda GL Max · Jember",
     quote:
-      "Hasil las pangkon shock dobelnya matang dan simetris kiri-kanan. Dipakai boncengan tetap stabil, tampilannya dapat tapi fungsinya juga oke.",
+      "Garapan pangkon shock dobelnya simetris kiri kanan. Buat boncengan tetep stabil gak goyang, dapet tampilannya, dapet juga enaknya pas dipake.",
     quoteEn:
       "The twin shock mount welds are strong and dead symmetrical left-to-right. Handles two-up riding with confidence while looking clean.",
     is_sample: true,
