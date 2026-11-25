@@ -27,7 +27,6 @@ export type InquiryPackage = {
   id: string;
   name: string;
   desc: string;
-  duration: string;
 };
 
 export type InquiryAddon = {
@@ -45,33 +44,39 @@ const BIKES: InquiryBike[] = [
 
 const PACKAGES: InquiryPackage[] = [
   {
-    id: "standar",
-    name: "Paket Tata Body Standar",
-    desc: "Fitting dudukan tangki, jok ngepress rapi, slebor depan/belakang, begel",
-    duration: "3 - 5 Hari Kerja",
-  },
-  {
     id: "full-rangka",
-    name: "Paket Full Rangka & Senter Kaki",
-    desc: "Bikin subframe baru, setting kemiringan shock, as roda center",
-    duration: "5 - 7 Hari Kerja",
+    name: "Custom Rangka & Subframe",
+    desc: "Potong-sambung subframe pipa seamless, las dudukan shock, dan senter komstir",
   },
   {
-    id: "restorasi",
-    name: "Paket Restorasi Komplit + Cat Oven",
-    desc: "Tata bodi, repaint oven rangka & bodi, serta rakit kelistrikan rapi",
-    duration: "10 - 14 Hari Kerja",
+    id: "standar",
+    name: "Tata Body & Fitting",
+    desc: "Fitting dudukan tangki rata, jok slim presisi, slebor depan/belakang, dan begel",
   },
   {
-    id: "tune-up",
-    name: "Paket Tune-Up & Setting Herex",
-    desc: "Servis karbu/injeksi, klep, pengapian, dan uji jalan",
-    duration: "1 - 2 Hari Kerja",
+    id: "kaki-kaki",
+    name: "Rolling Chassis & Kaki-Kaki",
+    desc: "Setel swingarm, dudukan cakram, kemiringan shock, dan senter jalur rantai serta as roda",
+  },
+  {
+    id: "mesin",
+    name: "Garap Mesin, Tune-Up & Herex",
+    desc: "Servis mesin, korek harian/touring, setting klep, serta karburator atau throttle body",
+  },
+  {
+    id: "kelistrikan",
+    name: "Kelistrikan & Pengapian",
+    desc: "Perapihan kabel bodi tersembunyi, cek pengapian, kiprok, dan instalasi lampu",
+  },
+  {
+    id: "mentahan",
+    name: "Rakitan Mentahan & Non-Cat",
+    desc: "Rakit unit rangka mentahan siap jalan atau siap masuk pengecatan (tidak melayani repaint)",
   },
 ];
 
 const ADDONS: InquiryAddon[] = [
-  { id: "repaint-rangka", name: "Repaint Rangka Oven Anti Gores" },
+  { id: "subframe-seamless", name: "Las Subframe Pipa Seamless" },
   { id: "custom-jok", name: "Jok Custom Busa Latex / Kulit Mbtech" },
   { id: "kabel-rapi", name: "Penyembunyian Kabel Bodi Rapi" },
   { id: "polish-mesin", name: "Poles Blok Mesin / Bak Kopling Kilap" },
@@ -95,7 +100,7 @@ export function BuildInquiryModal({
 }) {
   const locale = useLocale();
   const [selectedBike, setSelectedBike] = useState<string>(initialBikeId || BIKES[0].id);
-  const [selectedPackage, setSelectedPackage] = useState<string>(initialPackageId || PACKAGES[1].id);
+  const [selectedPackage, setSelectedPackage] = useState<string>(initialPackageId || PACKAGES[0].id);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [partsStatus, setPartsStatus] = useState<string>(PARTS_OPTIONS[0]);
   const [notes, setNotes] = useState<string>("");
@@ -248,9 +253,6 @@ export function BuildInquiryModal({
                         {pkg.desc}
                       </p>
                     </div>
-                    <div className={`mt-3 font-mono text-xs font-bold uppercase ${isSelected ? "text-[#FFE600]" : "text-[#D62810]"}`}>
-                      {tr(pkg.duration, locale)}
-                    </div>
                   </button>
                 );
               })}
@@ -350,7 +352,7 @@ export function BuildInquiryModal({
                   {activeBikeObj.name} · {tr(activePackageObj.name, locale)}
                 </div>
                 <p className="font-mono text-xs text-[#D1D5DB]">
-                  {translatedPartsStatus} · {tr(activePackageObj.duration, locale)}
+                  {translatedPartsStatus}
                 </p>
                 {site.contact.whatsapp_is_placeholder && (
                   <p className="pt-1 font-mono text-[11px] text-[#9CA3AF]">

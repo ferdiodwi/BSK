@@ -240,77 +240,89 @@ export const site = {
           blocks: [
             {
               order: 0,
-              title: "Layanan Tata Body & Jasa Bengkel",
-              subtitle: "RUANG LINGKUP GARAPAN",
-              description:
-                "Penentuan rincian pengerjaan disesuaikan dengan kondisi rangka awal, basis motor, dan kelengkapan part. Kirim konsep motor Anda untuk cek jadwal dan penawaran langsung via WhatsApp.",
+              title: "Rapi di tata body.",
+              subtitle: "LAYANAN BENGKEL & GARAPAN CUSTOM",
               extra: {
-                note: "Waktu pengerjaan bergantung pada antrean bengkel, kondisi rangka awal, dan ketersediaan part.",
+                title_line2: "Presisi di rangka & mesin.",
               },
               items: [
                 {
                   order: 0,
-                  id: "standar",
-                  title: "Paket Tata Body Standar",
+                  id: "full-rangka",
+                  title: "Custom Rangka & Subframe",
                   description:
-                    "Pemasangan set bodi lengkap: dudukan tangki, setting jok presisi, dudukan slebor depan dan belakang, serta begel.",
+                    "Pembuatan dan perbaikan geometri rangka CB, GL, Megapro, hingga Tiger. Mulai dari potong-sambung subframe pipa seamless, las dudukan shock, sampai senter leher komstir agar lurus dikendarai.",
                   extra: {
-                    duration: "3 - 5 Hari Kerja",
-                    scope: "Fitting Bodi & Braket",
-                    highlights: [
-                      "Fitting tangki rata tidak mendongak",
-                      "Dudukan jok presisi tanpa celah",
-                      "Penataan slebor, begel, dan stoplamp",
-                    ],
+                    span: 2,
+                    iconKey: "rangka",
+                    ctaLabel: "Konsultasi custom rangka",
+                    tags: ["Potong & Sambung Subframe", "Senter Komstir", "Las Pipa Tebal"],
                   },
                 },
                 {
                   order: 1,
-                  id: "full-rangka",
-                  title: "Paket Full Rangka & Senter Kaki",
+                  id: "standar",
+                  title: "Tata Body & Fitting",
                   description:
-                    "Penyelarasan rangka total, bikin subframe pipa seamless baru, dudukan shock dobel simetris, dan senter as roda depan-belakang.",
+                    "Penataan set bodi proporsional tanpa celah renggang: tangki duduk rata, jok slim ngepress rangka, serta pemasangan slebor dan begel.",
                   extra: {
-                    duration: "5 - 7 Hari Kerja",
-                    scope: "Fabrikasi Subframe & Alignment",
-                    featured: true,
-                    highlights: [
-                      "Semua cakupan Paket Standar",
-                      "Potong dan sambung subframe pipa tebal",
-                      "Senter as roda depan, swingarm, dan gir",
-                    ],
+                    span: 1,
+                    iconKey: "body",
+                    ctaLabel: "Konsultasi tata body",
+                    tags: ["Fitting Tangki Rata", "Jok Slim Rapi", "Slebor & Begel"],
                   },
                 },
                 {
                   order: 2,
-                  id: "restorasi",
-                  title: "Paket Restorasi Komplit + Cat Oven",
+                  id: "kaki-kaki",
+                  title: "Rolling Chassis & Kaki-Kaki",
                   description:
-                    "Bangun motor dari rangka dasar: tata body penuh, repaint oven 3 lapis rangka dan bodi, serta perakitan kabel bodi tersembunyi.",
+                    "Penyelarasan sektor kaki-kaki depan dan belakang: setel swingarm, dudukan cakram, kemiringan shock, dan senter jalur rantai serta as roda.",
                   extra: {
-                    duration: "10 - 14 Hari Kerja",
-                    scope: "Bangun Ulang & Finishing",
-                    highlights: [
-                      "Full tata body & alignment rangka",
-                      "Repaint oven 3 lapis rangka dan tangki",
-                      "Rakit kabel bodi rapi tersembunyi",
-                    ],
+                    span: 1,
+                    featured: true,
+                    iconKey: "kaki",
+                    ctaLabel: "Konsultasi kaki-kaki",
+                    tags: ["Senter As Roda", "Setel Swingarm", "Jalur Rantai Lurus"],
                   },
                 },
                 {
                   order: 3,
-                  id: "tune-up",
-                  title: "Paket Tune-Up & Setting Harian / Herex",
+                  id: "mesin",
+                  title: "Garap Mesin, Tune-Up & Herex",
                   description:
-                    "Perawatan performa mesin dan kelistrikan: servis karburator atau throttle body, setel klep, cek pengapian, dan ganti oli.",
+                    "Penanganan dapur pacu untuk kebutuhan harian tangguh maupun spek touring dan herex. Meliputi servis rutin, korek harian, setting rasio, setel klep, serta penataan karburator atau throttle body.",
                   extra: {
-                    duration: "1 - 2 Hari Kerja",
-                    scope: "Performa Mesin & Kelistrikan",
-                    highlights: [
-                      "Servis karburator atau throttle body",
-                      "Setting celah klep dan kelistrikan",
-                      "Uji jalan respons tarikan",
-                    ],
+                    span: 2,
+                    iconKey: "mesin",
+                    ctaLabel: "Konsultasi garap mesin",
+                    tags: ["Tune-Up & Servis", "Spek Harian / Herex", "Karbu & Klep"],
+                  },
+                },
+                {
+                  order: 4,
+                  id: "kelistrikan",
+                  title: "Kelistrikan & Pengapian",
+                  description:
+                    "Perakitan dan perapihan jalur kabel bodi tersembunyi agar rangka bersih, pengecekan pengapian, kiprok, hingga instalasi lampu stabil.",
+                  extra: {
+                    span: 1,
+                    iconKey: "kelistrikan",
+                    ctaLabel: "Konsultasi kelistrikan",
+                    tags: ["Kabel Bodi Rapi", "Cek Pengapian", "Full DC & Lampu"],
+                  },
+                },
+                {
+                  order: 5,
+                  id: "mentahan",
+                  title: "Rakitan Mentahan & Non-Cat",
+                  description:
+                    "Fokus pengerjaan mekanis, rangka mentahan, dan perakitan unit siap jalan atau siap masuk tukang cat pilihan Anda tanpa layanan repaint.",
+                  extra: {
+                    span: 1,
+                    iconKey: "mentahan",
+                    ctaLabel: "Konsultasi rakitan",
+                    tags: ["Fokus Rangka & Mesin", "Siap Naik Cat Sendiri", "Non-Repaint"],
                   },
                 },
               ],
