@@ -143,9 +143,9 @@ export const site = {
     "Bengkel spesialis tata body CB, penataan rangka center, fitting tangki dan jok presisi, serta custom kaki-kaki motor klasik dan harian.",
   preview_image_url: "/logo.png",
   contact: {
-    whatsapp_number: "6280000000000",
-    whatsapp_is_placeholder: true,
-    whatsapp_display: "[Nomor WA Admin, atur di site.ts]",
+    whatsapp_number: "6282223145215",
+    whatsapp_is_placeholder: false,
+    whatsapp_display: "+62 822-2314-5215",
     instagram_user: "@bsk.custom",
     instagram_url: "https://instagram.com/bsk.custom",
     tiktok_url: "https://tiktok.com/@bsk.custom",
