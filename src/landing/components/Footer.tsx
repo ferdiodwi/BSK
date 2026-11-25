@@ -23,9 +23,9 @@ export function Footer({ block, onOpenInquiry }: SectionComponentProps) {
             <img
               src="/logo.png"
               alt="Logo BSK Custom"
-              width={2048}
-              height={2048}
-              className="h-10 w-10 object-contain"
+              width={1935}
+              height={828}
+              className="h-9 w-auto object-contain"
             />
             <div>
               <span className="font-hero text-lg font-bold tracking-wider text-white uppercase">

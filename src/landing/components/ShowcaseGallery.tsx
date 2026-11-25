@@ -161,10 +161,10 @@ export function ShowcaseGallery({ block, onOpenInquiry }: SectionComponentProps)
                     <img
                       src={bike.imageUrl}
                       alt={`${bike.name} - ${bike.categoryLabel}`}
-                      width={2048}
-                      height={2048}
+                      width={bike.width}
+                      height={bike.height}
                       {...imgPerfProps()}
-                      className="relative z-10 h-full max-h-[250px] w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                      className="relative z-10 h-auto max-h-[240px] w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                     />
                     <span className="absolute top-3 left-3 z-20 bg-[#141518] px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider text-white uppercase">
                       {locale === "en" ? bike.categoryLabelEn : bike.categoryLabel}
@@ -246,8 +246,8 @@ export function ShowcaseGallery({ block, onOpenInquiry }: SectionComponentProps)
                 <img
                   src={inspectedBike.imageUrl}
                   alt={inspectedBike.name}
-                  width={2048}
-                  height={2048}
+                  width={inspectedBike.width}
+                  height={inspectedBike.height}
                   className="max-h-[280px] w-auto object-contain"
                 />
               </div>

@@ -93,6 +93,7 @@ const EN_MAP: Record<string, string> = {
   "Penataan tangki, jok, subframe, dan kelurusan kaki-kaki motor klasik maupun harian. Rapi di mata, lurus saat dikendarai.":
     "Precision tank fitting, seat alignment, subframe welding, and wheel geometry for classic CB and daily custom builds.",
   "Konsultasi Konsep": "Consult Your Build",
+  "Konsultasi Konsep Garapan": "Consult Your Build",
   "Lihat Detail Garapan": "View Build Gallery",
   "Motor Sebelumnya": "Previous Motorcycle",
   "Motor Berikutnya": "Next Motorcycle",

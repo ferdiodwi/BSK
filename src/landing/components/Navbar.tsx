@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { tr, toggleLocale, useLocale } from "../lib/i18n";
 import { FlagIcon } from "../ui/FlagIcon";
-import { InstagramLogo } from "../ui/BrandLogos";
 import {
   ariaLabelAttr,
   attachKeydown,
@@ -22,7 +21,7 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
   const links = sortedItems(block.items);
 
   useEffect(() => {
-    return attachWindowScroll(16, setScrolled);
+    return attachWindowScroll(32, setScrolled);
   }, []);
 
   useEffect(() => {
@@ -34,65 +33,48 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
 
   return (
     <header
-      className={`sticky top-0 left-0 right-0 z-40 transition-colors duration-200 border-b ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
         scrolled
-          ? "border-black/10 bg-[#FFFFFF] shadow-sm"
-          : "border-black/10 bg-[#F5F5F6]"
+          ? "border-b border-white/15 bg-[#141518]/95 shadow-lg"
+          : "bg-gradient-to-b from-black/80 via-black/45 to-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
-        {/* Brand Identity */}
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3.5 sm:px-8 lg:px-12">
+        {/* Trimmed BSK Custom Brand Sticker Logo */}
         <a
           href="#hero"
-          className="flex min-h-[44px] items-center gap-3 text-[#111216] transition-opacity hover:opacity-85"
+          aria-label="Beranda BSK Custom"
+          className="flex min-h-[44px] items-center transition-transform hover:scale-[1.02]"
         >
           <img
             src="/logo.png"
-            alt="Logo BSK Custom"
-            width={2048}
-            height={2048}
-            className="h-9 w-9 object-contain sm:h-10 sm:w-10"
+            alt="BSK Custom - Tata Body CB"
+            width={1935}
+            height={828}
+            className="h-9 w-auto object-contain sm:h-11 lg:h-12"
           />
-          <div className="flex flex-col leading-none">
-            <span className="font-hero text-xl font-bold tracking-tight text-[#111216] sm:text-2xl">
-              BSK <span className="text-[#D62810]">CUSTOM</span>
-            </span>
-            <span className="mt-0.5 font-mono text-[10px] font-semibold tracking-widest text-[#4B5563] uppercase">
-              TATA BODY CB
-            </span>
-          </div>
         </a>
 
-        {/* Desktop Links */}
+        {/* Centered Editorial Nav Links */}
         <nav aria-label="Navigasi utama" className="hidden items-center gap-6 lg:flex xl:gap-8">
           {links.map((item, idx) => (
             <a
               key={idx}
               href={item.icon || "#hero"}
-              className="inline-flex min-h-[44px] items-center px-1 text-sm font-semibold text-[#111216] transition-colors hover:text-[#D62810]"
+              className="inline-flex min-h-[44px] items-center px-1 font-hero text-xs font-semibold tracking-widest text-[#F3F4F6] uppercase transition-colors hover:text-[#FF6B35]"
             >
               {tr(item.title || "", locale)}
             </a>
           ))}
         </nav>
 
-        {/* Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <a
-            href="https://instagram.com/bsk.custom"
-            target="_blank"
-            rel="noopener noreferrer"
-            {...ariaLabelAttr("Instagram BSK Custom")}
-            className="hidden h-11 w-11 items-center justify-center border border-black/15 bg-white text-[#111216] transition-colors hover:border-[#D62810] hover:text-[#D62810] sm:inline-flex"
-          >
-            <InstagramLogo className="h-4 w-4" aria-hidden="true" />
-          </a>
-
+        {/* Right Controls: Language Toggle + Rectangular Bordered Action (Harley TEST RIDE motif) */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <button
             type="button"
             onClick={toggleLocale}
             {...ariaLabelAttr(locale === "id" ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian")}
-            className="inline-flex min-h-[44px] items-center gap-2 border border-black/15 bg-white px-3 text-xs font-bold text-[#111216] transition-colors hover:border-[#111216]"
+            className="inline-flex min-h-[44px] items-center gap-2 border border-white/25 bg-[#141518]/80 px-3 text-xs font-bold text-[#F3F4F6] transition-colors hover:border-white"
           >
             <span>{locale.toUpperCase()}</span>
             <FlagIcon isEn={locale === "en"} />
@@ -101,7 +83,7 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
           <button
             type="button"
             onClick={() => onOpenInquiry?.()}
-            className="hidden min-h-[44px] items-center bg-[#D62810] px-5 text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-[#C41E0A] active:scale-[0.98] md:inline-flex"
+            className="hidden min-h-[44px] items-center border border-[#FF5722] bg-[#141518]/75 px-5 font-hero text-xs font-bold tracking-widest text-[#FF6B35] uppercase transition-colors hover:border-[#D62810] hover:bg-[#D62810] hover:text-white active:scale-[0.98] md:inline-flex"
           >
             {tr("Ajukan Konsep", locale)}
           </button>
@@ -114,7 +96,7 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
             {...ariaLabelAttr(
               mobileMenuOpen ? tr("Tutup menu navigasi", locale) : tr("Buka menu navigasi", locale)
             )}
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 border border-black/20 bg-white px-3 text-xs font-bold text-[#111216] uppercase transition-colors hover:border-[#111216] lg:hidden"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 border border-white/25 bg-[#141518]/85 px-3 text-xs font-bold text-white uppercase transition-colors hover:border-white lg:hidden"
           >
             {mobileMenuOpen ? (
               <X className="h-4 w-4" aria-hidden="true" />
@@ -131,7 +113,7 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
         <nav
           id="mobile-nav-drawer"
           aria-label="Navigasi seluler"
-          className="border-t border-black/10 bg-white px-4 py-4 shadow-lg lg:hidden"
+          className="border-t border-white/15 bg-[#141518] px-4 py-4 shadow-2xl lg:hidden"
         >
           <div className="flex flex-col gap-1">
             {links.map((item, idx) => (
@@ -139,32 +121,21 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
                 key={idx}
                 href={item.icon || "#hero"}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex min-h-[44px] items-center px-3 text-sm font-semibold text-[#111216] transition-colors hover:bg-[#F5F5F6] hover:text-[#D62810]"
+                className="flex min-h-[44px] items-center px-3 font-hero text-sm font-semibold tracking-wider text-[#F3F4F6] uppercase transition-colors hover:bg-white/5 hover:text-[#FF6B35]"
               >
                 {tr(item.title || "", locale)}
               </a>
             ))}
-            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-black/10 pt-3">
-              <a
-                href="https://instagram.com/bsk.custom"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex min-h-[44px] items-center justify-center gap-2 border border-black/15 bg-[#F5F5F6] px-3 text-xs font-bold text-[#111216]"
-              >
-                <InstagramLogo className="h-4 w-4" aria-hidden="true" />
-                <span>@bsk.custom</span>
-              </a>
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenInquiry?.();
-                }}
-                className="flex min-h-[44px] items-center justify-center bg-[#D62810] px-3 text-xs font-bold tracking-wider text-white uppercase"
-              >
-                {tr("Ajukan Konsep", locale)}
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenInquiry?.();
+              }}
+              className="mt-3 flex min-h-[44px] w-full items-center justify-center bg-[#D62810] px-4 font-hero text-xs font-bold tracking-widest text-white uppercase hover:bg-[#C41E0A]"
+            >
+              {tr("Ajukan Konsep", locale)}
+            </button>
           </div>
         </nav>
       )}

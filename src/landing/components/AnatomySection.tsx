@@ -86,16 +86,16 @@ export function AnatomySection({ block, onOpenInquiry }: SectionComponentProps) 
                 </div>
               </div>
 
-              {/* Keep 1:1 square ratio matching 2048x2048 cutouts so hotspot coordinates align across breakpoints */}
-              <div className="relative mx-auto mt-4 aspect-square w-full max-w-[440px]">
+              {/* Match trimmed image aspect ratio directly so percentage hotspots lock onto frame anatomy */}
+              <div className="relative mx-auto mt-6 w-full max-w-[540px]">
                 <img
                   key={inspectionBike.id}
                   src={inspectionBike.imageUrl}
                   alt={`Inspeksi anatomi rangka ${inspectionBike.name}`}
-                  width={2048}
-                  height={2048}
+                  width={inspectionBike.width}
+                  height={inspectionBike.height}
                   {...imgPerfProps()}
-                  className="h-full w-full object-contain"
+                  className="h-auto w-full object-contain"
                 />
 
                 {ANATOMY_POINTS.map((point) => {

@@ -2,11 +2,14 @@ export type BikeSpec = {
   id: string;
   inquiryBikeId: string;
   name: string;
+  heroTitle: string;
   watermark: string;
   category: "Tata Body Rangka" | "Full Build";
   categoryLabel: string;
   categoryLabelEn: string;
   imageUrl: string;
+  width: number;
+  height: number;
   facing: "right" | "left";
   platform: string;
   focus: string;
@@ -33,11 +36,14 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "cb-black-gold",
     inquiryBikeId: "cb-gelatik",
     name: "CB 100 Black Gold",
+    heroTitle: "CB 100 BLACK",
     watermark: "CB 100",
     category: "Tata Body Rangka",
     categoryLabel: "Tata Body & Rolling Chassis",
     categoryLabelEn: "Bodywork & Rolling Chassis",
     imageUrl: "/bikes/5.png",
+    width: 1531,
+    height: 944,
     facing: "right",
     platform: "Rangka CB 100 / 125",
     focus: "Fitting tangki hitam lis emas, jok slim kotak, sok depan gold, dan senter as roda.",
@@ -49,11 +55,14 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "cb-raw-frame",
     inquiryBikeId: "cb-gelatik",
     name: "CB Raw Frame",
+    heroTitle: "CB RAW FRAME",
     watermark: "RAW CB",
     category: "Tata Body Rangka",
     categoryLabel: "Tata Body Mentahan Presisi",
     categoryLabelEn: "Raw Frame Alignment",
     imageUrl: "/bikes/8.png",
+    width: 1765,
+    height: 1000,
     facing: "right",
     platform: "Rangka Klasik CB / GL",
     focus: "Penataan tangki bahan primer, dudukan jok tipis presisi, subframe belakang, dan slebor chrome.",
@@ -65,11 +74,14 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "gl-slate-blue",
     inquiryBikeId: "gl-series",
     name: "GL / CB Slate Blue",
+    heroTitle: "GL SLATE BLUE",
     watermark: "RESTOMOD",
     category: "Full Build",
     categoryLabel: "Full Build Resto",
     categoryLabelEn: "Full Build Restoration",
     imageUrl: "/bikes/4.png",
+    width: 1706,
+    height: 992,
     facing: "right",
     platform: "GL Series Restomod",
     focus: "Tata body utuh, bak mesin & begel chrome, shock tabung merah, rem cakram lebar depan.",
@@ -81,11 +93,14 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "mp-herex",
     inquiryBikeId: "megapro",
     name: "Megapro / GL Herex",
+    heroTitle: "MP GL HEREX",
     watermark: "HEREX",
     category: "Full Build",
     categoryLabel: "Full Build Racing Harian",
     categoryLabelEn: "Daily Racing Herex Build",
     imageUrl: "/bikes/7.png",
+    width: 1396,
+    height: 816,
     facing: "right",
     platform: "Megapro / GL Racing",
     focus: "Postur rangka herex harian, jok datar presisi, knalpot racing stainless, dan shock belakang kuning.",
@@ -97,11 +112,14 @@ export const BSK_BIKES: BikeSpec[] = [
     id: "cb-blue-track",
     inquiryBikeId: "cb-dream",
     name: "CB Blue Track",
+    heroTitle: "CB BLUE TRACK",
     watermark: "CLASSIC",
     category: "Tata Body Rangka",
     categoryLabel: "Tata Body & Kaki-Kaki",
     categoryLabelEn: "Bodywork & Suspension Setup",
     imageUrl: "/bikes/6.png",
+    width: 1806,
+    height: 1180,
     facing: "left",
     platform: "Rangka CB Silver",
     focus: "Fitting tangki biru metalik, arm kotak kokoh, shock tabung, dan penyetelan kelurusan ban belakang.",
@@ -111,14 +129,15 @@ export const BSK_BIKES: BikeSpec[] = [
   },
 ];
 
+// Coordinates calibrated directly to the trimmed 5.png and 8.png aspect ratios
 export const ANATOMY_POINTS: AnatomyPoint[] = [
   {
     id: "komstir",
     number: "01",
     title: "Komstir & Leher Rangka",
     titleEn: "Steering Head & Neck Alignment",
-    xPercent: 60,
-    yPercent: 45,
+    xPercent: 68,
+    yPercent: 26,
     standard: "Sudut Rake Simetris & Bebas Oblak",
     standardEn: "Symmetrical Rake Angle & Zero Play",
     detail: "Kelurusan leher komstir diperiksa dengan mal ukur agar motor tetap lurus stabil saat lepas stang di kecepatan tinggi.",
@@ -129,8 +148,8 @@ export const ANATOMY_POINTS: AnatomyPoint[] = [
     number: "02",
     title: "Pertemuan Tangki & Jok",
     titleEn: "Tank-to-Seat Flush Fitment",
-    xPercent: 46,
-    yPercent: 46,
+    xPercent: 45,
+    yPercent: 25,
     standard: "Garis Bodi Datar Tanpa Celah Renggang",
     standardEn: "Flush Profile With Zero Awkward Gap",
     detail: "Dudukan karet dan kait tangki disetel ulang supaya posisi tangki tidak mendongak dan ujung jok menempel rapat mengikuti lekuk tangki.",
@@ -141,8 +160,8 @@ export const ANATOMY_POINTS: AnatomyPoint[] = [
     number: "03",
     title: "Subframe & Dudukan Shock",
     titleEn: "Subframe & Shock Mounts",
-    xPercent: 31,
-    yPercent: 52,
+    xPercent: 28,
+    yPercent: 39,
     standard: "Las Penetrasi Penuh & Kiri-Kanan Sejajar",
     standardEn: "Full-Penetration Weld & Equal Left-Right Geometry",
     detail: "Pemotongan dan penyambungan pipa subframe memakai pengelasan matang serta dudukan shock dobel yang simetris kiri-kanan.",
@@ -153,8 +172,8 @@ export const ANATOMY_POINTS: AnatomyPoint[] = [
     number: "04",
     title: "Swingarm & Senter As Roda",
     titleEn: "Swingarm & Axle Centering",
-    xPercent: 26,
-    yPercent: 67,
+    xPercent: 18,
+    yPercent: 69,
     standard: "Senter Ban, Slebor & Gir Sejalur",
     standardEn: "Wheel, Fender & Sprocket Inline Alignment",
     detail: "Penataan bushing swingarm, jarak ban terhadap slebor belakang, serta garis rantai agar ban berputar lurus tanpa gesekan.",
@@ -220,12 +239,12 @@ export const site = {
             {
               order: 0,
               title: "Tata Body CB & Rangka Presisi",
-              subtitle: "TATA BODY CB",
+              subtitle: "BSK CUSTOM",
               description:
                 "Penataan tangki, jok, subframe, dan kelurusan kaki-kaki motor klasik maupun harian. Rapi di mata, lurus saat dikendarai.",
               extra: {
                 section_id: "hero",
-                primary_cta_label: "Konsultasi Konsep",
+                primary_cta_label: "Konsultasi Konsep Garapan",
                 secondary_cta_label: "Lihat Detail Garapan",
               },
             },
