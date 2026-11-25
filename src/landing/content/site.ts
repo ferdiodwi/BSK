@@ -243,8 +243,6 @@ export const site = {
                 { order: 0, title: "Showcase", icon: "#hero" },
                 { order: 1, title: "Anatomi Presisi", icon: "#anatomi" },
                 { order: 2, title: "Layanan & Paket", icon: "#paket" },
-                { order: 3, title: "Galeri Unit", icon: "#galeri" },
-                { order: 4, title: "Bengkel", icon: "#bengkel" },
               ],
             },
           ],
@@ -363,76 +361,6 @@ export const site = {
                   },
                 },
               ],
-            },
-          ],
-        },
-        {
-          type: "ShowcaseGallery",
-          order: 4,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "Galeri 5 Unit Garapan BSK",
-              subtitle: "UNIT NYATA WORKSHOP",
-              description:
-                "Lima contoh hasil penataan rangka dan full build dari studio BSK Custom. Klik unit untuk melihat spesifikasi ubahan lengkap.",
-            },
-          ],
-        },
-        {
-          type: "WorkshopSection",
-          order: 5,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "Alur Kerja Bengkel",
-              subtitle: "KONSULTASI & LOKASI",
-              description:
-                "Setiap unit melewati tahapan ukur sebelum las untuk menjamin kestabilan berkendara dan kerapian tampilan.",
-              items: [
-                {
-                  order: 0,
-                  title: "01. Cek Rangka Awal",
-                  description: "Pemeriksaan kondisi leher komstir, lengan ayun, dan titik simetris rangka dasar.",
-                },
-                {
-                  order: 1,
-                  title: "02. Penentuan Konsep",
-                  description: "Pemilihan tangki, jok, dan jarak main suspensi serta persetujuan rincian pengerjaan.",
-                },
-                {
-                  order: 2,
-                  title: "03. Fabrikasi & Las",
-                  description: "Pemotongan, penyambungan subframe, serta pembuatan braket bodi yang kokoh.",
-                },
-                {
-                  order: 3,
-                  title: "04. Senter Kaki-Kaki",
-                  description: "Penyelarasan as roda depan-belakang, posisi slebor, dan jalur rantai.",
-                },
-                {
-                  order: 4,
-                  title: "05. Finishing & Uji Jalan",
-                  description: "Pembersihan las, perakitan akhir, dan pengecekan kestabilan sebelum serah terima.",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: "Footer",
-          order: 6,
-          is_active: true,
-          blocks: [
-            {
-              order: 0,
-              title: "BSK Custom",
-              description: "Spesialis Tata Body CB & Rangka Presisi",
-              extra: {
-                copyright: "© 2026 BSK Custom. Tata Body CB & Rangka Presisi.",
-              },
             },
           ],
         },

@@ -6,9 +6,6 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { AnatomySection } from "./components/AnatomySection";
 import { ServicePackages } from "./components/ServicePackages";
-import { ShowcaseGallery } from "./components/ShowcaseGallery";
-import { WorkshopSection } from "./components/WorkshopSection";
-import { Footer } from "./components/Footer";
 import { BuildInquiryModal } from "./components/BuildInquiryModal";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
@@ -24,9 +21,6 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   Hero,
   AnatomySection,
   ServicePackages,
-  ShowcaseGallery,
-  WorkshopSection,
-  Footer,
 };
 
 export function Landing() {
@@ -73,10 +67,7 @@ export function Landing() {
   };
 
   const headerSections = activeSections.filter((s) => s.section.type === "Navbar");
-  const mainSections = activeSections.filter(
-    (s) => s.section.type !== "Navbar" && s.section.type !== "Footer"
-  );
-  const footerSections = activeSections.filter((s) => s.section.type === "Footer");
+  const mainSections = activeSections.filter((s) => s.section.type !== "Navbar");
 
   return (
     <div ref={rootRef} className="bsk-landing">
@@ -85,8 +76,6 @@ export function Landing() {
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         {mainSections.map(renderSection)}
       </main>
-
-      {footerSections.map(renderSection)}
 
       {inquiryState.open && (
         <BuildInquiryModal

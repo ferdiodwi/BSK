@@ -176,7 +176,7 @@ export function Hero({ block }: SectionComponentProps) {
           {/* Bottom Centered Underlined Action Link */}
           <div {...heroEnterAttr(0.18)} className="relative z-30 mt-4 flex flex-col items-center">
             <a
-              href="#galeri"
+              href="#anatomi"
               className="inline-flex min-h-[44px] items-center border-b-2 border-[#FF5722] px-2 pb-1 font-condensed text-base tracking-[0.12em] text-[#FF6B35] uppercase transition-colors hover:border-white hover:text-white sm:text-lg"
             >
               {tr("Lihat Detail Garapan", locale)}
