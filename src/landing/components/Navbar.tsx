@@ -2,22 +2,29 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { site } from "../content/site";
 import { tr, toggleLocale, useLocale } from "../lib/i18n";
 import {
   ariaLabelAttr,
   attachKeydown,
   attachWindowScroll,
+  buildDirectWhatsAppUrl,
   isEscapeKey,
   sortedItems,
   type SectionComponentProps,
 } from "../lib/helpers";
 
-export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
+export function Navbar({ block }: SectionComponentProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const locale = useLocale();
 
   const links = sortedItems(block.items);
+  const waHref = buildDirectWhatsAppUrl(
+    site.contact.whatsapp_number,
+    locale === "en" ? "custom motorcycle build" : "konsep garapan motor",
+    locale
+  );
 
   useEffect(() => {
     return attachWindowScroll(32, setScrolled);
@@ -58,18 +65,6 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
         <nav aria-label="Navigasi utama" className="hidden items-center gap-7 lg:flex xl:gap-9">
           {links.map((item, idx) => {
             const href = item.icon || "#hero";
-            if (href === "#inquiry") {
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => onOpenInquiry?.()}
-                  className="inline-flex min-h-[44px] items-center px-1 font-hero text-[13px] font-medium tracking-[0.14em] text-[#E5E7EB] uppercase transition-colors hover:text-[#FF6B35]"
-                >
-                  {tr(item.title || "", locale)}
-                </button>
-              );
-            }
             const isExternal = href.startsWith("http");
             return (
               <a
@@ -85,7 +80,7 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
           })}
         </nav>
 
-        {/* Right: Minimal Language Toggle + Sharp Orange-Bordered CTA */}
+        {/* Right: Minimal Language Toggle + Direct WhatsApp CTA */}
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -96,13 +91,14 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
             {locale.toUpperCase()}
           </button>
 
-          <button
-            type="button"
-            onClick={() => onOpenInquiry?.()}
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden min-h-[44px] items-center border border-[#FF5722] bg-transparent px-6 font-hero text-xs font-semibold tracking-[0.16em] text-[#FF6B35] uppercase transition-colors hover:border-[#D62810] hover:bg-[#D62810] hover:text-white active:scale-[0.98] md:inline-flex"
           >
             {tr("Ajukan Konsep", locale)}
-          </button>
+          </a>
 
           <button
             type="button"
@@ -134,21 +130,6 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
           <div className="flex flex-col gap-1">
             {links.map((item, idx) => {
               const href = item.icon || "#hero";
-              if (href === "#inquiry") {
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      onOpenInquiry?.();
-                    }}
-                    className="flex min-h-[44px] w-full items-center px-3 text-left font-hero text-sm font-semibold tracking-wider text-[#F3F4F6] uppercase transition-colors hover:bg-white/5 hover:text-[#FF6B35]"
-                  >
-                    {tr(item.title || "", locale)}
-                  </button>
-                );
-              }
               const isExternal = href.startsWith("http");
               return (
                 <a
@@ -163,16 +144,15 @@ export function Navbar({ block, onOpenInquiry }: SectionComponentProps) {
                 </a>
               );
             })}
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenInquiry?.();
-              }}
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
               className="mt-3 flex min-h-[44px] w-full items-center justify-center bg-[#D62810] px-4 font-hero text-xs font-bold tracking-widest text-white uppercase hover:bg-[#C41E0A]"
             >
               {tr("Ajukan Konsep", locale)}
-            </button>
+            </a>
           </div>
         </nav>
       )}

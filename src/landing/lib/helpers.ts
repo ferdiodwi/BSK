@@ -53,7 +53,6 @@ export type LandingPayload = {
 export type SectionComponentProps = {
   section?: LandingSection;
   block: LandingBlock;
-  onOpenInquiry?: (opts?: { bikeId?: string; packageId?: string }) => void;
 };
 
 export function sortedBlocks(blocks?: LandingBlock[]): LandingBlock[] {
@@ -162,43 +161,16 @@ export function attachWindowScroll(threshold: number, onStateChange: (scrolled: 
   return () => window.removeEventListener("scroll", onScroll);
 }
 
-export function buildBuildInquiryText(
-  bikeModel: string,
-  packageName: string,
-  customNeeds: string,
-  partsStatus: string,
-  notes: string,
-  locale: Locale,
-): string {
-  const cleanNotes = notes.trim();
-  if (locale === "en") {
-    return `Hello BSK Custom, I would like to consult on a bodywork build and ask for workshop availability:\n\n• Bike Platform: ${bikeModel}\n• Package: ${packageName}\n• Add-Ons: ${customNeeds}\n• Parts Status: ${partsStatus}${
-      cleanNotes ? `\n• Notes: ${cleanNotes}` : ""
-    }\n\nCould you let me know the estimated schedule and quotation? Thank you.`;
-  }
-
-  return `Halo BSK Custom, saya mau konsultasi garapan dan tanya jadwal bengkel:\n\n• Basis Motor: ${bikeModel}\n• Layanan: ${packageName}\n• Tambahan: ${customNeeds}\n• Status Part: ${partsStatus}${
-    cleanNotes ? `\n• Catatan Kondisi: ${cleanNotes}` : ""
-  }\n\nKira-kira rincian pengerjaan dan slot terdekat kapan ya? Terima kasih.`;
-}
-
-export function buildWorkshopWhatsAppUrl(
+export function buildDirectWhatsAppUrl(
   phone: string,
-  bikeModel: string,
-  packageName: string,
-  customNeeds: string,
-  partsStatus: string,
-  notes: string,
+  topic: string,
   locale: Locale,
 ): string {
   const cleanPhone = phone.replace(/\D/g, "");
-  const text = buildBuildInquiryText(
-    bikeModel,
-    packageName,
-    customNeeds,
-    partsStatus,
-    notes,
-    locale,
-  );
+  const cleanTopic = topic.trim();
+  const text =
+    locale === "en"
+      ? `Hello BSK Custom, I would like to consult about ${cleanTopic} and ask for workshop availability.`
+      : `Halo BSK Custom, saya ingin konsultasi mengenai ${cleanTopic} dan cek jadwal bengkel.`;
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
 }

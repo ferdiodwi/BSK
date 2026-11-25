@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef, useState, type ComponentType } from "react";
+import { useRef, type ComponentType } from "react";
 import "./styles.css";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { AboutSection } from "./components/AboutSection";
 import { ServicePackages } from "./components/ServicePackages";
-import { BuildInquiryModal } from "./components/BuildInquiryModal";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
 import {
@@ -25,25 +24,8 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
 
 export function Landing() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [inquiryState, setInquiryState] = useState<{
-    open: boolean;
-    bikeId?: string;
-    packageId?: string;
-  }>({ open: false });
 
   usePageMotion(rootRef);
-
-  const openInquiry = (opts?: { bikeId?: string; packageId?: string }) => {
-    setInquiryState({
-      open: true,
-      bikeId: opts?.bikeId,
-      packageId: opts?.packageId,
-    });
-  };
-
-  const closeInquiry = () => {
-    setInquiryState((prev) => ({ ...prev, open: false }));
-  };
 
   const pages = [...(site.pages ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   const activeSections = pages.flatMap((page, pIdx) =>
@@ -61,7 +43,6 @@ export function Landing() {
         key={blockRenderKey(entry.pIdx, entry.sIdx, bIdx)}
         section={entry.section}
         block={block}
-        onOpenInquiry={openInquiry}
       />
     ));
   };
@@ -76,16 +57,6 @@ export function Landing() {
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         {mainSections.map(renderSection)}
       </main>
-
-      {inquiryState.open && (
-        <BuildInquiryModal
-          key={`${inquiryState.bikeId || "default"}-${inquiryState.packageId || "default"}`}
-          isOpen={inquiryState.open}
-          onClose={closeInquiry}
-          initialBikeId={inquiryState.bikeId}
-          initialPackageId={inquiryState.packageId}
-        />
-      )}
     </div>
   );
 }

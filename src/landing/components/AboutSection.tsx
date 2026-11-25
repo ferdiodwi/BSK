@@ -4,12 +4,12 @@ import { ArrowUpRight, Compass, Layers, Wrench } from "lucide-react";
 import { site } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
-import { imgPerfProps, revealLeft, revealRight, sortedItems, type SectionComponentProps } from "../lib/helpers";
+import { imgPerfProps, revealLeft, revealRight, sortedItems, buildDirectWhatsAppUrl, type SectionComponentProps } from "../lib/helpers";
 import { InstagramLogo, TikTokLogo, WhatsAppLogo } from "../ui/BrandLogos";
 
 const PILLAR_ICONS = [Compass, Wrench, Layers] as const;
 
-export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
+export function AboutSection({ block }: SectionComponentProps) {
   const locale = useLocale();
   const pillars = sortedItems(block.items);
 
@@ -100,14 +100,19 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
 
             {/* Primary CTA & Rounded Dark Social Actions */}
             <div className="mt-9 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-7">
-              <button
-                type="button"
-                onClick={() => onOpenInquiry?.()}
+              <a
+                href={buildDirectWhatsAppUrl(
+                  site.contact.whatsapp_number,
+                  locale === "en" ? "bodywork and custom frame build" : "tata body dan custom rangka",
+                  locale
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-xl bg-white px-7 py-3.5 font-sans text-xs font-bold tracking-[0.12em] text-[#111216] uppercase transition-colors hover:bg-[#FF6B35] sm:text-sm"
               >
                 <span>{tr("Konsultasi Konsep Garapan", locale)}</span>
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              </button>
+              </a>
 
               <div className="flex items-center gap-3">
                 <a

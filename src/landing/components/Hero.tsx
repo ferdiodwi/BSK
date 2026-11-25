@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { BSK_BIKES } from "../content/site";
+import { BSK_BIKES, site } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
-import { heroEnterAttr, type SectionComponentProps } from "../lib/helpers";
+import { buildDirectWhatsAppUrl, heroEnterAttr, type SectionComponentProps } from "../lib/helpers";
 
-export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
+export function Hero({ block }: SectionComponentProps) {
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const stageRef = useRef<HTMLElement>(null);
@@ -179,15 +179,16 @@ export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
             </button>
           </div>
 
-          {/* Bottom Centered Underlined Action Button opening Build Inquiry with Active Bike */}
+          {/* Bottom Centered Underlined Direct WhatsApp Action for Active Bike */}
           <div {...heroEnterAttr(0.18)} className="relative z-30 mt-4 flex flex-col items-center">
-            <button
-              type="button"
-              onClick={() => onOpenInquiry?.({ bikeId: activeBike.inquiryBikeId })}
+            <a
+              href={buildDirectWhatsAppUrl(site.contact.whatsapp_number, activeBike.name, locale)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-[44px] items-center border-b-2 border-[#FF5722] px-2 pb-1 font-condensed text-base tracking-[0.12em] text-[#FF6B35] uppercase transition-colors hover:border-white hover:text-white sm:text-lg"
             >
               {tr(bind(block, "extra.primary_cta_label", "Konsultasi Konsep Garapan"), locale)}
-            </button>
+            </a>
           </div>
         </div>
       </div>

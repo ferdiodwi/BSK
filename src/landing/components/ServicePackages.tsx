@@ -9,9 +9,10 @@ import {
   Layers,
   ShieldCheck,
 } from "lucide-react";
+import { site } from "../content/site";
 import { bind } from "../lib/bind";
 import { tr, useLocale } from "../lib/i18n";
-import { revealUp, sortedItems, type SectionComponentProps } from "../lib/helpers";
+import { buildDirectWhatsAppUrl, revealUp, sortedItems, type SectionComponentProps } from "../lib/helpers";
 
 const SERVICE_ICONS = {
   rangka: Compass,
@@ -24,7 +25,7 @@ const SERVICE_ICONS = {
 
 type ServiceIconKey = keyof typeof SERVICE_ICONS;
 
-export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps) {
+export function ServicePackages({ block }: SectionComponentProps) {
   const locale = useLocale();
   const services = sortedItems(block.items);
   const lineTwo = bind(block, "extra.title_line2", "Presisi di rangka & mesin.");
@@ -115,9 +116,14 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
                     </div>
                   )}
 
-                  <button
-                    type="button"
-                    onClick={() => onOpenInquiry?.({ packageId: svc.id || "full-rangka" })}
+                  <a
+                    href={buildDirectWhatsAppUrl(
+                      site.contact.whatsapp_number,
+                      tr(svc.title || "layanan bengkel", locale),
+                      locale
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`mt-5 inline-flex min-h-[44px] w-full items-center text-left text-[13px] font-semibold text-[#FF8A5B] transition-colors hover:text-[#F9FAFB] sm:text-sm ${
                       isWide ? "justify-start gap-2.5" : "justify-between gap-2"
                     }`}
@@ -127,7 +133,7 @@ export function ServicePackages({ block, onOpenInquiry }: SectionComponentProps)
                       className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
                       aria-hidden="true"
                     />
-                  </button>
+                  </a>
                 </div>
               </article>
             );

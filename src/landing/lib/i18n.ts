@@ -200,29 +200,12 @@ const EN_MAP: Record<string, string> = {
   "05. Finishing & Uji Jalan": "05. Finishing & Road Test",
   "Pembersihan las, perakitan akhir, dan pengecekan kestabilan sebelum serah terima.":
     "Weld cleanup, final assembly, and stability road testing before handover.",
-  "Konsultasi Konsep & Jadwal Pengerjaan": "Build Consultation & Workshop Scheduling",
-  "Kirim foto kondisi motor saat ini atau pilih paket yang diinginkan lewat formulir pengajuan konsep sebelum datang ke bengkel.":
-    "Send photos of your bike or pick your desired scope via the build inquiry form before visiting the shop.",
   "Konsultasi & Lokasi Workshop": "Consultation & Workshop Location",
   "Instagram Resmi": "Official Instagram",
   "WhatsApp Admin": "Admin WhatsApp",
   "Alamat Workshop": "Workshop Address",
   "Jam Operasional": "Operating Hours",
   "Chat via WhatsApp": "Chat via WhatsApp",
-
-  // Build Inquiry Modal
-  "Pengajuan Konsep & Konsultasi Bengkel": "Build Concept & Workshop Inquiry",
-  "1. Pilih Basis Motor": "1. Select Motorcycle Base",
-  "2. Pilih Paket Layanan": "2. Select Service Package",
-  "3. Tambahan Pekerjaan (Opsional)": "3. Optional Add-Ons",
-  "4. Status Part & Bodi": "4. Parts & Bodywork Status",
-  "Part & bodi bawa sendiri": "Bringing own parts & body",
-  "Minta dicarikan bengkel": "Request workshop to source parts",
-  "Catatan Kondisi Motor (Opsional)": "Bike Condition Notes (Optional)",
-  "Ringkasan Pengajuan Konsep": "Build Inquiry Summary",
-  "Salin Format Konsultasi": "Copy Inquiry Text",
-  "Format Tersalin": "Inquiry Copied",
-  "Tanya Jadwal & Penawaran via WA": "Ask Schedule & Quote via WA",
 
   // About Section
   "Tentang BSK Custom": "About BSK Custom",
