@@ -224,8 +224,6 @@ const EN_MAP: Record<string, string> = {
   "Tentang BSK Custom": "About BSK Custom",
   "SPESIALIS TATA BODY CB & RANGKA PRESISI":
     "CB BODYWORK & PRECISION FRAME SPECIALIST",
-  "Bengkel BSK Custom": "BSK Custom Workshop",
-  "Tata Body CB & Senter Rangka": "CB Bodywork & Frame Alignment",
   "Proses pengerjaan tata body dan perakitan rangka di bengkel BSK Custom":
     "Bodywork fitting and frame assembly process at BSK Custom workshop",
   "BSK Custom berfokus menangani tata body CB, perbaikan geometri rangka, dan penataan kaki-kaki motor klasik maupun harian. Setiap unit dikerjakan dengan pengukuran senter yang teliti, pengelasan matang, serta fitting tangki dan jok yang rapat agar tampilan motor rapi sekaligus stabil dikendarai.":

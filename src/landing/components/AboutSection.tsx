@@ -29,9 +29,9 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
 
       <div className="relative z-10 mx-auto max-w-[1320px] px-5 pt-10 pb-20 sm:px-8 sm:pt-12 lg:px-12 lg:pt-14 lg:pb-28">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
-          {/* Left Editorial Photo Card: about.jpeg with frosted bottom caption */}
+          {/* Left Editorial Photo Card: clean about.jpeg portrait */}
           <div {...revealLeft(0)} className="lg:col-span-5">
-            <div className="group relative mx-auto max-w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#141518] shadow-[0_24px_60px_rgba(0,0,0,0.6)] lg:max-w-none">
+            <div className="group mx-auto max-w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#141518] shadow-[0_24px_60px_rgba(0,0,0,0.6)] lg:max-w-none">
               <img
                 src="/about.jpeg"
                 alt={tr("Proses pengerjaan tata body dan perakitan rangka di bengkel BSK Custom", locale)}
@@ -40,23 +40,6 @@ export function AboutSection({ block, onOpenInquiry }: SectionComponentProps) {
                 {...imgPerfProps()}
                 className="aspect-[3/4] h-auto w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B0C0E]/90 via-[#0B0C0E]/40 to-transparent"
-              />
-              <div className="absolute inset-x-3.5 bottom-3.5 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#0B0C0E]/82 px-4 py-3 backdrop-blur-md">
-                <div>
-                  <p className="font-mono text-[10px] font-semibold tracking-[0.18em] text-[#FF8A5B] uppercase">
-                    {tr("Bengkel BSK Custom", locale)}
-                  </p>
-                  <p className="mt-0.5 text-xs font-medium text-[#F9FAFB]">
-                    {tr("Tata Body CB & Senter Rangka", locale)}
-                  </p>
-                </div>
-                <span className="font-condensed text-lg tracking-wider text-white/90 uppercase">
-                  BSK
-                </span>
-              </div>
             </div>
           </div>
 
