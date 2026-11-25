@@ -83,6 +83,7 @@ const EN_MAP: Record<string, string> = {
   "Layanan": "Services",
   "Galeri": "Gallery",
   "Testimoni": "Reviews",
+  "Kontak": "Contact",
   "Anatomi Presisi": "Frame Anatomy",
   "Layanan & Paket": "Services & Packages",
   "Galeri Unit": "Build Gallery",
@@ -189,6 +190,47 @@ const EN_MAP: Record<string, string> = {
   "Lempeng, Rapi, Enak Dipake.": "Straight, Tight, Road Ready.",
   "Testimoni pelanggan baris atas": "Customer testimonials top row",
   "Testimoni pelanggan baris bawah": "Customer testimonials bottom row",
+
+  // Contact & Location
+  "KONTAK & KONSULTASI BENGKEL": "CONTACT & WORKSHOP CONSULTATION",
+  "Hubungi BSK Custom": "Contact BSK Custom",
+  "Mau tanya soal tata bodi, custom rangka, kaki-kaki, atau janjian mampir ke bengkel? Isi pesan singkat di samping atau langsung chat WhatsApp.":
+    "Questions about bodywork, custom frames, suspension setup, or visiting the shop? Fill the quick form or reach us directly on WhatsApp.",
+  "Konsultasi Garapan": "Build Consultation",
+  "Tanya kecocokan tangki, jok, shock, atau rangka sebelum motor dibawa ke bengkel.":
+    "Ask about tank, seat, shock, or frame fitment before bringing your bike to the shop.",
+  "Cek Slot Bengkel": "Check Workshop Queue",
+  "Pastikan jadwal dan kesiapan part lebih dulu via WA supaya pas datang langsung dikerjakan.":
+    "Confirm workshop schedule and parts availability on WhatsApp before dropping by.",
+  "Kunjungan Workshop": "Workshop Visit",
+  "Mampir langsung cek kondisi komstir, arm, atau diskusi konsep langsung bareng mekanik.":
+    "Stop by to inspect steering neck alignment, swingarm setup, or discuss build plans directly with the mechanic.",
+  "Kirim Pesan Cepat": "Quick WhatsApp Brief",
+  "Isi singkat lalu langsung teruskan ke WhatsApp admin.":
+    "Fill out a quick note and send straight to our admin WhatsApp.",
+  "Nama": "Name",
+  "Nama kamu": "Your name",
+  "Basis Motor": "Motorcycle Base",
+  "Misal: CB 100 / GL": "e.g., CB 100 / GL",
+  "Keperluan Garapan": "Work Needed",
+  "Tata Body & Fitting Tangki-Jok": "Bodywork & Tank-Seat Fitment",
+  "Garap Mesin & Tune-Up Herex": "Engine Build & Herex Tune-Up",
+  "Kondisi / Catatan Motor": "Bike Condition / Notes",
+  "Ceritakan kondisi motor sekarang atau ubahan yang diinginkan...":
+    "Describe your current bike condition or custom build goals...",
+  "Kirim via WhatsApp": "Send via WhatsApp",
+  "Pesan siap dikirim:": "Ready to send:",
+  "Buka WhatsApp Sekarang": "Open WhatsApp Now",
+  "Peta lokasi bengkel BSK Custom": "BSK Custom workshop location map",
+  "LOKASI WORKSHOP": "WORKSHOP LOCATION",
+  "Mampir Langsung ke BSK Custom": "Visit BSK Custom Workshop",
+  "Bisa bawa unit langsung ke bengkel untuk ukur rangka, fitting bodi, atau diskusi ubahan bareng mekanik. Gunakan pin Google Maps BSK CUSTOM di sebelah untuk rute tercepat.":
+    "Bring your bike directly to the shop for frame checks, body fitting, or face-to-face planning with our builders. Use the BSK CUSTOM Google Maps pin for direct directions.",
+  "Titik Lokasi Maps": "Google Maps Pin",
+  "Jadwal Workshop": "Workshop Schedule",
+  "Konfirmasi jadwal & antrean via WhatsApp sebelum datang.":
+    "Confirm workshop hours and queue via WhatsApp before visiting.",
+  "Buka di Google Maps": "Open in Google Maps",
 
   // SOP & Workshop
   "KONSULTASI & LOKASI": "CONSULTATION & LOCATION",

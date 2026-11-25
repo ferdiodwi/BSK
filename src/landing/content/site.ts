@@ -554,8 +554,11 @@ export const site = {
     instagram_user: "@bsk.custom",
     instagram_url: "https://instagram.com/bsk.custom",
     tiktok_url: "https://tiktok.com/@bsk.custom",
-    address: "[Alamat Workshop BSK Custom, atur di site.ts]",
-    hours: "[Hari & Jam Buka Workshop, atur di site.ts]",
+    address: "BSK CUSTOM (Pin Lokasi Google Maps)",
+    hours: "Konfirmasi jadwal & antrean via WhatsApp sebelum datang.",
+    maps_embed_url:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.294189781254!2d113.762836!3d-8.071447100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6eb0049ae15a7%3A0xf1b87ec022ef0a96!2sBSK%20CUSTOM!5e0!3m2!1sid!2sid!4v1795635024596!5m2!1sid!2sid",
+    maps_url: "https://www.google.com/maps/search/?api=1&query=-8.0714471%2C113.762836",
   },
   pages: [
     {
@@ -585,7 +588,8 @@ export const site = {
                 { order: 2, title: "Layanan", icon: "#layanan" },
                 { order: 3, title: "Galeri", icon: "#galeri" },
                 { order: 4, title: "Testimoni", icon: "#testimoni" },
-                { order: 5, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
+                { order: 5, title: "Kontak", icon: "#kontak" },
+                { order: 6, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
               ],
             },
           ],
@@ -759,6 +763,20 @@ export const site = {
               extra: {
                 title_line2: "Lempeng, Rapi, Enak Dipake.",
               },
+            },
+          ],
+        },
+        {
+          type: "ContactSection",
+          order: 6,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Hubungi BSK Custom",
+              subtitle: "KONTAK & KONSULTASI BENGKEL",
+              description:
+                "Mau tanya soal tata bodi, custom rangka, kaki-kaki, atau janjian mampir ke bengkel? Kirim pesan lewat form di sebelah atau langsung chat WhatsApp.",
             },
           ],
         },
