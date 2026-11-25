@@ -122,10 +122,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
       ? activeItem?.descriptionEn ?? activeItem?.description
       : activeItem?.description;
 
-  const lightboxIndex = lightboxItem
-    ? items.findIndex((i) => i.id === lightboxItem.id)
-    : -1;
-
   return (
     <section
       id="galeri"
@@ -239,11 +235,7 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               </button>
 
               <div className="min-w-0 flex-1 text-center">
-                <p className="font-mono text-xs font-semibold tracking-[0.14em] text-[#FF8A5B] uppercase">
-                  {String(safeIndex + 1).padStart(2, "0")} /{" "}
-                  {String(items.length).padStart(2, "0")}
-                </p>
-                <h3 className="mt-1.5 truncate font-display text-xl font-bold text-[#F9FAFB] sm:text-2xl">
+                <h3 className="truncate font-display text-xl font-bold text-[#F9FAFB] sm:text-2xl">
                   {activeTitle}
                 </h3>
                 <p className="mt-1 line-clamp-2 text-sm text-[#A1A1AA]">
@@ -319,13 +311,9 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
           <div className="bsk-dialog-in relative z-10 flex max-h-[92vh] w-full max-w-[1040px] flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#121419] text-[#F9FAFB] shadow-2xl">
             <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-3.5 sm:px-6">
               <div className="min-w-0">
-                <p className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#FF8A5B] uppercase">
-                  {String((lightboxIndex >= 0 ? lightboxIndex : 0) + 1).padStart(2, "0")} /{" "}
-                  {String(items.length).padStart(2, "0")}
-                </p>
                 <h3
                   id="gallery-lightbox-title"
-                  className="mt-0.5 truncate font-display text-lg font-bold sm:text-xl"
+                  className="truncate font-display text-lg font-bold sm:text-xl"
                 >
                   {locale === "en" ? lightboxItem.titleEn : lightboxItem.title}
                 </h3>
