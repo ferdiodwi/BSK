@@ -66,7 +66,7 @@ export function Hero({ block }: SectionComponentProps) {
     <section
       id="hero"
       ref={stageRef}
-      className="bsk-dark-section relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-[#141518] pt-20 pb-6 text-white sm:min-h-[680px] sm:pt-24 sm:pb-8 lg:min-h-[min(100dvh,920px)] lg:pt-24 lg:pb-8"
+      className="bsk-dark-section relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-[#141518] pt-20 pb-8 text-white sm:min-h-[680px] sm:pt-24 sm:pb-10 lg:min-h-[100dvh] lg:pt-28 lg:pb-12"
     >
       {/* Anchor background to bottom so warm sunlit garage floor sits directly beneath the motorcycle stand and wheels */}
       <img
@@ -186,16 +186,16 @@ export function Hero({ block }: SectionComponentProps) {
       </div>
 
       {/* Left Edge Peeking Wheel — fixed height keeps floor level identical across all 5 bikes */}
-      <div className="pointer-events-none absolute bottom-16 left-0 z-20 hidden md:block lg:bottom-20">
+      <div className="pointer-events-none absolute bottom-16 left-0 z-20 hidden md:block lg:bottom-24">
         <button
           type="button"
           onClick={handlePrev}
           aria-label={`${tr("Motor Sebelumnya", locale)}: ${prevBike.name}`}
           className="pointer-events-auto relative flex h-[240px] items-end -translate-x-[74%] opacity-75 transition-all duration-300 hover:-translate-x-[68%] hover:opacity-100 lg:h-[310px] lg:-translate-x-[76%] lg:hover:-translate-x-[70%]"
         >
-          <div
+          <span
             aria-hidden="true"
-            className="pointer-events-none absolute right-[6%] -bottom-1 left-[55%] z-10 h-5 rounded-full bg-black/85 blur-sm"
+            className="pointer-events-none absolute right-[6%] -bottom-1 left-[55%] z-10 block h-5 rounded-full bg-black/85 blur-sm"
           />
           <img
             src={prevBike.imageUrl}
@@ -209,16 +209,16 @@ export function Hero({ block }: SectionComponentProps) {
       </div>
 
       {/* Right Edge Peeking Wheel — fixed height keeps floor level identical across all 5 bikes */}
-      <div className="pointer-events-none absolute right-0 bottom-16 z-20 hidden md:block lg:bottom-20">
+      <div className="pointer-events-none absolute right-0 bottom-16 z-20 hidden md:block lg:bottom-24">
         <button
           type="button"
           onClick={handleNext}
           aria-label={`${tr("Motor Berikutnya", locale)}: ${nextBike.name}`}
           className="pointer-events-auto relative flex h-[240px] items-end translate-x-[74%] opacity-75 transition-all duration-300 hover:translate-x-[68%] hover:opacity-100 lg:h-[310px] lg:translate-x-[76%] lg:hover:translate-x-[70%]"
         >
-          <div
+          <span
             aria-hidden="true"
-            className="pointer-events-none absolute right-[55%] -bottom-1 left-[6%] z-10 h-5 rounded-full bg-black/85 blur-sm"
+            className="pointer-events-none absolute right-[55%] -bottom-1 left-[6%] z-10 block h-5 rounded-full bg-black/85 blur-sm"
           />
           <img
             src={nextBike.imageUrl}
