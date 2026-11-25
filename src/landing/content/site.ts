@@ -176,8 +176,9 @@ export const site = {
               },
               items: [
                 { order: 0, title: "Showcase", icon: "#hero" },
-                { order: 1, title: "Konsultasi Konsep", icon: "#inquiry" },
-                { order: 2, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
+                { order: 1, title: "Tentang", icon: "#about" },
+                { order: 2, title: "Konsultasi Konsep", icon: "#inquiry" },
+                { order: 3, title: "Instagram", icon: "https://instagram.com/bsk.custom" },
               ],
             },
           ],
@@ -197,6 +198,37 @@ export const site = {
                 section_id: "hero",
                 primary_cta_label: "Konsultasi Konsep Garapan",
               },
+            },
+          ],
+        },
+        {
+          type: "AboutSection",
+          order: 2,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Tentang BSK Custom",
+              subtitle: "BSK CUSTOM - SPESIALIS TATA BODY CB & RANGKA PRESISI",
+              description:
+                "BSK Custom berfokus menangani tata body CB, perbaikan geometri rangka, dan penataan kaki-kaki motor klasik maupun harian. Setiap unit dikerjakan dengan pengukuran senter yang teliti, pengelasan matang, serta fitting tangki dan jok yang rapat agar tampilan motor rapi sekaligus stabil dikendarai.",
+              items: [
+                {
+                  order: 0,
+                  title: "Senter Rangka & Komstir",
+                  description: "Geometri leher komstir dan as roda diukur presisi agar motor stabil saat berkendara.",
+                },
+                {
+                  order: 1,
+                  title: "Las Rapi & Kokoh",
+                  description: "Sambungan pipa subframe dikerjakan matang agar kuat untuk pemakaian harian maupun touring.",
+                },
+                {
+                  order: 2,
+                  title: "Fitting Tanpa Celah",
+                  description: "Pertemuan tangki, jok, dan slebor ditata proporsional tanpa celah renggang.",
+                },
+              ],
             },
           ],
         },

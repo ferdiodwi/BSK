@@ -79,6 +79,7 @@ export function useLocale(): Locale {
 const EN_MAP: Record<string, string> = {
   // Navigation
   "Showcase": "Showcase",
+  "Tentang": "About",
   "Anatomi Presisi": "Frame Anatomy",
   "Layanan & Paket": "Services & Packages",
   "Galeri Unit": "Build Gallery",
@@ -218,6 +219,22 @@ const EN_MAP: Record<string, string> = {
   "Salin Format Konsultasi": "Copy Inquiry Text",
   "Format Tersalin": "Inquiry Copied",
   "Tanya Jadwal & Penawaran via WA": "Ask Schedule & Quote via WA",
+
+  // About Section
+  "Tentang BSK Custom": "About BSK Custom",
+  "BSK CUSTOM - SPESIALIS TATA BODY CB & RANGKA PRESISI":
+    "BSK CUSTOM - CB BODYWORK & PRECISION FRAME SPECIALIST",
+  "BSK Custom berfokus menangani tata body CB, perbaikan geometri rangka, dan penataan kaki-kaki motor klasik maupun harian. Setiap unit dikerjakan dengan pengukuran senter yang teliti, pengelasan matang, serta fitting tangki dan jok yang rapat agar tampilan motor rapi sekaligus stabil dikendarai.":
+    "BSK Custom specializes in Honda CB bodywork, frame geometry correction, and suspension alignment for classic and daily custom motorcycles. Every unit goes through careful centering measurements, solid welding, and tight tank-to-seat fitment so it looks clean and tracks straight on the road.",
+  "Senter Rangka & Komstir": "Frame & Steering Alignment",
+  "Geometri leher komstir dan as roda diukur presisi agar motor stabil saat berkendara.":
+    "Steering neck and axle geometry are measured precisely so the bike tracks straight at speed.",
+  "Las Rapi & Kokoh": "Clean & Solid Welding",
+  "Sambungan pipa subframe dikerjakan matang agar kuat untuk pemakaian harian maupun touring.":
+    "Subframe pipe joints are welded cleanly for daily riding durability and long-distance touring.",
+  "Fitting Tanpa Celah": "Zero-Gap Fitment",
+  "Pertemuan tangki, jok, dan slebor ditata proporsional tanpa celah renggang.":
+    "Tank, seat, and fender junctions are aligned proportionally without awkward gaps.",
 };
 
 export function tr(key: string, locale: Locale): string {

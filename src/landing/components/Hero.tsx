@@ -87,7 +87,7 @@ export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
 
       {/* Main Centered Showcase Block */}
       <div className="relative z-20 mx-auto w-full max-w-[1440px] px-4 sm:px-8">
-        {/* Title Lockup Flanking Overhead — single-line condensed lockup prevents height jumps */}
+        {/* Title Lockup Flanking Overhead: single-line condensed lockup prevents height jumps */}
         <div {...heroEnterAttr(0)} className="mx-auto max-w-[940px]">
           <div className="flex items-baseline justify-between gap-2 px-1">
             <span className="font-condensed text-xs tracking-[0.06em] text-white uppercase whitespace-nowrap sm:text-xl lg:text-2xl">
@@ -186,7 +186,7 @@ export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
         </div>
       </div>
 
-      {/* Left Edge Peeking Wheel — fixed height keeps floor level identical across all 5 bikes */}
+      {/* Left Edge Peeking Wheel: fixed height keeps floor level identical across all 5 bikes */}
       <div className="pointer-events-none absolute bottom-16 left-0 z-20 hidden md:block lg:bottom-24">
         <button
           type="button"
@@ -209,7 +209,7 @@ export function Hero({ block, onOpenInquiry }: SectionComponentProps) {
         </button>
       </div>
 
-      {/* Right Edge Peeking Wheel — fixed height keeps floor level identical across all 5 bikes */}
+      {/* Right Edge Peeking Wheel: fixed height keeps floor level identical across all 5 bikes */}
       <div className="pointer-events-none absolute right-0 bottom-16 z-20 hidden md:block lg:bottom-24">
         <button
           type="button"

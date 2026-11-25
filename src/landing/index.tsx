@@ -4,6 +4,7 @@ import { useRef, useState, type ComponentType } from "react";
 import "./styles.css";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
+import { AboutSection } from "./components/AboutSection";
 import { BuildInquiryModal } from "./components/BuildInquiryModal";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
@@ -17,6 +18,7 @@ import {
 const views: Record<string, ComponentType<SectionComponentProps>> = {
   Navbar,
   Hero,
+  AboutSection,
 };
 
 export function Landing() {
