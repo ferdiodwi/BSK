@@ -32,7 +32,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
   const dragStartX = useRef<number | null>(null);
 
   const items = BSK_GALLERY;
@@ -57,17 +56,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
     setLightboxItem(items[nextIdx]);
     setActiveIndex(nextIdx);
   };
-
-  // Center active thumbnail inside the horizontal rail without vertical page scroll
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const activeThumb = rail.children[safeIndex] as HTMLElement | undefined;
-    if (!activeThumb) return;
-    const targetLeft =
-      activeThumb.offsetLeft - rail.clientWidth / 2 + activeThumb.clientWidth / 2;
-    rail.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
-  }, [safeIndex]);
 
   // Lightbox keyboard navigation & accessible focus return
   useEffect(() => {
@@ -253,47 +241,6 @@ export function ShowcaseGallery({ block }: SectionComponentProps) {
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />
               </button>
-            </div>
-
-            {/* Horizontal Scrollable Thumbnail Filmstrip */}
-            <div className="mt-8 border-t border-white/[0.08] pt-6">
-              <div
-                ref={railRef}
-                role="region"
-                aria-label={tr("Daftar foto galeri BSK Custom", locale)}
-                className="flex gap-2.5 overflow-x-auto pb-2 [scrollbar-color:#FF6B35_#141518] [scrollbar-width:thin]"
-              >
-                {items.map((item, idx) => {
-                  const isCurrent = idx === safeIndex;
-                  const thumbTitle = locale === "en" ? item.titleEn : item.title;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setActiveIndex(idx)}
-                      aria-label={`${String(idx + 1).padStart(2, "0")}. ${thumbTitle}`}
-                      aria-current={isCurrent ? "true" : undefined}
-                      className={`group relative h-20 w-16 shrink-0 overflow-hidden rounded-xl bg-[#141518] transition-transform duration-200 sm:h-24 sm:w-20 ${
-                        isCurrent ? "scale-[1.03]" : ""
-                      }`}
-                    >
-                      <img
-                        src={item.imageUrl}
-                        alt=""
-                        aria-hidden="true"
-                        width={item.width}
-                        height={item.height}
-                        {...imgPerfProps()}
-                        className={`h-full w-full object-cover object-center transition-[filter] duration-200 ${
-                          isCurrent
-                            ? "brightness-100"
-                            : "brightness-50 group-hover:brightness-90"
-                        }`}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
             </div>
           </div>
         )}
